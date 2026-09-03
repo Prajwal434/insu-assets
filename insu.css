@@ -1377,8 +1377,13 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .sc-slides { margin: 18px 0 22px; }
 .sc-stage {
   position: relative; border-radius: 12px; overflow: hidden;
-  background: var(--page-bg); border: 1px solid var(--page-line);
-  aspect-ratio: 1100 / 1500;
+  background: #fff; border: 1px solid var(--page-line);
+  /* Pages are portrait (1100x1556). Left full-width the stage renders
+     over 1200px tall — mostly white margin with the content scrolled
+     past. Capping the width keeps it reading as a document. */
+  aspect-ratio: 1100 / 1556;
+  width: 100%; max-width: 560px; margin: 0 auto;
+  box-shadow: 0 2px 18px rgba(0,0,0,.10);
 }
 .sc-slide {
   position: absolute; inset: 0; width: 100%; height: 100%;
@@ -1400,7 +1405,7 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .sc-arrow--prev { left: 12px; }
 .sc-arrow--next { right: 12px; }
 
-.sc-slide-bar { display: flex; align-items: center; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+.sc-slide-bar { max-width: 560px; margin-left: auto; margin-right: auto; display: flex; align-items: center; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
 .sc-slide-count { font-size: 12.5px; color: var(--page-ink-soft); font-variant-numeric: tabular-nums; }
 .sc-slide-count b { color: var(--page-ink); }
 .sc-dots { display: flex; gap: 7px; flex: 1 1 auto; }
