@@ -1205,74 +1205,121 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .impl code{ background:var(--page-bg); padding:1px 6px; border-radius:4px; font-size:13px; }
 
 /* ============================================================
-   SUPPLY CHAIN SOLUTIONS — document deck.
-   Same interaction language as the thread carousel on the main page:
-   drag the cards or pull the bead, elastic snap, pulse along the line.
-   Cards are the document itself — title sits over the page, nothing
-   outside the thumbnail.
+   SUPPLY CHAIN SOLUTIONS — resource library.
+   A scannable grid, not a carousel: two items in a slider hides half
+   the content behind an interaction for no reason. Every card states
+   format, length and category up front, and offers both view and
+   download, which is what resource libraries converge on.
    ============================================================ */
 
-.deck { max-width: 1120px; margin: 0 auto; padding: 44px 24px 64px; }
-.deck-viewport { overflow: visible; }
-.deck-track {
-  display: flex; gap: 26px; cursor: grab;
-  touch-action: pan-y; will-change: transform;
-}
-.deck-track.is-dragging { cursor: grabbing; }
+.reslib { max-width: 1120px; margin: 0 auto; padding: 56px 24px 72px; }
 
-.deckcard {
-  position: relative; flex: 0 0 auto;
-  width: min(360px, 74vw); aspect-ratio: 1100 / 1424;
-  padding: 0; border: 0; border-radius: 16px; overflow: hidden;
-  background: #fff; font: inherit; text-align: left; cursor: pointer;
-  box-shadow: 0 10px 34px rgba(0,0,0,.16);
-  transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease, opacity .4s ease;
-  opacity: .58; transform: scale(.94);
-}
-.deckcard.is-front { opacity: 1; transform: scale(1); box-shadow: 0 18px 52px rgba(0,0,0,.24); }
-.deckcard[data-accent="lime"] { --sc-accent: #A6C63A; }
-.deckcard[data-accent="teal"] { --sc-accent: #2E9C8E; }
-
-.deckcard-page {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: top center; display: block;
-  transition: transform .6s cubic-bezier(.2,.7,.2,1);
-}
-.deckcard.is-front:hover .deckcard-page { transform: scale(1.04); }
-
-.deckcard-veil {
-  position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to top, rgba(8,22,20,.94) 0%, rgba(8,22,20,.62) 26%, rgba(8,22,20,0) 52%);
-}
-.deckcard-code {
-  position: absolute; top: 14px; left: 14px; z-index: 2;
-  font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
-  color: #0F2E2A; background: var(--sc-accent);
-  padding: 5px 10px; border-radius: 5px;
-}
-.deckcard-title {
-  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
-  padding: 20px 20px 22px;
+.reslib-head { max-width: 720px; margin-bottom: 44px; }
+.reslib-h {
   font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
-  font-size: 16.5px; line-height: 1.28; letter-spacing: -0.01em; color: #fff;
+  font-size: clamp(30px, 4.2vw, 50px); line-height: 1.06;
+  letter-spacing: -0.03em; margin: 12px 0 16px; color: var(--page-ink);
 }
-.deckcard-title::after {
-  content: "View document \2192";
-  display: block; margin-top: 10px;
-  font-size: 11.5px; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--sc-accent);
-  opacity: 0; transform: translateY(6px);
-  transition: opacity .3s ease, transform .3s ease;
+.reslib-lede { margin: 0 0 26px; font-size: clamp(15px, 1.6vw, 17px); line-height: 1.65; color: var(--page-ink-soft); }
+.reslib-stats {
+  display: flex; flex-wrap: wrap; gap: 10px 30px;
+  padding-top: 20px; border-top: 1px solid var(--page-line);
+  font-size: 13px; color: var(--page-ink-soft);
 }
-.deckcard.is-front .deckcard-title::after,
-.deckcard:focus-visible .deckcard-title::after { opacity: 1; transform: none; }
-.deckcard:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
+.reslib-stats b { color: var(--page-ink); font-weight: 700; }
 
-.deck-line { position: relative; height: 64px; margin-top: 26px; }
-.deck-line svg { width: 100%; height: 64px; display: block; overflow: visible; }
+.reslib-grid {
+  display: grid; gap: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+}
+
+.res {
+  display: flex; flex-direction: column;
+  background: var(--page-card); border: 1px solid var(--page-line);
+  border-radius: 16px; overflow: hidden;
+  transition: transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s ease, border-color .28s ease;
+}
+.res[data-accent="lime"] { --sc-accent: #A6C63A; --sc-accent-ink: #3F4E10; --sc-accent-soft: rgba(166,198,58,.16); }
+.res[data-accent="teal"] { --sc-accent: #2E9C8E; --sc-accent-ink: #0F3B35; --sc-accent-soft: rgba(46,156,142,.14); }
+.res:hover { transform: translateY(-4px); border-color: var(--sc-accent); box-shadow: 0 16px 44px rgba(0,0,0,.14); }
+
+/* Preview: the first page, cropped to its top so the document's own
+   title block is what you see rather than a band of white margin. */
+.res-preview {
+  position: relative; display: block; width: 100%; padding: 0; border: 0;
+  cursor: pointer; background: #f4f4f2; overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+.res-preview img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  display: block; transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.res:hover .res-preview img { transform: scale(1.04); }
+.res-preview-hover {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(8,22,20,.58); opacity: 0; transition: opacity .25s ease;
+}
+.res-preview-hover span {
+  font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: #0F2E2A; background: var(--sc-accent); padding: 9px 16px; border-radius: 999px;
+}
+.res:hover .res-preview-hover, .res-preview:focus-visible .res-preview-hover { opacity: 1; }
+.res-preview:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: -2px; }
+
+.res-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1 1 auto; }
+.res-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.res-code {
+  font-size: 10.5px; font-weight: 800; letter-spacing: .12em;
+  color: var(--sc-accent-ink); background: var(--sc-accent-soft);
+  padding: 4px 9px; border-radius: 4px;
+}
+.res-cat { font-size: 12px; color: var(--page-ink-soft); letter-spacing: .02em; }
+
+.res-title {
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: 18px; line-height: 1.28; letter-spacing: -0.01em;
+  margin: 0 0 10px; color: var(--page-ink);
+}
+.res-desc { margin: 0 0 16px; font-size: 14px; line-height: 1.6; color: var(--page-ink-soft); }
+
+.res-topics { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.res-topic {
+  font-size: 11.5px; padding: 4px 9px; border-radius: 5px;
+  background: var(--page-bg); border: 1px solid var(--page-line); color: var(--page-ink-soft);
+}
+
+.res-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-top: auto;
+  padding-top: 16px; border-top: 1px solid var(--page-line);
+}
+.res-fmt { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--page-ink-soft); }
+.res-fmt-badge {
+  font-size: 10px; font-weight: 800; letter-spacing: .08em;
+  color: #fff; background: #C0392B; padding: 3px 6px; border-radius: 3px;
+}
+.res-actions { display: flex; gap: 8px; }
+.res-btn {
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  padding: 8px 16px; border-radius: 8px; text-decoration: none;
+  background: var(--sc-accent); color: #0F2E2A; border: 1px solid var(--sc-accent);
+  transition: filter .18s ease, transform .18s ease;
+}
+.res-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.res-btn--ghost { background: transparent; color: var(--page-ink); border-color: var(--page-line); }
+.res-btn--ghost:hover { border-color: var(--sc-accent); }
+
+.reslib-cta {
+  margin-top: 44px; padding: 26px 28px; border-radius: 14px;
+  background: var(--page-card); border: 1px solid var(--page-line);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.reslib-cta p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--page-ink); max-width: 56ch; }
 
 @media (max-width: 600px) {
-  .deck { padding: 30px 16px 48px; }
-  .deck-track { gap: 16px; }
-  .deckcard-title { font-size: 15px; padding: 16px 16px 18px; }
+  .reslib { padding: 34px 16px 52px; }
+  .reslib-grid { gap: 18px; }
+  .res-foot { flex-direction: column; align-items: flex-start; }
+  .res-actions { width: 100%; }
+  .res-btn { flex: 1 1 auto; text-align: center; }
 }
