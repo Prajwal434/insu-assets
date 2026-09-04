@@ -715,9 +715,9 @@ function boot(){
       var GATE_ENDPOINT = '/_functions/caseStudyRequest';
       var CDN = 'https://cdn.jsdelivr.net/gh/Prajwal434/insu-assets@main/';
       var DOCS = {
-        'BTS-004': { preview: CDN + 'img/slides/bts004-1.jpg',
+        'BTS-004': { preview: CDN + 'img/preview/bts004.jpg',
                      title: 'Intelligent Supply Planning for Process Manufacturing' },
-        'BTS-005': { preview: CDN + 'img/slides/bts005-1.jpg',
+        'BTS-005': { preview: CDN + 'img/preview/bts005.jpg',
                      title: 'Enterprise Planning Transformation' }
       };
 
