@@ -22,18 +22,25 @@ function boot(){
   // Published page only; the Wix editor is untouched.
   var w=document.getElementById('SITE_CONTAINER')||document.getElementById('site-root');
   if(w){w.style.display='none';}
-  if(document.getElementById('insu-root'))return;
-  var h=document.createElement('div');
-  h.id='insu-root';
-  h.innerHTML=MARKUP;
-  document.body.appendChild(h);
+
+  // Under Wix the page is empty and the markup is injected. The standalone
+  // build already has it in the HTML, so injecting would duplicate the whole
+  // site. One bundle serves both: inject only when the markup is absent.
+  var h;
+  if(!document.querySelector('.hero')){
+    if(document.getElementById('insu-root'))return;
+    h=document.createElement('div');
+    h.id='insu-root';
+    h.innerHTML=MARKUP;
+    document.body.appendChild(h);
+  }
 
   // apply the uploaded image URLs
   var rs=document.documentElement.style;
   rs.setProperty('--img-supplychain',"url('"+IMAGES.supplychain+"')");
   rs.setProperty('--img-ai',"url('"+IMAGES.ai+"')");
   rs.setProperty('--img-python',"url('"+IMAGES.python+"')");
-  var lg=h.querySelector('.mark-icon');
+  var lg=document.querySelector('.mark-icon');
   if(lg){lg.src=IMAGES.logo;}
 
 (function () {
