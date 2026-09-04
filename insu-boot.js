@@ -381,9 +381,9 @@ function boot(){
        timeline hands it over dark at the end of the hero; from there
        this keeps it readable.
 
-       It reads the section's *rendered* background rather than keying
-       off .section-dark / .section-light, so it stays correct in dark
-       mode, where the light and tint sections are themselves dark. */
+       It adopts each band's own computed text colour, so it follows
+       whatever the stylesheet resolves to — including any dark-mode
+       overrides — without duplicating that logic here. */
     (function () {
       var mark = document.querySelector('#r1');
       var text = document.querySelector('#r1 .mark-text');
@@ -391,19 +391,14 @@ function boot(){
       var bands = [].slice.call(document.querySelectorAll('.page-section, .site-footer'));
       if (!bands.length) return;
 
-      function luminance(el) {
-        while (el && el !== document.documentElement) {
-          var c = getComputedStyle(el).backgroundColor;
-          var m = c && c.match(/[\d.]+/g);
-          if (m && m.length >= 3 && (m.length < 4 || parseFloat(m[3]) > 0.5)) {
-            return (0.2126 * +m[0] + 0.7152 * +m[1] + 0.0722 * +m[2]) / 255;
-          }
-          el = el.parentElement;
-        }
-        return 1;
-      }
+      /* Each band already declares the text colour that reads against
+         its own background (#EAF6F2 on dark, #22292B on light), so the
+         mark simply adopts it.
 
-      var wasDark = null, queued = false;
+         Do NOT go via backgroundColor: the dark and tint sections use
+         linear-gradient backgrounds, so backgroundColor computes to
+         rgba(0,0,0,0) and every section looks light. */
+      var last = null, queued = false;
       function update() {
         queued = false;
         var r = mark.getBoundingClientRect();
@@ -415,12 +410,12 @@ function boot(){
         }
         /* No band under the mark means we are still in the hero, where
            the pinned timeline owns the colour. Leave it alone. */
-        if (!band) { wasDark = null; return; }
+        if (!band) { last = null; return; }
 
-        var dark = luminance(band) < 0.5;
-        if (dark === wasDark) return;
-        wasDark = dark;
-        text.style.color = dark ? '#EAF6F2' : '#22292B';
+        var c = getComputedStyle(band).color;
+        if (c === last) return;
+        last = c;
+        text.style.color = c;
       }
 
       function onScroll() {
@@ -433,7 +428,7 @@ function boot(){
       /* Re-check when the colour scheme flips under us. */
       if (window.matchMedia) {
         var mq = window.matchMedia('(prefers-color-scheme: dark)');
-        if (mq.addEventListener) mq.addEventListener('change', function () { wasDark = null; onScroll(); });
+        if (mq.addEventListener) mq.addEventListener('change', function () { last = null; onScroll(); });
       }
       update();
     })();
