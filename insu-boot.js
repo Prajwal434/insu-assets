@@ -153,6 +153,55 @@ function boot(){
     window.addEventListener('hashchange', syncToHash);
     syncToHash();   // deep link: /#supply-chain lands straight in the view
   })();
+  /* Hero calls to action jump rather than scroll. Smooth-scrolling from
+     the hero to #contact travels the whole page, running every pinned
+     section and reveal on the way — slow, and it shows the visitor
+     everything they just chose to skip. A short fade covers an instant
+     jump instead.
+
+     Lives outside the GSAP block so it still works with animations off. */
+  (function () {
+    var links = [].slice.call(document.querySelectorAll('.ctas a[href^="#"]'));
+    if (!links.length) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var veil = null;
+
+    function jump(target) {
+      var root = document.documentElement;
+      var prev = root.style.scrollBehavior;
+      /* The stylesheet sets scroll-behavior:smooth, which would animate
+         this jump too — turn it off for the duration. */
+      root.style.scrollBehavior = 'auto';
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+      root.style.scrollBehavior = prev;
+      /* Pins and scrubs are mid-flight after a jump this large. */
+      if (window.ScrollTrigger && ScrollTrigger.refresh) ScrollTrigger.refresh();
+    }
+
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href').slice(1);
+        var target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+
+        if (reduce) { jump(target); return; }
+
+        if (!veil) {
+          veil = document.createElement('div');
+          veil.className = 'jump-veil';
+          document.body.appendChild(veil);
+        }
+        veil.classList.add('is-on');
+        setTimeout(function () {
+          jump(target);
+          requestAnimationFrame(function () { veil.classList.remove('is-on'); });
+        }, 170);
+      });
+    });
+  })();
+
   function splitChars(el) {
     var text = el.textContent;
     el.setAttribute('aria-label', text);
