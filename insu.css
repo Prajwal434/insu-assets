@@ -1483,3 +1483,79 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 }
 .jump-veil.is-on { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .jump-veil { display: none; } }
+
+/* ============================================================
+   CONTACT POPUP
+   Replaces a bare mailto: on the primary business CTA. A mailto
+   does nothing visible when no mail client is configured, which
+   is common on desktop — the click appeared to do nothing at all.
+   ============================================================ */
+.contactpop {
+  position: fixed; inset: 0; z-index: 910;
+  background: rgba(8,20,18,.9);
+  -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+  display: grid; place-items: center; padding: 24px;
+  animation: dgFade .22s ease both;
+}
+.contactpop[hidden] { display: none; }
+
+.contactpop-panel {
+  position: relative; width: min(460px, 100%);
+  background: var(--page-card); border-radius: 18px; padding: 34px 32px 28px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+  animation: dgRise .3s cubic-bezier(.2,.7,.2,1) both;
+}
+.contactpop-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--page-line); background: transparent;
+  color: var(--page-ink); font-size: 20px; line-height: 1;
+  display: grid; place-items: center; transition: background .18s ease;
+}
+.contactpop-close:hover { background: var(--page-bg); }
+
+.contactpop-kicker {
+  display: block; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mint-ink); margin-bottom: 10px;
+}
+.contactpop-h {
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: 21px; line-height: 1.24; letter-spacing: -0.02em;
+  margin: 0 0 10px; color: var(--page-ink);
+}
+.contactpop-p { margin: 0 0 22px; font-size: 14px; line-height: 1.6; color: var(--page-ink-soft); }
+
+.contactpop-rows { display: flex; flex-direction: column; gap: 10px; }
+.contactpop-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 15px; border-radius: 11px;
+  background: var(--page-bg); border: 1px solid var(--page-line);
+}
+.contactpop-label {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--page-ink-soft);
+  flex: 0 0 46px;
+}
+.contactpop-val {
+  flex: 1 1 auto; min-width: 0; font-size: 14.5px; font-weight: 600;
+  color: var(--page-ink); text-decoration: none;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.contactpop-val:hover { color: var(--mint-ink); text-decoration: underline; }
+.contactpop-copy {
+  flex: 0 0 auto; cursor: pointer; font: inherit; font-size: 12px; font-weight: 600;
+  padding: 6px 12px; border-radius: 7px;
+  border: 1px solid var(--page-line); background: var(--page-card); color: var(--page-ink);
+  transition: border-color .18s ease, color .18s ease;
+}
+.contactpop-copy:hover { border-color: var(--mint); color: var(--mint-ink); }
+.contactpop-copy.is-done { border-color: var(--mint); color: var(--mint-ink); }
+
+.contactpop-fine { margin: 18px 0 0; font-size: 12px; color: var(--page-ink-soft); }
+
+@media (max-width: 480px) {
+  .contactpop-panel { padding: 28px 20px 22px; }
+  .contactpop-row { flex-wrap: wrap; }
+  .contactpop-label { flex-basis: 100%; }
+}
