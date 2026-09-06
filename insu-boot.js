@@ -203,15 +203,15 @@ function boot(){
   })();
 
   /* Contact popup with a working form.
-     Posts to FormSubmit, which relays straight to the inbox below and
-     needs no backend. NOTE: the very first submission triggers a
-     one-time confirmation email to that address — until someone clicks
-     the link in it, nothing is delivered.
-     If the post fails for any reason, the visitor is not left with a
-     dead form: they get the address, the number, and their own text
-     back to copy, so nothing they typed is lost. */
+     Posts to a Velo HTTP function on the same origin, so enquiries
+     stay inside Wix and no third party sees them.
+     If the post fails the visitor is not left with a dead form: they
+     get the address, the number, and their own text back to copy, so
+     nothing they typed is lost. */
   (function () {
-    var ENDPOINT = 'https://formsubmit.co/ajax/info@insudynamics.com';
+    /* Same-origin Velo HTTP function — see src/backend/http-functions.js
+       in the insudynamics repo. Nothing leaves Wix. */
+    var ENDPOINT = '/_functions/contactRequest';
     var INBOX = 'info@insudynamics.com';
 
     var pop = document.querySelector('[data-contactpop]');
