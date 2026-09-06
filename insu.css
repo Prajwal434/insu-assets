@@ -1173,8 +1173,8 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .scs { max-width: 1180px; margin: 0 auto; padding: 8px 32px 80px; }
 
 .scs-pill {
-  display: inline-block; font-size: 11.5px; font-weight: 600;
-  letter-spacing: .01em; color: var(--page-ink-soft);
+  display: inline-block; font-size: 13px; font-weight: 600;
+  letter-spacing: .02em; color: var(--sc-accent-ink, var(--mint-ink));
   background: var(--page-bg); border: 1px solid var(--page-line);
   padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
 }
@@ -1185,11 +1185,11 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 }
 .scs-h2 {
   font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
-  font-size: clamp(26px, 3.2vw, 40px); line-height: 1.1;
-  letter-spacing: -0.03em; margin: 0 0 14px; color: var(--page-ink);
+  font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06;
+  letter-spacing: -0.035em; margin: 2px 0 16px; color: var(--page-ink);
 }
 .scs-lede, .scs-sub {
-  margin: 0 0 26px; font-size: 15px; line-height: 1.68;
+  margin: 0 0 26px; font-size: clamp(15px, 1.7vw, 17px); line-height: 1.68;
   color: var(--page-ink-soft); max-width: 54ch;
 }
 
@@ -1548,6 +1548,121 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .contactpop-panel { padding: 28px 20px 22px; }
   .contactpop-row { flex-wrap: wrap; }
   .contactpop-label { flex-basis: 100%; }
+}
+
+/* ---- Contact form inside the popup ---- */
+.cform { display: flex; flex-direction: column; gap: 13px; }
+.cform-row { display: flex; flex-direction: column; gap: 6px; }
+.cform-label {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--page-ink-soft);
+}
+.cform-opt { font-weight: 500; letter-spacing: 0; text-transform: none; opacity: .75; }
+.cform-input {
+  border: 1px solid var(--page-line); border-radius: 9px;
+  background: var(--page-bg); color: var(--page-ink);
+  padding: 11px 13px; font-size: 14px; font-family: inherit; width: 100%;
+}
+.cform-input:focus { outline: none; border-color: var(--mint); box-shadow: 0 0 0 3px rgba(143,209,193,.24); }
+.cform-input.is-bad { border-color: var(--signal); }
+.cform-area { resize: vertical; min-height: 92px; line-height: 1.55; }
+.cform-error { margin: 0; font-size: 12.5px; color: var(--signal); }
+.cform-error[hidden] { display: none; }
+.cform-send {
+  margin-top: 4px; font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer;
+  padding: 13px 22px; border-radius: 9px;
+  background: var(--teal-900); color: #EAF6F2; border: 1px solid var(--teal-900);
+  transition: filter .18s ease, transform .18s ease;
+}
+.cform-send:hover:not(:disabled) { filter: brightness(1.18); transform: translateY(-1px); }
+.cform-send:disabled { opacity: .6; cursor: default; }
+.cform-fine { margin: 2px 0 0; font-size: 12px; color: var(--page-ink-soft); }
+
+.cform-done[hidden], .cform[hidden] { display: none; }
+.cform-done-msg { margin: 0 0 16px; font-size: 14.5px; line-height: 1.6; color: var(--page-ink); }
+.cform-copyall { margin-top: 12px; }
+.cform-copyall[hidden] { display: none; }
+
+/* ---- Nuggets: SCM facts, full-bleed sliding band ----
+   One slide at a time on a translated track rather than a cross-fade:
+   the horizontal movement is what signals "there is more here", which a
+   fade does not. Transform only, so it stays on the compositor. ---- */
+.scs-nug-sec { padding: 72px 0; border-top: 1px solid var(--page-line); }
+.scs-nug-head { max-width: 720px; margin-bottom: 34px; }
+
+.nugbox {
+  position: relative;
+  /* Break out of the page gutter to run edge to edge. */
+  width: 100vw; margin-left: calc(50% - 50vw);
+  background: var(--teal-900); color: #EAF6F2;
+  overflow: hidden;
+}
+.nug-viewport { overflow: hidden; }
+.nug-track {
+  display: flex; will-change: transform;
+  transition: transform .62s cubic-bezier(.4,.02,.2,1);
+}
+.nug {
+  flex: 0 0 100%; min-width: 100%;
+  padding: 62px clamp(24px, 8vw, 120px);
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: 300px;
+}
+.nug-tag {
+  align-self: flex-start; font-size: 11px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mint); background: rgba(143,209,193,.16);
+  border: 1px solid rgba(143,209,193,.4);
+  padding: 5px 12px; border-radius: 999px; margin-bottom: 20px;
+}
+.nug-h {
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: clamp(26px, 4vw, 46px); line-height: 1.08; letter-spacing: -0.03em;
+  margin: 0 0 16px; color: #fff; max-width: 20ch;
+}
+.nug-p {
+  margin: 0; font-size: clamp(15px, 1.8vw, 18px); line-height: 1.62;
+  color: rgba(234,246,242,.82); max-width: 62ch;
+}
+
+.nug-bar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 0 clamp(24px, 8vw, 120px) 30px;
+}
+.nug-arrow {
+  width: 40px; height: 40px; flex: 0 0 auto; border-radius: 50%; cursor: pointer;
+  border: 1px solid rgba(234,246,242,.32); background: transparent;
+  color: #EAF6F2; font-size: 21px; line-height: 1; display: grid; place-items: center;
+  transition: background .18s ease, transform .18s ease;
+}
+.nug-arrow:hover { background: rgba(234,246,242,.14); transform: scale(1.06); }
+.nug-dots { display: flex; gap: 8px; flex: 1 1 auto; }
+.nug-dot {
+  width: 8px; height: 8px; padding: 0; border-radius: 50%; cursor: pointer;
+  border: none; background: rgba(234,246,242,.28);
+  transition: background .2s ease, transform .2s ease;
+}
+.nug-dot.is-on { background: var(--mint); transform: scale(1.45); }
+.nug-pause {
+  flex: 0 0 auto; font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  color: rgba(234,246,242,.75); background: transparent; border: 0; padding: 4px 2px;
+}
+.nug-pause:hover { color: #fff; }
+
+.nug-progress { height: 2px; background: rgba(234,246,242,.16); }
+.nug-progress span { display: block; height: 100%; width: 0; background: var(--mint); }
+
+/* A sliding band is exactly the motion reduced-motion asks to avoid:
+   cut between slides and drop the timer bar instead. */
+@media (prefers-reduced-motion: reduce) {
+  .nug-track { transition: none; }
+  .nug-progress { display: none; }
+}
+
+@media (max-width: 600px) {
+  .nug { padding: 44px 22px; min-height: 340px; }
+  .nug-bar { padding: 0 22px 24px; gap: 10px; }
+  .nug-arrow { width: 34px; height: 34px; font-size: 18px; }
 }
 
 /* ---- Contact form inside the popup ---- */
