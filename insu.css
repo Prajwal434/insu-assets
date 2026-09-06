@@ -1472,17 +1472,7 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 @media (max-width: 760px) {
   .docgate { padding: 14px; align-items: start; }
   .docgate-body { padding: 24px 22px 28px; }
-}
-
-/* Covers the instant jump from a hero call to action, so the page
-   changes under a fade instead of flicking. */
-.jump-veil {
-  position: fixed; inset: 0; z-index: 700; pointer-events: none;
-  background: var(--page-bg); opacity: 0;
-  transition: opacity .17s ease;
-}
-.jump-veil.is-on { opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .jump-veil { display: none; } }
+}@media (prefers-reduced-motion: reduce) {}
 
 /* ============================================================
    CONTACT POPUP

@@ -153,31 +153,18 @@ function boot(){
     window.addEventListener('hashchange', syncToHash);
     syncToHash();   // deep link: /#supply-chain lands straight in the view
   })();
-  /* Hero calls to action jump rather than scroll. Smooth-scrolling from
-     the hero to #contact travels the whole page, running every pinned
-     section and reveal on the way — slow, and it shows the visitor
-     everything they just chose to skip. A short fade covers an instant
-     jump instead.
+  /* Hero calls to action.
 
-     Lives outside the GSAP block so it still works with animations off. */
+     These used to fade and jump instantly. That was removed: the jump
+     called ScrollTrigger.refresh() from the middle of the page, which
+     recalculates every pin's start and end against the current scroll
+     position and left the hero unable to restore itself on the way back
+     up. A plain scroll costs nothing and keeps the pins honest.
+
+     Sits outside the GSAP block so it still works with animations off. */
   (function () {
     var links = [].slice.call(document.querySelectorAll('.ctas a[href^="#"]'));
     if (!links.length) return;
-
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var veil = null;
-
-    function jump(target) {
-      var root = document.documentElement;
-      var prev = root.style.scrollBehavior;
-      /* The stylesheet sets scroll-behavior:smooth, which would animate
-         this jump too — turn it off for the duration. */
-      root.style.scrollBehavior = 'auto';
-      target.scrollIntoView({ behavior: 'auto', block: 'start' });
-      root.style.scrollBehavior = prev;
-      /* Pins and scrubs are mid-flight after a jump this large. */
-      if (window.ScrollTrigger && ScrollTrigger.refresh) ScrollTrigger.refresh();
-    }
 
     links.forEach(function (a) {
       a.addEventListener('click', function (e) {
@@ -185,178 +172,26 @@ function boot(){
         var target = document.getElementById(id);
         if (!target) return;
         e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-        if (reduce) { jump(target); return; }
-
-        if (!veil) {
-          veil = document.createElement('div');
-          veil.className = 'jump-veil';
-          document.body.appendChild(veil);
-        }
-        veil.classList.add('is-on');
-        setTimeout(function () {
-          jump(target);
-          requestAnimationFrame(function () { veil.classList.remove('is-on'); });
-        }, 170);
-      });
-    });
-  })();
-
-  /* Contact popup with a working form.
-     Posts to a Velo HTTP function on the same origin, so enquiries
-     stay inside Wix and no third party sees them.
-     If the post fails the visitor is not left with a dead form: they
-     get the address, the number, and their own text back to copy, so
-     nothing they typed is lost. */
-  (function () {
-    /* Same-origin Velo HTTP function — see src/backend/http-functions.js
-       in the insudynamics repo. Nothing leaves Wix. */
-    var ENDPOINT = '/_functions/contactRequest';
-    var INBOX = 'info@insudynamics.com';
-
-    var pop = document.querySelector('[data-contactpop]');
-    var triggers = [].slice.call(document.querySelectorAll('[data-contact]'));
-    if (!pop || !triggers.length) return;
-
-    /* position:fixed — must not sit under a transformed ancestor. */
-    if (pop.parentNode !== document.body) document.body.appendChild(pop);
-
-    var form = pop.querySelector('[data-cform]');
-    var errEl = pop.querySelector('[data-cform-error]');
-    var doneEl = pop.querySelector('[data-cform-done]');
-    var doneMsg = pop.querySelector('[data-cform-done-msg]');
-    var fallback = pop.querySelector('[data-cform-fallback]');
-    var mailtoEl = pop.querySelector('[data-cform-mailto]');
-    var copyAll = pop.querySelector('[data-cform-copyall]');
-    var sendBtn = pop.querySelector('.cform-send');
-    var lastFocus = null, typed = '';
-
-    function open() {
-      lastFocus = document.activeElement;
-      pop.hidden = false;
-      pop.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      var f = pop.querySelector('#cf-name');
-      if (f) f.focus();
-    }
-    function close() {
-      if (pop.hidden) return;
-      pop.hidden = true;
-      pop.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
-    triggers.forEach(function (t) {
-      t.addEventListener('click', function (e) { e.preventDefault(); open(); });
-    });
-    var closeBtn = pop.querySelector('[data-contactpop-close]');
-    if (closeBtn) closeBtn.addEventListener('click', close);
-    pop.addEventListener('click', function (e) { if (e.target === pop) close(); });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !pop.hidden) close();
-    });
-
-    function val(id) {
-      var el = pop.querySelector(id);
-      return el ? el.value.trim() : '';
-    }
-    function flagBad(id, bad) {
-      var el = pop.querySelector(id);
-      if (el) el.classList.toggle('is-bad', !!bad);
-    }
-    function showError(msg) {
-      if (!errEl) return;
-      errEl.textContent = msg;
-      errEl.hidden = false;
-    }
-
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (errEl) errEl.hidden = true;
-
-        var name = val('#cf-name'), email = val('#cf-email');
-        var company = val('#cf-company'), problem = val('#cf-problem');
-        var emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
-
-        flagBad('#cf-name', !name);
-        flagBad('#cf-email', !emailOk);
-        flagBad('#cf-problem', !problem);
-        if (!name || !emailOk || !problem) {
-          showError(!emailOk && email ? 'That email address does not look right.'
-                                      : 'Please fill in your name, email and what you are trying to solve.');
-          return;
-        }
-
-        typed = 'Name: ' + name + '\nEmail: ' + email +
-                (company ? '\nCompany: ' + company : '') +
-                '\n\n' + problem;
-
-        if (sendBtn) { sendBtn.disabled = true; sendBtn.textContent = 'Sending...'; }
-
-        function finish(msg, showFallback) {
-          form.hidden = true;
-          if (doneMsg) doneMsg.textContent = msg;
-          if (doneEl) doneEl.hidden = false;
-          if (fallback) fallback.hidden = !showFallback;
-          if (copyAll) copyAll.hidden = !showFallback;
-          if (showFallback && mailtoEl) {
-            mailtoEl.href = 'mailto:' + INBOX +
-              '?subject=' + encodeURIComponent('Problem worth solving — ' + name) +
-              '&body=' + encodeURIComponent(typed);
+        /* Once the scroll settles, ask the thread to play its entrance.
+           Waiting matters — fired immediately the animation would run
+           while the section is still off screen. */
+        if (id === 'story') {
+          var idle = null;
+          function settled() {
+            window.removeEventListener('scroll', onScroll);
+            document.dispatchEvent(new CustomEvent('insu:show-thread'));
           }
+          function onScroll() {
+            clearTimeout(idle);
+            idle = setTimeout(settled, 140);
+          }
+          window.addEventListener('scroll', onScroll, { passive: true });
+          idle = setTimeout(settled, 1200);   // in case no scroll fires at all
         }
-
-        fetch(ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            name: name, email: email, company: company || '(not given)',
-            problem: problem, _subject: 'Website enquiry — ' + name
-          })
-        }).then(function (r) {
-          if (!r.ok) throw new Error('status ' + r.status);
-          return r.json();
-        }).then(function () {
-          finish('Thanks — that has come through to us. We will reply to ' + email + '.', false);
-        }).catch(function () {
-          finish('We could not send that automatically. Mail or call us and we will pick it up — ' +
-                 'your message is below, ready to copy.', true);
-        });
       });
-    }
-
-    if (copyAll) {
-      copyAll.addEventListener('click', function () { copyText(typed, copyAll); });
-    }
-    pop.querySelectorAll('[data-copy]').forEach(function (btn) {
-      btn.addEventListener('click', function () { copyText(btn.getAttribute('data-copy'), btn); });
     });
-
-    function copyText(text, btn) {
-      function ok() {
-        var was = btn.textContent;
-        btn.textContent = 'Copied';
-        btn.classList.add('is-done');
-        setTimeout(function () { btn.textContent = was; btn.classList.remove('is-done'); }, 1600);
-      }
-      /* The async clipboard API needs a secure context and can be
-         blocked; the textarea route still works when it is not. */
-      function viaTextarea() {
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); ok(); } catch (err) {}
-        document.body.removeChild(ta);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(ok, viaTextarea);
-      } else { viaTextarea(); }
-    }
   })();
 
   function splitChars(el) {
@@ -920,6 +755,14 @@ function boot(){
             refreshPriority: 1,   // second pin down the page — see hero above
             onEnter: function () { entrance.play(); },
             onEnterBack: function () { entrance.play(); }
+          });
+
+          /* The hero's "See Our Services" button lands here, and the
+             entrance has usually already run — play() on a finished
+             timeline does nothing. Restart it so the slider arrives the
+             same way it does when you scroll down to it. */
+          document.addEventListener('insu:show-thread', function () {
+            entrance.restart();
           });
         })();
         measure();
