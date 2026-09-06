@@ -1665,100 +1665,11 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .nug-arrow { width: 34px; height: 34px; font-size: 18px; }
 }
 
-/* ---- Contact form inside the popup ---- */
-.cform { display: flex; flex-direction: column; gap: 13px; }
-.cform-row { display: flex; flex-direction: column; gap: 6px; }
-.cform-label {
-  font-size: 11.5px; font-weight: 700; letter-spacing: .07em;
-  text-transform: uppercase; color: var(--page-ink-soft);
+/* Lost when the Supply Chain section was rewritten. .sc-sr hides label
+   text visually while leaving it for screen readers — without it the
+   form labels render as stray visible text. */
+.sc-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
-.cform-opt { font-weight: 500; letter-spacing: 0; text-transform: none; opacity: .75; }
-.cform-input {
-  border: 1px solid var(--page-line); border-radius: 9px;
-  background: var(--page-bg); color: var(--page-ink);
-  padding: 11px 13px; font-size: 14px; font-family: inherit; width: 100%;
-}
-.cform-input:focus { outline: none; border-color: var(--mint); box-shadow: 0 0 0 3px rgba(143,209,193,.24); }
-.cform-input.is-bad { border-color: var(--signal); }
-.cform-area { resize: vertical; min-height: 92px; line-height: 1.55; }
-.cform-error { margin: 0; font-size: 12.5px; color: var(--signal); }
-.cform-error[hidden] { display: none; }
-.cform-send {
-  margin-top: 4px; font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer;
-  padding: 13px 22px; border-radius: 9px;
-  background: var(--teal-900); color: #EAF6F2; border: 1px solid var(--teal-900);
-  transition: filter .18s ease, transform .18s ease;
-}
-.cform-send:hover:not(:disabled) { filter: brightness(1.18); transform: translateY(-1px); }
-.cform-send:disabled { opacity: .6; cursor: default; }
-.cform-fine { margin: 2px 0 0; font-size: 12px; color: var(--page-ink-soft); }
-
-.cform-done[hidden], .cform[hidden] { display: none; }
-.cform-done-msg { margin: 0 0 16px; font-size: 14.5px; line-height: 1.6; color: var(--page-ink); }
-.cform-copyall { margin-top: 12px; }
-.cform-copyall[hidden] { display: none; }
-
-/* ---- Nuggets: SCM facts on a timer ---- */
-.scs-nug-sec { padding: 64px 0; border-top: 1px solid var(--page-line); }
-
-.nugbox {
-  position: relative; margin-top: 32px;
-  border: 1px solid var(--page-line); border-radius: 16px;
-  background: var(--page-card); overflow: hidden;
-}
-.nug-stage { position: relative; min-height: 232px; }
-.nug {
-  position: absolute; inset: 0; padding: 34px 36px;
-  display: flex; flex-direction: column; justify-content: center;
-  opacity: 0; visibility: hidden; transform: translateY(10px);
-  transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.2,1), visibility .45s;
-}
-.nug.is-on { opacity: 1; visibility: visible; transform: none; }
-.nug-tag {
-  align-self: flex-start; font-size: 10.5px; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: var(--mint-ink); background: rgba(143,209,193,.28);
-  padding: 4px 10px; border-radius: 4px; margin-bottom: 14px;
-}
-.nug-h {
-  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
-  font-size: clamp(19px, 2.4vw, 26px); line-height: 1.2; letter-spacing: -0.02em;
-  margin: 0 0 10px; color: var(--page-ink);
-}
-.nug-p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--page-ink-soft); max-width: 68ch; }
-
-.nug-bar {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 0 36px 22px;
-}
-.nug-dots { display: flex; gap: 7px; }
-.nug-dot {
-  width: 8px; height: 8px; padding: 0; border-radius: 50%; cursor: pointer;
-  border: none; background: var(--page-line);
-  transition: background .2s ease, transform .2s ease;
-}
-.nug-dot.is-on { background: var(--mint); transform: scale(1.4); }
-.nug-pause {
-  font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
-  color: var(--page-ink-soft); background: transparent; border: 0; padding: 4px 2px;
-}
-.nug-pause:hover { color: var(--page-ink); }
-
-.nug-progress { height: 2px; background: var(--page-line); }
-.nug-progress span {
-  display: block; height: 100%; width: 0; background: var(--mint);
-  transform-origin: left center;
-}
-
-/* The timer is the point of the section, but it should not animate for
-   anyone who has asked for less motion — they get the dots instead. */
-@media (prefers-reduced-motion: reduce) {
-  .nug { transition: none; }
-  .nug-progress { display: none; }
-}
-
-@media (max-width: 600px) {
-  .nug { padding: 26px 22px; }
-  .nug-bar { padding: 0 22px 18px; }
-  .nug-stage { min-height: 290px; }
-}
+.scs-hero-text { min-width: 0; }
