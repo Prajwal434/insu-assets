@@ -1173,8 +1173,8 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .scs { max-width: 1180px; margin: 0 auto; padding: 8px 32px 80px; }
 
 .scs-pill {
-  display: inline-block; font-size: 13px; font-weight: 600;
-  letter-spacing: .02em; color: var(--sc-accent-ink, var(--mint-ink));
+  display: inline-block; font-size: 11.5px; font-weight: 600;
+  letter-spacing: .01em; color: var(--page-ink-soft);
   background: var(--page-bg); border: 1px solid var(--page-line);
   padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
 }
@@ -1185,11 +1185,11 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 }
 .scs-h2 {
   font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
-  font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06;
-  letter-spacing: -0.035em; margin: 2px 0 16px; color: var(--page-ink);
+  font-size: clamp(26px, 3.2vw, 40px); line-height: 1.1;
+  letter-spacing: -0.03em; margin: 0 0 14px; color: var(--page-ink);
 }
 .scs-lede, .scs-sub {
-  margin: 0 0 26px; font-size: clamp(15px, 1.7vw, 17px); line-height: 1.68;
+  margin: 0 0 26px; font-size: 15px; line-height: 1.68;
   color: var(--page-ink-soft); max-width: 54ch;
 }
 
@@ -1583,93 +1583,67 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .cform-copyall { margin-top: 12px; }
 .cform-copyall[hidden] { display: none; }
 
-/* ---- Nuggets: SCM facts, full-bleed sliding band ----
-   One slide at a time on a translated track rather than a cross-fade:
-   the horizontal movement is what signals "there is more here", which a
-   fade does not. Transform only, so it stays on the compositor. ---- */
-.scs-nug-sec { padding: 72px 0; border-top: 1px solid var(--page-line); }
-.scs-nug-head { max-width: 720px; margin-bottom: 34px; }
+/* ---- Nuggets: SCM facts on a timer ---- */
+.scs-nug-sec { padding: 64px 0; border-top: 1px solid var(--page-line); }
 
 .nugbox {
-  position: relative;
-  /* Break out of the page gutter to run edge to edge. */
-  width: 100vw; margin-left: calc(50% - 50vw);
-  background: var(--teal-900); color: #EAF6F2;
-  overflow: hidden;
+  position: relative; margin-top: 32px;
+  border: 1px solid var(--page-line); border-radius: 16px;
+  background: var(--page-card); overflow: hidden;
 }
-.nug-viewport { overflow: hidden; }
-.nug-track {
-  display: flex; will-change: transform;
-  transition: transform .62s cubic-bezier(.4,.02,.2,1);
-}
+.nug-stage { position: relative; min-height: 232px; }
 .nug {
-  flex: 0 0 100%; min-width: 100%;
-  padding: 62px clamp(24px, 8vw, 120px);
+  position: absolute; inset: 0; padding: 34px 36px;
   display: flex; flex-direction: column; justify-content: center;
-  min-height: 300px;
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.2,1), visibility .45s;
 }
+.nug.is-on { opacity: 1; visibility: visible; transform: none; }
 .nug-tag {
-  align-self: flex-start; font-size: 11px; font-weight: 700;
-  letter-spacing: .14em; text-transform: uppercase;
-  color: var(--mint); background: rgba(143,209,193,.16);
-  border: 1px solid rgba(143,209,193,.4);
-  padding: 5px 12px; border-radius: 999px; margin-bottom: 20px;
+  align-self: flex-start; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mint-ink); background: rgba(143,209,193,.28);
+  padding: 4px 10px; border-radius: 4px; margin-bottom: 14px;
 }
 .nug-h {
   font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
-  font-size: clamp(26px, 4vw, 46px); line-height: 1.08; letter-spacing: -0.03em;
-  margin: 0 0 16px; color: #fff; max-width: 20ch;
+  font-size: clamp(19px, 2.4vw, 26px); line-height: 1.2; letter-spacing: -0.02em;
+  margin: 0 0 10px; color: var(--page-ink);
 }
-.nug-p {
-  margin: 0; font-size: clamp(15px, 1.8vw, 18px); line-height: 1.62;
-  color: rgba(234,246,242,.82); max-width: 62ch;
-}
+.nug-p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--page-ink-soft); max-width: 68ch; }
 
 .nug-bar {
-  display: flex; align-items: center; gap: 14px;
-  padding: 0 clamp(24px, 8vw, 120px) 30px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 36px 22px;
 }
-.nug-arrow {
-  width: 40px; height: 40px; flex: 0 0 auto; border-radius: 50%; cursor: pointer;
-  border: 1px solid rgba(234,246,242,.32); background: transparent;
-  color: #EAF6F2; font-size: 21px; line-height: 1; display: grid; place-items: center;
-  transition: background .18s ease, transform .18s ease;
-}
-.nug-arrow:hover { background: rgba(234,246,242,.14); transform: scale(1.06); }
-.nug-dots { display: flex; gap: 8px; flex: 1 1 auto; }
+.nug-dots { display: flex; gap: 7px; }
 .nug-dot {
   width: 8px; height: 8px; padding: 0; border-radius: 50%; cursor: pointer;
-  border: none; background: rgba(234,246,242,.28);
+  border: none; background: var(--page-line);
   transition: background .2s ease, transform .2s ease;
 }
-.nug-dot.is-on { background: var(--mint); transform: scale(1.45); }
+.nug-dot.is-on { background: var(--mint); transform: scale(1.4); }
 .nug-pause {
-  flex: 0 0 auto; font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
-  color: rgba(234,246,242,.75); background: transparent; border: 0; padding: 4px 2px;
+  font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  color: var(--page-ink-soft); background: transparent; border: 0; padding: 4px 2px;
 }
-.nug-pause:hover { color: #fff; }
+.nug-pause:hover { color: var(--page-ink); }
 
-.nug-progress { height: 2px; background: rgba(234,246,242,.16); }
-.nug-progress span { display: block; height: 100%; width: 0; background: var(--mint); }
+.nug-progress { height: 2px; background: var(--page-line); }
+.nug-progress span {
+  display: block; height: 100%; width: 0; background: var(--mint);
+  transform-origin: left center;
+}
 
-/* A sliding band is exactly the motion reduced-motion asks to avoid:
-   cut between slides and drop the timer bar instead. */
+/* The timer is the point of the section, but it should not animate for
+   anyone who has asked for less motion — they get the dots instead. */
 @media (prefers-reduced-motion: reduce) {
-  .nug-track { transition: none; }
+  .nug { transition: none; }
   .nug-progress { display: none; }
 }
 
 @media (max-width: 600px) {
-  .nug { padding: 44px 22px; min-height: 340px; }
-  .nug-bar { padding: 0 22px 24px; gap: 10px; }
-  .nug-arrow { width: 34px; height: 34px; font-size: 18px; }
+  .nug { padding: 26px 22px; }
+  .nug-bar { padding: 0 22px 18px; }
+  .nug-stage { min-height: 290px; }
 }
-
-/* Lost when the Supply Chain section was rewritten. .sc-sr hides label
-   text visually while leaving it for screen readers — without it the
-   form labels render as stray visible text. */
-.sc-sr {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-}
-.scs-hero-text { min-width: 0; }
