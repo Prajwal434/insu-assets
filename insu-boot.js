@@ -1033,8 +1033,17 @@ function boot(){
       var dragging = false, startX = 0, startShift = 0, shift = 0, pull = 0, moved = 0;
 
       function measure() {
-        step = cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
-        maxShift = Math.max(0, track.scrollWidth - track.parentNode.clientWidth);
+        var first = cards[0].getBoundingClientRect();
+        var last = cards[cards.length - 1].getBoundingClientRect();
+        step = cards[1].getBoundingClientRect().left - first.left;
+        /* Measure from the cards themselves rather than track.scrollWidth:
+           the track is overflow:visible so it is not a scroll container,
+           and scrollWidth then reports its own width, not the content's —
+           which came back as zero travel and pinned the deck in place.
+           Both rects sit inside the same transform, so the difference is
+           correct whatever the current offset. */
+        var content = last.right - first.left;
+        maxShift = Math.max(0, Math.round(content - track.parentNode.clientWidth));
       }
       function clampShift(v) { return Math.max(-maxShift, Math.min(0, v)); }
       function drawLine() {
