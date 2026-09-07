@@ -1156,26 +1156,18 @@ function boot(){
           'We build AI around your problem, not around a product.',
           'Two of ours are running below.'
         ];
-        var SEEN = 'insuAiIntroSeen';
-        function seen() {
-          try { return sessionStorage.getItem(SEEN) === '1'; } catch (e) { return false; }
-        }
-        function markSeen() {
-          try { sessionStorage.setItem(SEEN, '1'); } catch (e) {}
-        }
-
         function end() {
           clearAll();
           el.hidden = true;
           el.setAttribute('aria-hidden', 'true');
-          markSeen();
         }
         if (skip) skip.addEventListener('click', end);
 
         function play() {
-          /* Once per session. Sitting through the same intro on every
-             visit to the page turns a nice touch into an obstacle. */
-          if (seen() || reduce) { el.hidden = true; return; }
+          /* Plays on every open. The skip control is what keeps that
+             from being an obstacle, so it stays. */
+          if (reduce) { el.hidden = true; return; }
+          clearAll();
           el.hidden = false;
           el.setAttribute('aria-hidden', 'false');
           var i = 0;

@@ -2444,3 +2444,103 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 }
 .aifit-opt:hover .aifit-opt-go, .aifit-opt:focus-visible .aifit-opt-go { transform: none; opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .aifit-opt:hover { transform: none; } }
+
+/* ============================================================
+   AI PANEL — background motion and text interactions.
+   The single drifting layer read as static. Four layers now move
+   on different clocks so the ground never repeats visibly: two
+   colour fields, a panning grid, and a slow diagonal sweep.
+   All transform/opacity, all behind the content.
+   ============================================================ */
+
+/* The panel's own pseudo-elements are free; the scroller already
+   uses both of its own. */
+.pageview[data-page="ai-solutions"] { position: fixed; overflow: hidden; }
+.pageview[data-page="ai-solutions"] > * { position: relative; z-index: 2; }
+
+.pageview[data-page="ai-solutions"]::before {
+  content: ""; position: absolute; inset: -25%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(38% 34% at 22% 28%, rgba(46,156,142,.30), transparent 62%),
+    radial-gradient(30% 28% at 78% 62%, rgba(166,198,58,.16), transparent 60%);
+  animation: aiOrbit 34s ease-in-out infinite alternate;
+}
+@keyframes aiOrbit {
+  0%   { transform: translate3d(-6%, 4%, 0) rotate(0deg) scale(1); }
+  100% { transform: translate3d(7%, -5%, 0) rotate(8deg) scale(1.18); }
+}
+
+/* A band of light crossing the page every twelve seconds. */
+.pageview[data-page="ai-solutions"]::after {
+  content: ""; position: absolute; inset: -40% -60%; z-index: 0; pointer-events: none;
+  background: linear-gradient(104deg, transparent 42%, rgba(143,209,193,.09) 50%, transparent 58%);
+  animation: aiSweep 12s linear infinite;
+}
+@keyframes aiSweep {
+  from { transform: translate3d(-38%, 0, 0); }
+  to   { transform: translate3d(38%, 0, 0); }
+}
+
+/* The grid drifts instead of sitting still. */
+.pageview[data-page="ai-solutions"] .pageview-scroll::after {
+  animation: aiGrid 40s linear infinite;
+}
+@keyframes aiGrid {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 64px 64px, 64px 64px; }
+}
+
+/* ---- text interactions ---- */
+.pageview[data-page="ai-solutions"] .pv-block h2 {
+  transition: color .3s ease, text-shadow .3s ease;
+}
+.pageview[data-page="ai-solutions"] .pv-block h2:hover {
+  text-shadow: 0 0 26px rgba(143,209,193,.45);
+}
+.pageview[data-page="ai-solutions"] .pv-block h2::before { transition: transform .3s ease, box-shadow .3s ease; }
+.pageview[data-page="ai-solutions"] .pv-block h2:hover::before {
+  transform: scale(1.5) rotate(45deg); box-shadow: 0 0 20px rgba(143,209,193,1);
+}
+
+.pageview[data-page="ai-solutions"] .pv-list li {
+  transition: transform .26s cubic-bezier(.2,.7,.2,1), color .26s ease;
+}
+.pageview[data-page="ai-solutions"] .pv-list li:hover {
+  transform: translateX(7px); color: #fff;
+}
+
+.pageview[data-page="ai-solutions"] .pv-steps li {
+  transition: transform .26s cubic-bezier(.2,.7,.2,1);
+}
+.pageview[data-page="ai-solutions"] .pv-steps li:hover { transform: translateX(6px); }
+.pageview[data-page="ai-solutions"] .pv-steps li span { transition: color .26s ease, text-shadow .26s ease; }
+.pageview[data-page="ai-solutions"] .pv-steps li:hover span { text-shadow: 0 0 16px rgba(143,209,193,.7); }
+
+/* Panels lift very slightly, enough to feel responsive. */
+.pageview[data-page="ai-solutions"] .pv-block {
+  transition: opacity .8s cubic-bezier(.16,.84,.28,1),
+              transform .8s cubic-bezier(.16,.84,.28,1),
+              border-color .35s ease, background .35s ease;
+}
+.pageview[data-page="ai-solutions"] .pv-block.is-in:hover {
+  border-color: rgba(143,209,193,.34);
+  background: linear-gradient(160deg, rgba(143,209,193,.09), rgba(234,246,242,.03));
+}
+
+/* The hero headline breathes. */
+.pageview[data-page="ai-solutions"] .pageview-h {
+  animation: aiGlow 7s ease-in-out infinite alternate;
+}
+@keyframes aiGlow {
+  from { text-shadow: 0 0 40px rgba(143,209,193,.16); }
+  to   { text-shadow: 0 0 80px rgba(143,209,193,.34); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageview[data-page="ai-solutions"]::before,
+  .pageview[data-page="ai-solutions"]::after,
+  .pageview[data-page="ai-solutions"] .pageview-scroll::after,
+  .pageview[data-page="ai-solutions"] .pageview-h { animation: none; }
+  .pageview[data-page="ai-solutions"] .pv-list li:hover,
+  .pageview[data-page="ai-solutions"] .pv-steps li:hover { transform: none; }
+}
