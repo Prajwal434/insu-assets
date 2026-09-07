@@ -2030,3 +2030,137 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .pf-stage { padding: 22px 18px 20px; }
   .pf-fine { padding: 0 18px 18px; }
 }
+
+/* ============================================================
+   PATHFINDER — restyled.
+   The first pass inherited the light page tokens and read as a
+   plain form. It now owns a dark panel with its own palette, so
+   it registers as a distinct thing on the page rather than more
+   body copy.
+   ============================================================ */
+.pathfinder-sec { position: relative; }
+
+.pf {
+  position: relative;
+  margin-top: 28px;
+  border: 1px solid rgba(143,209,193,.22);
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 90% at 12% 0%, rgba(46,156,142,.30) 0%, transparent 55%),
+    radial-gradient(100% 80% at 92% 8%, rgba(166,198,58,.16) 0%, transparent 52%),
+    linear-gradient(160deg, #12332E 0%, #0C2422 60%, #0F2E2A 100%);
+  box-shadow: 0 24px 60px rgba(6,20,18,.34);
+  overflow: hidden;
+  isolation: isolate;
+}
+/* A slow drift so the panel is never completely still. */
+.pf::before {
+  content: ""; position: absolute; inset: -40%; z-index: 0; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(143,209,193,.16), transparent 70%);
+  animation: pfDrift 18s ease-in-out infinite alternate;
+}
+@keyframes pfDrift {
+  from { transform: translate3d(-8%, -6%, 0) scale(1); }
+  to   { transform: translate3d(10%, 8%, 0) scale(1.15); }
+}
+
+/* Progress reads as segments, one per question. */
+.pf-progress {
+  position: relative; z-index: 1;
+  height: 3px; background: rgba(234,246,242,.14);
+}
+.pf-progress span {
+  background: linear-gradient(90deg, var(--mint), #A6C63A);
+  box-shadow: 0 0 14px rgba(143,209,193,.6);
+}
+
+.pf-stage { position: relative; z-index: 1; padding: 38px 36px 32px; min-height: 340px; }
+.pf-nojs { color: rgba(234,246,242,.72); }
+.pf-nojs a { color: var(--mint); }
+
+.pf-step {
+  color: var(--mint);
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(143,209,193,.12); border: 1px solid rgba(143,209,193,.3);
+  padding: 5px 12px; border-radius: 999px; letter-spacing: .1em;
+}
+.pf-q { color: #fff; max-width: 22ch; }
+
+/* Options: numbered, and they light up from the left on hover. */
+.pf-opts { gap: 11px; }
+.pf-opt {
+  position: relative; overflow: hidden;
+  background: rgba(234,246,242,.05);
+  border: 1px solid rgba(234,246,242,.16);
+  color: rgba(234,246,242,.94);
+  padding: 16px 18px 16px 54px;
+  animation: pfOpt .45s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes pfOpt { from { opacity: 0; transform: translate3d(-14px,0,0); } to { opacity: 1; transform: none; } }
+.pf-opt:nth-child(1) { animation-delay: .06s; }
+.pf-opt:nth-child(2) { animation-delay: .12s; }
+.pf-opt:nth-child(3) { animation-delay: .18s; }
+.pf-opt:nth-child(4) { animation-delay: .24s; }
+.pf-opt:nth-child(5) { animation-delay: .30s; }
+
+/* The counter is generated, so adding a question needs no new markup. */
+.pf-opts { counter-reset: pfopt; }
+.pf-opt::before {
+  counter-increment: pfopt; content: counter(pfopt);
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  width: 26px; height: 26px; border-radius: 8px;
+  display: grid; place-items: center;
+  font-size: 12px; font-weight: 700;
+  background: rgba(143,209,193,.16); color: var(--mint);
+  border: 1px solid rgba(143,209,193,.28);
+  transition: background .22s ease, color .22s ease, transform .22s ease;
+}
+.pf-opt::after {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--mint), #A6C63A);
+  transform: scaleY(0); transform-origin: center;
+  transition: transform .28s cubic-bezier(.2,.7,.2,1);
+}
+.pf-opt:hover, .pf-opt:focus-visible {
+  background: rgba(143,209,193,.12);
+  border-color: rgba(143,209,193,.55);
+  transform: translateX(6px);
+}
+.pf-opt:hover::after, .pf-opt:focus-visible::after { transform: scaleY(1); }
+.pf-opt:hover::before { background: var(--mint); color: #0F2E2A; transform: translateY(-50%) scale(1.08); }
+.pf-opt-go { color: var(--mint); }
+
+.pf-back { color: rgba(234,246,242,.6); }
+.pf-back:hover { color: #fff; }
+
+/* Results land one after another rather than both at once. */
+.pf-res {
+  background: rgba(234,246,242,.06);
+  border: 1px solid rgba(234,246,242,.16);
+  border-top: 3px solid var(--mint);
+  animation: pfRes .6s cubic-bezier(.2,.7,.2,1) both;
+}
+.pf-res:nth-child(1) { animation-delay: .10s; }
+.pf-res:nth-child(2) { animation-delay: .28s; border-top-color: #A6C63A; }
+@keyframes pfRes { from { opacity: 0; transform: translate3d(0,20px,0); } to { opacity: 1; transform: none; } }
+.pf-res:nth-child(2) .pf-res-tag { color: #C6E06A; }
+.pf-res h4 { color: #fff; }
+.pf-res-note { color: rgba(234,246,242,.62); }
+.pf-res-why { color: rgba(234,246,242,.9); }
+.pf-res-tag { color: var(--mint); }
+.pf-res-foot { color: rgba(234,246,242,.78); }
+
+.pf-actions .btn.ghost { border-color: rgba(234,246,242,.4); color: #EAF6F2; }
+
+.pf-fine { color: rgba(234,246,242,.5); padding: 0 36px 26px; position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pf::before { animation: none; }
+  .pf-opt, .pf-res { animation: none; }
+  .pf-opt:hover { transform: none; }
+}
+@media (max-width: 600px) {
+  .pf-stage { padding: 26px 18px 22px; }
+  .pf-fine { padding: 0 18px 20px; }
+  .pf-opt { padding: 14px 14px 14px 48px; }
+}
