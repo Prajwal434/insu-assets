@@ -1852,3 +1852,37 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .pageview:not([hidden]) .scs-case:nth-child(1) { animation-delay: 1.05s; }
 .pageview:not([hidden]) .scs-case:nth-child(2) { animation-delay: 1.22s; }
 .pageview:not([hidden]) .scs-case:nth-child(3) { animation-delay: 1.39s; }
+
+/* ============================================================
+   PANEL BAR — back control on the left.
+   Back navigation belongs on the leading edge: it is where the
+   browser's own back button sits and where people reach for it.
+   It was on the right, opposite the direction it takes you.
+   ============================================================ */
+.pageview-bar {
+  justify-content: flex-start;
+  gap: 40px;
+  padding-top: 22px; padding-bottom: 22px;
+  flex-wrap: wrap;
+}
+.pageview-close {
+  order: -1;              /* also correct if any bar is still title-first */
+  flex: 0 0 auto;
+}
+.pageview-title {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* The arrow leads on hover, matching the direction of travel. */
+.pageview-close { transition: background .2s ease, transform .2s ease; }
+.pageview-close:hover { transform: translateX(-3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pageview-close { transition: none; }
+  .pageview-close:hover { transform: none; }
+}
+
+@media (max-width: 600px) {
+  .pageview-bar { gap: 16px; padding-top: 16px; padding-bottom: 16px; }
+}
