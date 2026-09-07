@@ -1948,3 +1948,85 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 
 .casedeck-line { margin-top: 18px; }
 .casedeck-hint { text-align: center; }
+
+/* ============================================================
+   PATHFINDER — guided programme finder on the AI page.
+   ============================================================ */
+.pathfinder-sec .scs-pill { margin-bottom: 14px; }
+
+.pf {
+  margin-top: 26px; border: 1px solid var(--page-line); border-radius: 16px;
+  background: var(--page-card); overflow: hidden;
+}
+.pf-progress { height: 3px; background: var(--page-line); }
+.pf-progress span {
+  display: block; height: 100%; width: 0; background: var(--mint);
+  transition: width .45s cubic-bezier(.2,.7,.2,1);
+}
+.pf-stage { padding: 30px 30px 26px; min-height: 300px; }
+.pf-nojs { margin: 0; font-size: 14px; color: var(--page-ink-soft); }
+
+.pf-card { animation: pfIn .4s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes pfIn { from { opacity: 0; transform: translate3d(14px,0,0); } to { opacity: 1; transform: none; } }
+
+.pf-step {
+  display: block; font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--page-ink-soft); margin-bottom: 12px;
+}
+.pf-q {
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: clamp(20px, 2.6vw, 28px); line-height: 1.2; letter-spacing: -0.02em;
+  margin: 0 0 22px; color: var(--page-ink); max-width: 26ch;
+}
+
+.pf-opts { display: flex; flex-direction: column; gap: 10px; }
+.pf-opt {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  width: 100%; text-align: left; cursor: pointer; font: inherit; font-size: 15px;
+  padding: 15px 18px; border-radius: 11px;
+  border: 1px solid var(--page-line); background: var(--page-bg); color: var(--page-ink);
+  transition: border-color .2s ease, transform .2s cubic-bezier(.2,.7,.2,1), background .2s ease;
+}
+.pf-opt:hover { border-color: var(--mint); transform: translateX(4px); background: var(--page-card); }
+.pf-opt:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+.pf-opt-go { flex: 0 0 auto; color: var(--mint-ink); opacity: 0; transition: opacity .2s ease; }
+.pf-opt:hover .pf-opt-go { opacity: 1; }
+
+.pf-back {
+  margin-top: 18px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  background: transparent; border: 0; padding: 4px 0; color: var(--page-ink-soft);
+}
+.pf-back:hover { color: var(--page-ink); }
+
+.pf-results { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.pf-res {
+  border: 1px solid var(--page-line); border-top: 3px solid var(--mint);
+  border-radius: 12px; padding: 18px; background: var(--page-bg);
+}
+.pf-res-tag {
+  display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--mint-ink); margin-bottom: 10px;
+}
+.pf-res h4 {
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: 17px; margin: 0 0 6px; color: var(--page-ink);
+}
+.pf-res-note { margin: 0 0 10px; font-size: 13px; color: var(--page-ink-soft); }
+.pf-res-why { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--page-ink); }
+.pf-res-foot { margin: 18px 0 0; font-size: 14px; line-height: 1.6; color: var(--page-ink-soft); }
+.pf-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+.pf-fine {
+  margin: 0; padding: 0 30px 22px; font-size: 12px; line-height: 1.55;
+  color: var(--page-ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-card { animation: none; }
+  .pf-opt:hover { transform: none; }
+  .pf-progress span { transition: none; }
+}
+@media (max-width: 600px) {
+  .pf-stage { padding: 22px 18px 20px; }
+  .pf-fine { padding: 0 18px 18px; }
+}
