@@ -1918,3 +1918,20 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 @media (prefers-reduced-motion: reduce) {
   .casedeck.is-live .scs-case { transition: none; }
 }
+
+/* ============================================================
+   CASE DECK — clip the track, not the page.
+   The viewport was switched to overflow:visible when the deck went
+   live, so the track (wider than the screen) spilled and dragged
+   the whole panel sideways. The viewport must keep clipping; only
+   the track inside it moves.
+   ============================================================ */
+.casedeck { overflow: hidden; }
+.casedeck.is-live .casedeck-viewport {
+  overflow: hidden;
+  /* Room for the hover lift and card shadows, which would otherwise
+     be cut off by the clip. */
+  padding: 10px 0 22px;
+  margin: -10px 0 -22px;
+}
+.casedeck.is-live .scs-cases { overflow: visible; padding-bottom: 0; }
