@@ -1886,3 +1886,35 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 @media (max-width: 600px) {
   .pageview-bar { gap: 16px; padding-top: 16px; padding-bottom: 16px; }
 }
+
+/* ============================================================
+   CASE DECK — same interaction as the home-page thread.
+   Once JS takes over, scroll-snap must be turned off or the two
+   fight for control of the same axis: the browser snaps back
+   while the drag is still moving the track.
+   ============================================================ */
+.casedeck-viewport { overflow: hidden; }
+.casedeck.is-live .casedeck-viewport { overflow: visible; }
+.casedeck.is-live .scs-cases {
+  overflow: visible; scroll-snap-type: none;
+  cursor: grab; touch-action: pan-y; will-change: transform;
+  padding-bottom: 4px;
+}
+.casedeck.is-live .scs-cases.is-dragging { cursor: grabbing; }
+.casedeck.is-live .scs-case { scroll-snap-align: none; }
+
+/* The card in front reads as the active one, the rest sit back. */
+.casedeck.is-live .scs-case {
+  opacity: .62; transform: scale(.97);
+  transition: opacity .4s ease, transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease;
+}
+.casedeck.is-live .scs-case.is-front { opacity: 1; transform: scale(1); }
+.casedeck.is-live .scs-case.is-front:hover { transform: scale(1) translateY(-4px); }
+
+.casedeck-line { position: relative; height: 64px; margin-top: 22px; }
+.casedeck-line svg { width: 100%; height: 64px; display: block; overflow: visible; }
+.casedeck-hint { margin: 6px 0 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .casedeck.is-live .scs-case { transition: none; }
+}
