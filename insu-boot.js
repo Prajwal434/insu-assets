@@ -1145,6 +1145,14 @@ function boot(){
 
       /* ---------- opening sequence ---------- */
       (function intro() {
+        /* Own timer list. These three sequences run concurrently, and a
+           shared clearAll() meant whichever reset last killed the others'
+           pending steps — the intro stopped dead the moment the pegging
+           demo scrolled into view. */
+        var timers = [];
+        function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+        function clearAll() { timers.forEach(clearTimeout); timers = []; }
+
         var el = panel.querySelector('[data-aiintro]');
         var line = panel.querySelector('[data-aiintro-line]');
         var skip = panel.querySelector('[data-aiintro-skip]');
@@ -1199,6 +1207,14 @@ function boot(){
 
       /* ---------- Planning Agent: pegging tree ---------- */
       (function pegging() {
+        /* Own timer list. These three sequences run concurrently, and a
+           shared clearAll() meant whichever reset last killed the others'
+           pending steps — the intro stopped dead the moment the pegging
+           demo scrolled into view. */
+        var timers = [];
+        function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+        function clearAll() { timers.forEach(clearTimeout); timers = []; }
+
         var host = panel.querySelector('[data-agent-demo="pegging"]');
         if (!host) return;
         var typed = host.querySelector('[data-peg-typed]');
@@ -1272,6 +1288,14 @@ function boot(){
 
       /* ---------- SRE Bench ---------- */
       (function sre() {
+        /* Own timer list. These three sequences run concurrently, and a
+           shared clearAll() meant whichever reset last killed the others'
+           pending steps — the intro stopped dead the moment the pegging
+           demo scrolled into view. */
+        var timers = [];
+        function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+        function clearAll() { timers.forEach(clearTimeout); timers = []; }
+
         var host = panel.querySelector('[data-agent-demo="sre"]');
         if (!host) return;
         var metrics = host.querySelector('[data-sre-metrics]');
