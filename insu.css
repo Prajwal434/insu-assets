@@ -2164,3 +2164,107 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .pf-fine { padding: 0 18px 20px; }
   .pf-opt { padding: 14px 14px 14px 48px; }
 }
+
+/* ============================================================
+   AI SOLUTIONS — the whole panel as one environment.
+   The panel pins light tokens for every pageview, which is right
+   for the others but left this page as a white document with one
+   dark widget on it. Repointing the tokens here flips every
+   descendant at once instead of restyling each block by hand.
+   ============================================================ */
+.pageview[data-page="ai-solutions"] {
+  --page-bg: #0A1917;
+  --page-ink: #EAF6F2;
+  --page-ink-soft: rgba(234,246,242,.68);
+  --page-line: rgba(234,246,242,.14);
+  --page-card: rgba(234,246,242,.05);
+  background: #0A1917;
+  color: #EAF6F2;
+}
+
+/* Two drifting fields and a faint grid, all behind the content. */
+.pageview[data-page="ai-solutions"] .pageview-scroll { position: relative; isolation: isolate; }
+.pageview[data-page="ai-solutions"] .pageview-scroll::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 15% 12%, rgba(46,156,142,.22), transparent 60%),
+    radial-gradient(50% 40% at 88% 30%, rgba(166,198,58,.12), transparent 58%),
+    radial-gradient(55% 45% at 60% 92%, rgba(46,156,142,.16), transparent 60%);
+  animation: aiDrift 26s ease-in-out infinite alternate;
+}
+.pageview[data-page="ai-solutions"] .pageview-scroll::after {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(143,209,193,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143,209,193,.055) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 40%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 0%, transparent 78%);
+}
+@keyframes aiDrift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
+}
+.pageview[data-page="ai-solutions"] .pageview-hero,
+.pageview[data-page="ai-solutions"] .pv-block { position: relative; z-index: 1; }
+
+/* Hero */
+.pageview[data-page="ai-solutions"] .pageview-h {
+  color: #fff;
+  text-shadow: 0 0 60px rgba(143,209,193,.22);
+}
+.pageview[data-page="ai-solutions"] .who-eyebrow { color: var(--mint); }
+
+/* Blocks read as panels rather than runs of text. */
+.pageview[data-page="ai-solutions"] .pv-block {
+  border: 1px solid rgba(234,246,242,.12);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(234,246,242,.055), rgba(234,246,242,.02));
+  padding: 34px 34px 30px;
+  margin-bottom: 22px;
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+}
+.pageview[data-page="ai-solutions"] .pv-block h2 { color: #fff; }
+.pageview[data-page="ai-solutions"] .pv-block h2::before {
+  content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 2px;
+  background: var(--mint); margin-right: 12px; vertical-align: middle;
+  box-shadow: 0 0 12px rgba(143,209,193,.8);
+}
+.pageview[data-page="ai-solutions"] .pv-lead { color: rgba(234,246,242,.74); }
+.pageview[data-page="ai-solutions"] .pv-list li { color: rgba(234,246,242,.86); }
+.pageview[data-page="ai-solutions"] .pv-list li b { color: var(--mint); }
+.pageview[data-page="ai-solutions"] .pv-steps li span { color: var(--mint); }
+.pageview[data-page="ai-solutions"] .pv-steps li b { color: #fff; }
+.pageview[data-page="ai-solutions"] .pv-steps li p { color: rgba(234,246,242,.7); }
+
+.pageview[data-page="ai-solutions"] .tag {
+  background: rgba(143,209,193,.10);
+  border: 1px solid rgba(143,209,193,.28);
+  color: rgba(234,246,242,.9);
+  transition: background .24s ease, border-color .24s ease, transform .24s cubic-bezier(.2,.7,.2,1);
+}
+.pageview[data-page="ai-solutions"] .tag:hover {
+  background: rgba(143,209,193,.2); border-color: var(--mint); transform: translateY(-2px);
+}
+
+/* Scroll reveal: JS adds .is-in as each block comes into the panel's
+   own scroller. ScrollTrigger watches the window, which is the wrong
+   scroller here, so this uses its own observer. */
+.pageview[data-page="ai-solutions"] .pv-block,
+.pageview[data-page="ai-solutions"] .pathfinder-sec {
+  opacity: 0; transform: translate3d(0, 34px, 0);
+  transition: opacity .8s cubic-bezier(.16,.84,.28,1), transform .8s cubic-bezier(.16,.84,.28,1);
+}
+.pageview[data-page="ai-solutions"] .pv-block.is-in,
+.pageview[data-page="ai-solutions"] .pathfinder-sec.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pageview[data-page="ai-solutions"] .pageview-scroll::before { animation: none; }
+  .pageview[data-page="ai-solutions"] .pv-block,
+  .pageview[data-page="ai-solutions"] .pathfinder-sec {
+    opacity: 1; transform: none; transition: none;
+  }
+}
+@media (max-width: 600px) {
+  .pageview[data-page="ai-solutions"] .pv-block { padding: 24px 20px 22px; }
+}

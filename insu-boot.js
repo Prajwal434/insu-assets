@@ -1130,6 +1130,42 @@ function boot(){
       window.addEventListener('resize', function () { measure(); goTo(idx, true); });
     })();
 
+    /* AI panel: reveal blocks as they scroll into view.
+       ScrollTrigger watches the window, but this content scrolls inside
+       .pageview-scroll — so the window never scrolls and nothing would
+       ever fire. Its own observer, rooted on that element, is the fix. */
+    (function () {
+      var panel = document.querySelector('.pageview[data-page="ai-solutions"]');
+      if (!panel || !('IntersectionObserver' in window)) return;
+      var scroller = panel.querySelector('.pageview-scroll');
+      var blocks = [].slice.call(panel.querySelectorAll('.pv-block, .pathfinder-sec'));
+      if (!scroller || !blocks.length) return;
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);   // reveal once; re-running on every pass is noise
+          }
+        });
+      }, { root: scroller, rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+
+      blocks.forEach(function (b) { io.observe(b); });
+
+      /* The panel is hidden until opened, so nothing intersects while it
+         is closed. Re-check on open, or the first screen stays blank. */
+      panel.addEventListener('toggle', function () {});
+      var mo = new MutationObserver(function () {
+        if (!panel.hidden) {
+          blocks.forEach(function (b) {
+            var r = b.getBoundingClientRect();
+            if (r.top < window.innerHeight) { b.classList.add('is-in'); io.unobserve(b); }
+          });
+        }
+      });
+      mo.observe(panel, { attributes: true, attributeFilter: ['hidden'] });
+    })();
+
     /* Pathfinder: five questions, then two suggestions — the path they
        asked for and the one their answers point at.
 
