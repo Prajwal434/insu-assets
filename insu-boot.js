@@ -213,8 +213,14 @@ function boot(){
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function show(n) {
+      var prev = i;
       i = (n + cards.length) % cards.length;
-      cards.forEach(function (c, k) { c.classList.toggle('is-on', k === i); });
+      /* The outgoing card needs its own class: with only on/off it would
+         snap back to the incoming side instead of leaving to the left. */
+      cards.forEach(function (c, k) {
+        c.classList.toggle('is-on', k === i);
+        c.classList.toggle('is-out', k === prev && prev !== i);
+      });
       dots.forEach(function (d, k) { d.classList.toggle('is-on', k === i); });
       elapsed = 0; t0 = performance.now();
     }
