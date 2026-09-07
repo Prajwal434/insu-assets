@@ -1797,3 +1797,58 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .pageview:not([hidden]),
   .pageview:not([hidden]) * { animation: none !important; }
 }
+
+/* ============================================================
+   PANEL ENTRANCE — slower, with more travel.
+   The first pass ran ~0.7s over 26px, which read as the page
+   simply appearing. Roughly doubled in both, and the panel now
+   rises from the bottom edge so it lands as a new page arriving
+   rather than a cross-fade in place.
+   ============================================================ */
+@keyframes pvRise {
+  from { opacity: 0; transform: translate3d(0, 52px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pvPanel {
+  from { opacity: 0; transform: translate3d(0, 4%, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+.pageview:not([hidden]) { animation: pvPanel .62s cubic-bezier(.16,.84,.28,1) both; }
+.pageview:not([hidden]) .pageview-bar { animation: pvBar .72s cubic-bezier(.16,.84,.28,1) .10s both; }
+
+.pageview:not([hidden]) .pageview-hero,
+.pageview:not([hidden]) .scs > section,
+.pageview:not([hidden]) .pv-block,
+.pageview:not([hidden]) .pageview-scroll > .page-section {
+  animation: pvRise 1.05s cubic-bezier(.16,.84,.28,1) both;
+}
+.pageview:not([hidden]) .pageview-hero { animation-delay: .26s; }
+.pageview:not([hidden]) .scs > section:nth-of-type(1),
+.pageview:not([hidden]) .pv-block:nth-of-type(1),
+.pageview:not([hidden]) .pageview-scroll > .page-section:nth-of-type(1) { animation-delay: .34s; }
+.pageview:not([hidden]) .scs > section:nth-of-type(2),
+.pageview:not([hidden]) .pv-block:nth-of-type(2),
+.pageview:not([hidden]) .pageview-scroll > .page-section:nth-of-type(2) { animation-delay: .56s; }
+.pageview:not([hidden]) .scs > section:nth-of-type(3),
+.pageview:not([hidden]) .pv-block:nth-of-type(3),
+.pageview:not([hidden]) .pageview-scroll > .page-section:nth-of-type(3) { animation-delay: .78s; }
+.pageview:not([hidden]) .scs > section:nth-of-type(4),
+.pageview:not([hidden]) .pv-block:nth-of-type(4),
+.pageview:not([hidden]) .pageview-scroll > .page-section:nth-of-type(4) { animation-delay: 1.00s; }
+.pageview:not([hidden]) .scs > section:nth-of-type(n+5),
+.pageview:not([hidden]) .pv-block:nth-of-type(n+5),
+.pageview:not([hidden]) .pageview-scroll > .page-section:nth-of-type(n+5) { animation-delay: 1.18s; }
+
+.pageview:not([hidden]) .scs-hero-text > * { animation: pvRise .95s cubic-bezier(.16,.84,.28,1) both; }
+.pageview:not([hidden]) .scs-hero-text > *:nth-child(1) { animation-delay: .42s; }
+.pageview:not([hidden]) .scs-hero-text > *:nth-child(2) { animation-delay: .56s; }
+.pageview:not([hidden]) .scs-hero-text > *:nth-child(3) { animation-delay: .70s; }
+.pageview:not([hidden]) .scs-hero-text > *:nth-child(4) { animation-delay: .84s; }
+.pageview:not([hidden]) .scs-hero-text > *:nth-child(5) { animation-delay: .98s; }
+.pageview:not([hidden]) .scs-hero-img { animation: pvRise 1.2s cubic-bezier(.16,.84,.28,1) .50s both; }
+
+.pageview:not([hidden]) .scs-case { animation: pvRise .95s cubic-bezier(.16,.84,.28,1) both; }
+.pageview:not([hidden]) .scs-case:nth-child(1) { animation-delay: 1.05s; }
+.pageview:not([hidden]) .scs-case:nth-child(2) { animation-delay: 1.22s; }
+.pageview:not([hidden]) .scs-case:nth-child(3) { animation-delay: 1.39s; }
