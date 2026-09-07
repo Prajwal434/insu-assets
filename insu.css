@@ -1935,3 +1935,16 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   margin: -10px 0 -22px;
 }
 .casedeck.is-live .scs-cases { overflow: visible; padding-bottom: 0; }
+
+/* ============================================================
+   CASE DECK — reveal the rope.
+   .thread-line and .thread-hint are display:none until something
+   marks the slider live, and only `.thread.is-live` did that. The
+   deck sets `.casedeck.is-live`, so the rope and its hint stayed
+   hidden even though the markup and the drag were both present.
+   ============================================================ */
+.casedeck.is-live .thread-line,
+.casedeck.is-live .thread-hint { display: block; }
+
+.casedeck-line { margin-top: 18px; }
+.casedeck-hint { text-align: center; }
