@@ -2722,3 +2722,43 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .aiintro-step { padding: 11px 13px; gap: 11px; }
   .aiintro-step-t span { font-size: 12px; }
 }
+
+/* ============================================================
+   FIRST AGENT — cinematic reveal.
+   The intro hands over to a page that was fully drawn. The first
+   agent now assembles a piece at a time, so the sequence carries
+   on instead of stopping dead. Only the first: doing it twice
+   turns a reveal into a wait.
+   ============================================================ */
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .cstudy-problem,
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .cstudy-col--now,
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .cstudy-col--next,
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .cstudy-win,
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .agentui,
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .agentdemo-head {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity .75s cubic-bezier(.16,.84,.28,1),
+              transform .75s cubic-bezier(.16,.84,.28,1);
+}
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"].is-in .agentdemo-head { opacity: 1; transform: none; transition-delay: .05s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"].is-in .cstudy-problem { opacity: 1; transform: none; transition-delay: .45s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"].is-in .cstudy-col--now { opacity: 1; transform: none; transition-delay: .95s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"].is-in .cstudy-col--next { opacity: 1; transform: none; transition-delay: 1.45s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"].is-in .cstudy-win { opacity: 1; transform: none; transition-delay: 1.95s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"].is-in .agentui { opacity: 1; transform: none; transition-delay: 2.45s; }
+
+/* The effort bars wait for their column, or they fill against nothing. */
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"].is-in .cstudy-col--now .cstudy-bar i { transition-delay: 1.35s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo="pegging"].is-in .cstudy-col--next .cstudy-bar i { transition-delay: 1.85s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .cstudy-problem,
+  .pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .cstudy-col--now,
+  .pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .cstudy-col--next,
+  .pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .cstudy-win,
+  .pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .agentui,
+  .pageview[data-page="ai-solutions"] [data-agent-demo="pegging"] .agentdemo-head {
+    opacity: 1; transform: none; transition: none;
+  }
+}

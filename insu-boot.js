@@ -1160,6 +1160,8 @@ function boot(){
 
         /* Kept short and near-equal in length: at display size a long
            line wraps to three and the block jumps between steps. */
+        var skipped = false;
+
         var LINES = [
           'Hello.',
           'Welcome to InSu AI Solutions.',
@@ -1182,8 +1184,17 @@ function boot(){
           clearAll();
           el.hidden = true;
           el.setAttribute('aria-hidden', 'true');
+          /* Carry the sequence into the first agent rather than dropping the
+             viewer at the top of a finished page. Only when it played
+             through — someone who skipped asked not to be taken anywhere. */
+          if (!skipped) {
+            var first = panel.querySelector('[data-agent-demo="pegging"]');
+            if (first) later(function () {
+              first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 320);
+          }
         }
-        if (skip) skip.addEventListener('click', end);
+        if (skip) skip.addEventListener('click', function () { skipped = true; end(); });
 
         function play() {
           /* Plays on every open. The skip control is what keeps that
@@ -1345,7 +1356,7 @@ function boot(){
         var scroller = panel.querySelector('.pageview-scroll');
         if ('IntersectionObserver' in window && scroller) {
           var io = new IntersectionObserver(function (es) {
-            es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); run(); } });
+            es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); /* the panel takes ~2.4s to arrive; typing into it before then is lost */ later(run, 2600); } });
           }, { root: scroller, threshold: 0.3 });
           io.observe(host);
         } else { run(); }
