@@ -3787,3 +3787,18 @@ body.ai-panel-open #r1 .mark-text .ch { color: #22292B; }
 .pf-res-foot { color: var(--page-ink-soft); }
 .pf-fine { color: #8A9391; }
 .pf-actions .btn.ghost { border-color: var(--page-line); color: var(--page-ink); }
+
+/* ============================================================
+   Brandmark stays visible through the intros too.
+   It was hidden while an intro played because the overlay was dark
+   and the mark was dark on dark. The intros are light now, the mark
+   sits top-left and the intro content is centred, so there is
+   nothing left to collide with.
+   ============================================================ */
+body.intro-playing #r1 { opacity: 1; pointer-events: auto; }
+body.intro-playing #r1 .mark-text,
+body.intro-playing #r1 .mark-text .ch { color: #22292B; }
+
+/* The intro sits above the page but below the mark, so the mark needs
+   its own breathing room at the top of the overlay. */
+.aiintro-inner, .pgintro-inner { margin-top: 24px; }
