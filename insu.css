@@ -3212,3 +3212,92 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 @media (max-width: 600px) {
   .pf-greet { padding: 28px 20px; min-height: 220px; }
 }
+
+/* ============================================================
+   PROGRAMS — panel intro, same shape as the AI page
+   ============================================================ */
+.pgintro {
+  position: fixed; inset: 0; z-index: 890;
+  display: grid; place-items: center; padding: 32px;
+  background: radial-gradient(72% 60% at 50% 44%, #163B34 0%, #08140F 72%);
+}
+.pgintro[hidden] { display: none; }
+.pgintro-inner {
+  display: flex; align-items: baseline; gap: 12px;
+  max-width: min(700px, 88vw); text-align: left;
+}
+.pgintro-avatar {
+  flex: 0 0 auto; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--mint); box-shadow: 0 0 18px var(--mint);
+  transform: translateY(-3px); animation: aiPulse 1.8s ease-in-out infinite;
+}
+.pgintro-line {
+  margin: 0;
+  font-family: 'Poppins','Century Gothic',-apple-system,sans-serif;
+  font-size: clamp(23px, 3.6vw, 42px); line-height: 1.2;
+  letter-spacing: -0.03em; color: #fff; text-wrap: balance;
+}
+.pgintro-caret {
+  flex: 0 0 auto; width: 3px; height: .82em; background: var(--mint);
+  animation: aiBlink 1s steps(2, start) infinite;
+}
+
+/* ============================================================
+   PATHFINDER — richer question surface
+   It was a dark box with plain rows. The panel now carries its own
+   light, the assistant marker sits with the question, and options
+   read as choices rather than list items.
+   ============================================================ */
+.pf {
+  background:
+    radial-gradient(120% 84% at 10% 0%, rgba(46,156,142,.32) 0%, transparent 56%),
+    radial-gradient(96% 76% at 94% 10%, rgba(166,198,58,.18) 0%, transparent 54%),
+    linear-gradient(158deg, #12332E 0%, #0B221F 62%, #0F2E2A 100%);
+  box-shadow: 0 26px 64px rgba(6,20,18,.36);
+}
+.pf-stage { padding: 34px 34px 30px; }
+
+/* The question is spoken, so it gets the assistant marker. */
+.pf-q { position: relative; padding-left: 24px; }
+.pf-q::before {
+  content: ""; position: absolute; left: 0; top: .52em;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--mint); box-shadow: 0 0 14px rgba(143,209,193,.9);
+}
+
+.pf-opt {
+  padding: 17px 20px 17px 58px;
+  background: linear-gradient(120deg, rgba(234,246,242,.07), rgba(234,246,242,.03));
+  border-color: rgba(234,246,242,.18);
+  font-size: 15.5px;
+}
+.pf-opt::before {
+  /* Letters read as choices; numbers read as a ranked list. */
+  content: counter(pfopt, upper-alpha);
+  left: 18px; width: 28px; height: 28px; border-radius: 9px; font-size: 12.5px;
+}
+.pf-opt:hover, .pf-opt:focus-visible {
+  background: linear-gradient(120deg, rgba(143,209,193,.18), rgba(143,209,193,.07));
+  border-color: rgba(143,209,193,.62);
+  box-shadow: 0 10px 26px rgba(6,20,18,.34);
+}
+.pf-opt-go { font-size: 17px; }
+
+.pf-step {
+  background: rgba(143,209,193,.14); border-color: rgba(143,209,193,.34);
+}
+
+/* Results sit forward of the questions that produced them. */
+.pf-res {
+  background: linear-gradient(150deg, rgba(234,246,242,.10), rgba(234,246,242,.04));
+  box-shadow: 0 14px 34px rgba(6,20,18,.3);
+}
+.pf-res h4 { font-size: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pgintro-avatar, .pgintro-caret { animation: none; }
+}
+@media (max-width: 600px) {
+  .pf-stage { padding: 24px 18px 22px; }
+  .pf-opt { padding: 14px 14px 14px 50px; font-size: 14.5px; }
+}
