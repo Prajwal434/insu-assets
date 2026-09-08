@@ -3658,3 +3658,31 @@ body.intro-playing #r1 .mark-text .ch { color: #EAF6F2 !important; }
 
 body.pageview-open #r1 .mark-icon,
 body.intro-playing #r1 .mark-icon { box-shadow: 0 0 0 1px rgba(234,246,242,.3); }
+
+/* ============================================================
+   Brandmark: carry its own ground on internal pages.
+   Chasing the colour of whatever sits behind it has failed twice —
+   the bar, the panel and the intro are all different surfaces and
+   Wix nests them differently from the standalone build. Giving the
+   mark its own backdrop makes it readable on any of them without
+   having to know which one it is.
+   ============================================================ */
+body.pageview-open #r1,
+body.intro-playing #r1 {
+  padding: 7px 14px 7px 10px;
+  border-radius: 999px;
+  background: rgba(10,25,23,.72);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0,0,0,.22);
+}
+body.pageview-open #r1 .mark-text,
+body.pageview-open #r1 .mark-text .ch,
+body.intro-playing #r1 .mark-text,
+body.intro-playing #r1 .mark-text .ch {
+  color: #EAF6F2 !important;
+  -webkit-text-fill-color: #EAF6F2;   /* beats any inherited fill */
+  opacity: 1 !important;
+}
+body.pageview-open #r1 .mark-icon,
+body.intro-playing #r1 .mark-icon { box-shadow: none; }
