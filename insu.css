@@ -3309,3 +3309,137 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .pgintro-pf[hidden] { display: none; }
 .pgintro-pf .pf { margin: 0; animation: aiFlowIn .5s cubic-bezier(.2,.7,.2,1) both; }
 .pgintro-pf .pf-fine { padding: 0 30px 22px; }
+
+/* ============================================================
+   PROGRAMS PAGE — colour and interaction.
+   It inherited the plain light page tokens, so four programmes,
+   three paths and a price table all read the same. Each programme
+   now carries an accent and the sections have their own weight.
+   ============================================================ */
+.pageview[data-page="programs"] .page-section { position: relative; }
+
+/* Section eyebrows get a rule that belongs to them. */
+.pageview[data-page="programs"] .who-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--mint-ink); font-weight: 700;
+}
+.pageview[data-page="programs"] .who-eyebrow::before {
+  content: ""; width: 26px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--mint), #A6C63A);
+}
+
+/* ---- programme cards ---- */
+.pageview[data-page="programs"] .prog {
+  --pa: #2E9C8E; --pa-soft: rgba(46,156,142,.12);
+  position: relative; overflow: hidden;
+  border-radius: 16px; padding: 26px 26px 24px;
+  background: var(--page-card);
+  border: 1px solid var(--page-line);
+  transition: transform .3s cubic-bezier(.2,.7,.2,1),
+              box-shadow .3s ease, border-color .3s ease;
+}
+.pageview[data-page="programs"] .prog[data-accent="teal"]  { --pa: #2E9C8E; --pa-soft: rgba(46,156,142,.12); }
+.pageview[data-page="programs"] .prog[data-accent="lime"]  { --pa: #86A828; --pa-soft: rgba(134,168,40,.14); }
+.pageview[data-page="programs"] .prog[data-accent="amber"] { --pa: #C98418; --pa-soft: rgba(201,132,24,.13); }
+.pageview[data-page="programs"] .prog[data-accent="deep"]  { --pa: #1C6F66; --pa-soft: rgba(28,111,102,.13); }
+
+/* A band of the programme's colour down the leading edge. */
+.pageview[data-page="programs"] .prog::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: var(--pa); transform: scaleY(.28); transform-origin: top center;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.pageview[data-page="programs"] .prog:hover {
+  transform: translateY(-5px);
+  border-color: var(--pa);
+  box-shadow: 0 18px 44px rgba(0,0,0,.13);
+}
+.pageview[data-page="programs"] .prog:hover::before { transform: scaleY(1); }
+.pageview[data-page="programs"] .prog h3 { color: var(--page-ink); }
+.pageview[data-page="programs"] .prog-head p { color: var(--page-ink-soft); }
+
+/* Flow nodes pick up the card's colour instead of all being mint. */
+.pageview[data-page="programs"] .prog .flow-node {
+  border-color: var(--pa); background: var(--pa-soft);
+  transition: transform .24s cubic-bezier(.2,.7,.2,1), background .24s ease;
+}
+.pageview[data-page="programs"] .prog:hover .flow-node { background: var(--pa-soft); }
+.pageview[data-page="programs"] .prog .flow-node--end { background: var(--pa); color: #fff; border-color: var(--pa); }
+
+/* ---- the flagship ---- */
+.pageview[data-page="programs"] .intern-static {
+  position: relative; border-radius: 20px; padding: 34px 32px 30px;
+  background:
+    radial-gradient(90% 70% at 8% 0%, rgba(46,156,142,.16), transparent 58%),
+    radial-gradient(70% 60% at 96% 12%, rgba(166,198,58,.14), transparent 56%),
+    var(--page-card);
+  border: 1px solid var(--page-line);
+  box-shadow: 0 16px 44px rgba(0,0,0,.08);
+}
+.pageview[data-page="programs"] .intern-stack-item {
+  border-radius: 12px; padding: 14px 16px;
+  background: var(--page-bg); border: 1px solid var(--page-line);
+  transition: transform .26s cubic-bezier(.2,.7,.2,1), border-color .26s ease;
+}
+.pageview[data-page="programs"] .intern-stack-item:hover {
+  transform: translateX(5px); border-color: var(--mint);
+}
+.pageview[data-page="programs"] .intern-stack-num { color: var(--mint-ink); }
+
+/* ---- paths ---- */
+.pageview[data-page="programs"] .path {
+  border-radius: 16px; overflow: hidden;
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease;
+}
+.pageview[data-page="programs"] .path:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,.12); }
+.pageview[data-page="programs"] .path--featured {
+  background: linear-gradient(158deg, rgba(46,156,142,.10), rgba(166,198,58,.08));
+  border-color: rgba(46,156,142,.4);
+}
+.pageview[data-page="programs"] .path-flag {
+  background: linear-gradient(90deg, var(--mint), #A6C63A); color: #0F2E2A;
+  font-weight: 700; letter-spacing: .08em;
+}
+.pageview[data-page="programs"] .path-dur { color: var(--mint-ink); font-weight: 700; }
+
+/* ---- pricing ---- */
+.pageview[data-page="programs"] .price-row {
+  border-radius: 14px; transition: background .24s ease, transform .24s ease;
+}
+.pageview[data-page="programs"] .price-row:hover { background: rgba(143,209,193,.07); transform: translateX(3px); }
+.pageview[data-page="programs"] .price-prog { color: var(--page-ink); font-weight: 700; }
+.pageview[data-page="programs"] .price-cell--best {
+  background: rgba(143,209,193,.12); border-radius: 10px;
+  border: 1px solid rgba(46,156,142,.3);
+}
+.pageview[data-page="programs"] .price-val { color: var(--mint-ink); font-weight: 600; }
+
+.pageview[data-page="programs"] .teach-example {
+  border-left: 3px solid var(--mint); border-radius: 0 12px 12px 0;
+  background: rgba(143,209,193,.08); padding: 20px 22px;
+}
+.pageview[data-page="programs"] .teach-tag { color: var(--mint-ink); font-weight: 700; }
+
+/* ---- scroll reveal, rooted on the panel's own scroller ---- */
+.pageview[data-page="programs"] .prog,
+.pageview[data-page="programs"] .path,
+.pageview[data-page="programs"] .intern-stack-item,
+.pageview[data-page="programs"] .price-row,
+.pageview[data-page="programs"] .teach-example {
+  opacity: 0; transform: translate3d(0, 22px, 0);
+  transition: opacity .7s cubic-bezier(.16,.84,.28,1), transform .7s cubic-bezier(.16,.84,.28,1),
+              box-shadow .3s ease, border-color .3s ease, background .24s ease;
+}
+.pageview[data-page="programs"] .is-in { opacity: 1 !important; transform: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pageview[data-page="programs"] .prog,
+  .pageview[data-page="programs"] .path,
+  .pageview[data-page="programs"] .intern-stack-item,
+  .pageview[data-page="programs"] .price-row,
+  .pageview[data-page="programs"] .teach-example {
+    opacity: 1; transform: none; transition: none;
+  }
+  .pageview[data-page="programs"] .prog:hover,
+  .pageview[data-page="programs"] .path:hover { transform: none; }
+}
