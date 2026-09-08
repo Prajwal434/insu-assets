@@ -1259,15 +1259,24 @@ function boot(){
 
 
           var mini = panel.querySelector('[data-aiintro-mini]');
-          /* Each step lights the piece of the agent it produced. Pieces stay
-             lit once shown, so the card visibly accumulates instead of
-             swapping — that accumulation is the whole idea. */
+          /* One stage at a time: the previous piece fades out before the next
+             fades in, so two are never on screen together. The window chrome
+             is excluded — it is the frame, not a stage, and blinking it in and
+             out on every step reads as a fault. */
           function light(n) {
             if (!mini) return;
-            mini.querySelectorAll('[data-piece]').forEach(function (el) {
-              if (parseInt(el.getAttribute('data-piece'), 10) <= n) el.classList.add('is-on');
-            });
+            var body = mini.querySelector('.mini-body');
+            var name = mini.querySelector('.mini-name');
+            if (name && n >= 2) name.classList.add('is-on');
             mini.classList.toggle('is-live', n >= 2);
+            if (!body) return;
+            var pieces = [].slice.call(body.querySelectorAll('[data-piece]'));
+            pieces.forEach(function (el) { el.classList.remove('is-on'); });
+            later(function () {
+              pieces.forEach(function (el) {
+                if (parseInt(el.getAttribute('data-piece'), 10) === n) el.classList.add('is-on');
+              });
+            }, 340);
           }
 
           function paint(n) {

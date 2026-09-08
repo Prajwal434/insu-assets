@@ -2902,3 +2902,22 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .aiintro-card { min-height: 0; }
   .aiintro-mini { min-height: 0; }
 }
+
+/* ---- AI intro: one stage on screen at a time ----
+   Pieces are absolutely stacked so the panel does not resize between
+   stages — step 4 is four rows, the others are one, and reflowing
+   between them made the whole card jump. */
+.mini-body { position: relative; min-height: 168px; display: block; padding: 14px; }
+.mini-body .mini-piece { position: absolute; left: 14px; right: 14px; top: 14px; }
+.mini-body .mini-row { top: auto; }
+.mini-body .mini-row[data-piece="3"]:nth-of-type(3) { top: 14px; }
+.mini-body .mini-row[data-piece="3"]:nth-of-type(4) { top: 50px; }
+.mini-body .mini-row[data-piece="3"]:nth-of-type(5) { top: 86px; }
+.mini-body .mini-row[data-piece="3"]:nth-of-type(6) { top: 122px; }
+.mini-body .mini-note { top: 50%; transform: translate3d(0,-50%,0); }
+.mini-body .mini-note.is-on { transform: translate3d(0,-50%,0); }
+.mini-body .mini-q { top: 50%; transform: translate3d(0,calc(-50% + 8px),0); }
+.mini-body .mini-q.is-on { transform: translate3d(0,-50%,0); }
+.mini-body .mini-prob { top: 50%; transform: translate3d(0,calc(-50% + 8px),0); }
+.mini-body .mini-prob.is-on { transform: translate3d(0,-50%,0); }
+@media (max-width: 780px) { .mini-body { min-height: 150px; } }
