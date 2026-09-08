@@ -3643,3 +3643,18 @@ body.ai-panel-open #r1 .mark-icon { box-shadow: 0 0 0 1px rgba(234,246,242,.28);
    the document overlays (890+) which are full-screen takeovers.
    ============================================================ */
 #r1 { z-index: 860 !important; }
+
+/* ============================================================
+   The mark always sits on the panel bar, so it takes the bar's
+   contrast — not the page's.
+   The bar is teal-900 on Programs and Supply Chain and spans the
+   top ~130px, while the mark sits at 20-48px. Colouring it for the
+   light page beneath put dark text on a dark bar.
+   ============================================================ */
+body.pageview-open #r1 .mark-text,
+body.pageview-open #r1 .mark-text .ch,
+body.intro-playing #r1 .mark-text,
+body.intro-playing #r1 .mark-text .ch { color: #EAF6F2 !important; }
+
+body.pageview-open #r1 .mark-icon,
+body.intro-playing #r1 .mark-icon { box-shadow: 0 0 0 1px rgba(234,246,242,.3); }
