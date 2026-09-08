@@ -3139,3 +3139,38 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 @supports not (overflow: clip) {
   .pageview[data-page="ai-solutions"] { overflow: hidden; }
 }
+
+/* ============================================================
+   AI panel bar: no bar, just the controls.
+   The opaque strip was only there to stop the background layers
+   painting over the button. Keeping z-index 6 does that on its own,
+   so the panel's own motion can show through instead.
+   ============================================================ */
+.pageview[data-page="ai-solutions"] > .pageview-bar {
+  background: transparent;
+  border-bottom: 0;
+  /* Content scrolls underneath, so a light blur keeps the controls
+     readable without hiding the moving ground behind them. */
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+}
+.pageview[data-page="ai-solutions"] .pageview-close {
+  background: rgba(10,25,23,.55);
+  border-color: rgba(143,209,193,.5);
+}
+.pageview[data-page="ai-solutions"] .pageview-close:hover {
+  background: rgba(143,209,193,.22);
+  border-color: var(--mint);
+}
+.pageview[data-page="ai-solutions"] .pageview-title {
+  color: rgba(234,246,242,.72);
+  text-shadow: 0 1px 12px rgba(6,18,16,.9);
+}
+
+/* The mask would clip the button's own edges, so lift the controls out
+   of the masked layer. */
+.pageview[data-page="ai-solutions"] > .pageview-bar > * {
+  -webkit-mask-image: none; mask-image: none;
+}
