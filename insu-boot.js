@@ -1571,6 +1571,70 @@ function boot(){
       })();
     })();
 
+    /* AI panel: scroll-driven motion.
+
+       The panel scrolls inside .pageview-scroll, so window scroll never
+       fires and ScrollTrigger cannot help here — this listens to the
+       scroller directly, throttled to one frame.
+
+       Everything below writes transform and opacity only. Reading
+       layout (getBoundingClientRect) and writing style in the same
+       frame is what makes scroll handlers janky, so all reads happen
+       first and all writes after. */
+    (function () {
+      var panel = document.querySelector('.pageview[data-page="ai-solutions"]');
+      if (!panel) return;
+      var scroller = panel.querySelector('.pageview-scroll');
+      if (!scroller) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      /* A real element rather than a pseudo: the panel's ::before and
+         ::after already carry looping transforms, and a scroll offset
+         would fight them. */
+      var par = document.createElement('div');
+      par.className = 'ai-par';
+      par.setAttribute('aria-hidden', 'true');
+      panel.insertBefore(par, panel.firstChild);
+
+      var blocks = [].slice.call(panel.querySelectorAll('.pv-block'));
+      var queued = false;
+
+      function frame() {
+        queued = false;
+        var h = scroller.clientHeight;
+        var y = scroller.scrollTop;
+
+        /* read */
+        var reads = blocks.map(function (b) {
+          var r = b.getBoundingClientRect();
+          return { el: b, mid: r.top + r.height / 2, h: r.height };
+        });
+
+        /* write */
+        par.style.transform = 'translate3d(0,' + (-y * 0.18).toFixed(1) + 'px,0)';
+        reads.forEach(function (o) {
+          if (!o.el.classList.contains('is-in')) return;
+          /* -1 above the fold, 0 centred, 1 below */
+          var d = (o.mid - h / 2) / h;
+          var away = Math.min(1, Math.abs(d) * 1.6);
+          o.el.style.setProperty('--away', away.toFixed(3));
+          o.el.style.setProperty('--drift', (d * -14).toFixed(1) + 'px');
+        });
+      }
+
+      function onScroll() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(frame);
+      }
+      scroller.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      new MutationObserver(function () { if (!panel.hidden) onScroll(); })
+        .observe(panel, { attributes: true, attributeFilter: ['hidden'] });
+      onScroll();
+    })();
+
     /* AI panel: reveal blocks as they scroll into view.
        ScrollTrigger watches the window, but this content scrolls inside
        .pageview-scroll — so the window never scrolls and nothing would

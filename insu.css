@@ -2921,3 +2921,81 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .mini-body .mini-prob { top: 50%; transform: translate3d(0,calc(-50% + 8px),0); }
 .mini-body .mini-prob.is-on { transform: translate3d(0,-50%,0); }
 @media (max-width: 780px) { .mini-body { min-height: 150px; } }
+
+/* ============================================================
+   AI PANEL — scroll motion
+   A parallax field behind the content, blocks that settle as they
+   reach the middle of the view, and inner elements that arrive in
+   sequence rather than all together.
+   ============================================================ */
+.ai-par {
+  position: absolute; inset: -20% -10% -40%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(28% 22% at 18% 18%, rgba(46,156,142,.20), transparent 62%),
+    radial-gradient(22% 20% at 82% 44%, rgba(166,198,58,.13), transparent 60%),
+    radial-gradient(26% 22% at 40% 78%, rgba(46,156,142,.15), transparent 62%);
+  will-change: transform;
+}
+
+/* --away runs 0 at the centre of the view to 1 at the edges, so a
+   block is sharpest exactly where it is being read. */
+.pageview[data-page="ai-solutions"] .pv-block.is-in {
+  --away: 0; --drift: 0px;
+  transform: translate3d(0, var(--drift), 0);
+  opacity: calc(1 - (var(--away) * 0.45));
+  transition: opacity .25s linear, transform .25s linear,
+              border-color .35s ease, background .35s ease;
+}
+
+/* Inner elements arrive one after another instead of together. */
+.pageview[data-page="ai-solutions"] .pv-block > .agentdemo-tag,
+.pageview[data-page="ai-solutions"] .pv-block > h2,
+.pageview[data-page="ai-solutions"] .pv-block > .pv-lead,
+.pageview[data-page="ai-solutions"] .pv-block > .probmore-grid,
+.pageview[data-page="ai-solutions"] .pv-block > .aifit-opts,
+.pageview[data-page="ai-solutions"] .pv-block > .pv-list,
+.pageview[data-page="ai-solutions"] .pv-block > .pv-steps,
+.pageview[data-page="ai-solutions"] .pv-block > .tagset {
+  opacity: 0; transform: translate3d(0, 18px, 0);
+  transition: opacity .7s cubic-bezier(.16,.84,.28,1), transform .7s cubic-bezier(.16,.84,.28,1);
+}
+.pageview[data-page="ai-solutions"] .pv-block.is-in > .agentdemo-tag { opacity: 1; transform: none; transition-delay: .06s; }
+.pageview[data-page="ai-solutions"] .pv-block.is-in > h2 { opacity: 1; transform: none; transition-delay: .16s; }
+.pageview[data-page="ai-solutions"] .pv-block.is-in > .pv-lead { opacity: 1; transform: none; transition-delay: .28s; }
+.pageview[data-page="ai-solutions"] .pv-block.is-in > .probmore-grid,
+.pageview[data-page="ai-solutions"] .pv-block.is-in > .aifit-opts,
+.pageview[data-page="ai-solutions"] .pv-block.is-in > .pv-list,
+.pageview[data-page="ai-solutions"] .pv-block.is-in > .pv-steps,
+.pageview[data-page="ai-solutions"] .pv-block.is-in > .tagset { opacity: 1; transform: none; transition-delay: .40s; }
+
+/* Chips and steps cascade within their own group. */
+.pageview[data-page="ai-solutions"] .probmore-i,
+.pageview[data-page="ai-solutions"] .tagset .tag {
+  opacity: 0; transform: translate3d(0, 12px, 0);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.pageview[data-page="ai-solutions"] .is-in .probmore-i,
+.pageview[data-page="ai-solutions"] .is-in .tagset .tag { opacity: 1; transform: none; }
+.pageview[data-page="ai-solutions"] .is-in .probmore-i:nth-child(1),
+.pageview[data-page="ai-solutions"] .is-in .tagset .tag:nth-child(1) { transition-delay: .46s; }
+.pageview[data-page="ai-solutions"] .is-in .probmore-i:nth-child(2),
+.pageview[data-page="ai-solutions"] .is-in .tagset .tag:nth-child(2) { transition-delay: .52s; }
+.pageview[data-page="ai-solutions"] .is-in .probmore-i:nth-child(3),
+.pageview[data-page="ai-solutions"] .is-in .tagset .tag:nth-child(3) { transition-delay: .58s; }
+.pageview[data-page="ai-solutions"] .is-in .probmore-i:nth-child(4),
+.pageview[data-page="ai-solutions"] .is-in .tagset .tag:nth-child(4) { transition-delay: .64s; }
+.pageview[data-page="ai-solutions"] .is-in .probmore-i:nth-child(n+5),
+.pageview[data-page="ai-solutions"] .is-in .tagset .tag:nth-child(n+5) { transition-delay: .70s; }
+
+/* The hero drifts slightly slower than the page. */
+.pageview[data-page="ai-solutions"] .pageview-hero { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-par { display: none; }
+  .pageview[data-page="ai-solutions"] .pv-block.is-in { opacity: 1; transform: none; }
+  .pageview[data-page="ai-solutions"] .pv-block > *,
+  .pageview[data-page="ai-solutions"] .probmore-i,
+  .pageview[data-page="ai-solutions"] .tagset .tag {
+    opacity: 1; transform: none; transition: none;
+  }
+}
