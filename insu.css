@@ -3487,3 +3487,47 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
     opacity: 1; transform: none; transition: none;
   }
 }
+
+/* ---- Other internships, revealed by Explore Internship ---- */
+.intern-more {
+  margin: 22px 0 4px; padding: 22px 24px; border-radius: 14px;
+  background: var(--page-bg); border: 1px solid var(--page-line);
+  animation: pfIn .45s cubic-bezier(.2,.7,.2,1) both;
+}
+.intern-more[hidden] { display: none; }
+.intern-more-k {
+  display: block; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mint-ink); margin-bottom: 8px;
+}
+.intern-more-p { margin: 0 0 18px; font-size: 14px; line-height: 1.6; color: var(--page-ink-soft); }
+.intern-more-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.intern-more-i {
+  --pa: #2E9C8E;
+  position: relative; text-align: left; cursor: pointer; font: inherit;
+  padding: 16px 18px 18px; border-radius: 12px;
+  background: var(--page-card); border: 1px solid var(--page-line);
+  border-top: 3px solid var(--pa);
+  transition: transform .26s cubic-bezier(.2,.7,.2,1), box-shadow .26s ease, border-color .26s ease;
+}
+.intern-more-i[data-accent="teal"]  { --pa: #2E9C8E; }
+.intern-more-i[data-accent="lime"]  { --pa: #86A828; }
+.intern-more-i[data-accent="amber"] { --pa: #C98418; }
+.intern-more-i:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(0,0,0,.12); border-color: var(--pa); }
+.intern-more-n {
+  display: block; margin-bottom: 6px;
+  font-family: 'Poppins','Century Gothic',-apple-system,sans-serif;
+  font-size: 15.5px; color: var(--page-ink);
+}
+.intern-more-d { display: block; font-size: 13px; line-height: 1.55; color: var(--page-ink-soft); }
+
+/* Marks the card you were sent to, so the jump lands somewhere. */
+.pageview[data-page="programs"] .prog.is-flash {
+  border-color: var(--pa); box-shadow: 0 0 0 3px var(--pa-soft), 0 18px 44px rgba(0,0,0,.13);
+}
+.pageview[data-page="programs"] .prog.is-flash::before { transform: scaleY(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .intern-more { animation: none; }
+  .intern-more-i:hover { transform: none; }
+}
