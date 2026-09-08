@@ -1184,7 +1184,8 @@ function boot(){
           clearAll();
           el.hidden = true;
           el.setAttribute('aria-hidden', 'true');
-          /* Carry the sequence into the first agent rather than dropping the
+          document.dispatchEvent(new CustomEvent('insu:ai-intro-done'));
+        /* Carry the sequence into the first agent rather than dropping the
              viewer at the top of a finished page. Only when it played
              through — someone who skipped asked not to be taken anywhere. */
           if (!skipped) {
@@ -1210,6 +1211,7 @@ function boot(){
              from being an obstacle, so it stays. */
           if (reduce) { el.hidden = true; return; }
           clearAll();
+          skipped = false;   // per open, not per session
           var fw = panel.querySelector('[data-aiintro-flow]');
           if (fw) fw.hidden = true;   // else the steps show, already finished
           el.hidden = false;
@@ -1673,6 +1675,25 @@ function boot(){
 
       blocks.forEach(function (b) { io.observe(b); });
 
+      /* The overlay does not stop intersection, so blocks behind it
+         reveal while the intro is still playing — skip, and you land on
+         a page whose animations have already run. Reset and re-observe
+         once the intro is actually done. */
+      document.addEventListener('insu:ai-intro-done', function () {
+        if (scroller) scroller.scrollTop = 0;
+        blocks.forEach(function (b) {
+          b.classList.remove('is-in');
+          b.style.transitionDelay = '';
+          io.observe(b);
+        });
+        requestAnimationFrame(function () {
+          blocks.forEach(function (b) {
+            var r = b.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.92) { b.classList.add('is-in'); io.unobserve(b); }
+          });
+        });
+      });
+
       /* The panel is hidden until opened, so nothing intersects while it
          is closed. Re-check on open, or the first screen stays blank. */
       panel.addEventListener('toggle', function () {});
@@ -1761,6 +1782,23 @@ function boot(){
 
       items.forEach(function (el) { io.observe(el); });
 
+      /* Same as the AI panel: nothing behind the overlay should count
+         as revealed until the intro has finished with the screen. */
+      document.addEventListener('insu:pg-intro-done', function () {
+        if (scroller) scroller.scrollTop = 0;
+        items.forEach(function (el) {
+          el.classList.remove('is-in');
+          el.style.transitionDelay = '';
+          io.observe(el);
+        });
+        requestAnimationFrame(function () {
+          items.forEach(function (el) {
+            var r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.92) { el.classList.add('is-in'); io.unobserve(el); }
+          });
+        });
+      });
+
       /* Nothing intersects while the panel is closed, so the first
          screen would stay blank on open. */
       new MutationObserver(function () {
@@ -1798,6 +1836,7 @@ function boot(){
         clearAll();
         el.hidden = true;
         el.setAttribute('aria-hidden', 'true');
+        document.dispatchEvent(new CustomEvent('insu:pg-intro-done'));
         /* Restore the greeting, or reopening lands on a finished
            questionnaire instead of the opening line. */
         var box = panel.querySelector('[data-pgintro-pf]');
