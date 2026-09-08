@@ -2670,3 +2670,55 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 @media (max-width: 600px) {
   .cstudy-problem, .cstudy-col, .cstudy-win { padding: 15px 16px; }
 }
+
+/* ---- AI intro: the build walkthrough ---- */
+.aiintro { align-content: center; }
+.aiintro-flow {
+  width: min(620px, 90vw); margin: 30px auto 0;
+  animation: aiFlowIn .5s cubic-bezier(.2,.7,.2,1) both;
+}
+.aiintro-flow[hidden] { display: none; }
+@keyframes aiFlowIn { from { opacity: 0; transform: translate3d(0,14px,0); } to { opacity: 1; transform: none; } }
+
+.aiintro-flow-k {
+  display: block; text-align: center; margin-bottom: 20px;
+  font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--mint);
+}
+.aiintro-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.aiintro-step {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 13px 16px; border-radius: 11px;
+  background: rgba(234,246,242,.05); border: 1px solid rgba(234,246,242,.14);
+  opacity: .3; transform: translate3d(0,8px,0);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1),
+              border-color .5s ease, background .5s ease;
+}
+.aiintro-step.is-on {
+  opacity: 1; transform: none;
+  border-color: rgba(143,209,193,.45); background: rgba(143,209,193,.10);
+}
+/* Earlier steps stay legible but recede, so the current one leads. */
+.aiintro-step.is-past { opacity: .55; }
+.aiintro-step-n {
+  flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px;
+  display: grid; place-items: center; font-size: 11px; font-weight: 700;
+  background: rgba(234,246,242,.1); color: rgba(234,246,242,.6);
+  transition: background .5s ease, color .5s ease;
+}
+.aiintro-step.is-on .aiintro-step-n { background: var(--mint); color: #0F2E2A; }
+.aiintro-step.is-past .aiintro-step-n { background: rgba(143,209,193,.25); color: var(--mint); }
+.aiintro-step-t { min-width: 0; }
+.aiintro-step-t b {
+  display: block; font-family: 'Poppins','Century Gothic',-apple-system,sans-serif;
+  font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px;
+}
+.aiintro-step-t span { font-size: 13px; line-height: 1.5; color: rgba(234,246,242,.72); }
+
+@media (prefers-reduced-motion: reduce) {
+  .aiintro-flow, .aiintro-step { animation: none; transition: none; }
+}
+@media (max-width: 600px) {
+  .aiintro-step { padding: 11px 13px; gap: 11px; }
+  .aiintro-step-t span { font-size: 12px; }
+}
