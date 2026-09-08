@@ -3094,3 +3094,18 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
     opacity: 1; transform: none; transition: none;
   }
 }
+
+/* ============================================================
+   Parallax layer: beat the panel's own child rule.
+   `.pageview[data-page="ai-solutions"] > *` sets position:relative
+   and z-index:2 on every direct child. That outranked `.ai-par`,
+   so the layer became an in-flow block sitting above the content
+   instead of an absolute field behind it — which pushed the page
+   down and covered it.
+   ============================================================ */
+.pageview[data-page="ai-solutions"] > .ai-par {
+  position: absolute;
+  z-index: 0;
+  inset: -20% -10% -40%;
+  pointer-events: none;
+}
