@@ -3577,3 +3577,18 @@ body.ai-panel-open #r1 .mark-text { color: #EAF6F2; }
 @media (max-width: 600px) {
   .pageview .pageview-bar { padding-top: 74px; padding-left: 14px; }
 }
+
+/* ============================================================
+   Brandmark steps aside for the intro takeover.
+   Both intro overlays sit inside .pageview-scroll, which isolates
+   its stacking context — so their z-index cannot beat the mark,
+   which lives on <body>. It floated over the intro text, the skip
+   control and the Programs questionnaire.
+
+   Hidden only while an intro is on screen. On the pages themselves
+   it stays, with the back control below it.
+   ============================================================ */
+body.intro-playing #r1 {
+  opacity: 0;
+  pointer-events: none;
+}

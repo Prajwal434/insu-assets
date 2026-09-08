@@ -1184,6 +1184,7 @@ function boot(){
           clearAll();
           el.hidden = true;
           el.setAttribute('aria-hidden', 'true');
+          document.body.classList.remove('intro-playing');
           document.dispatchEvent(new CustomEvent('insu:ai-intro-done'));
         /* Carry the sequence into the first agent rather than dropping the
              viewer at the top of a finished page. Only when it played
@@ -1216,6 +1217,7 @@ function boot(){
           if (fw) fw.hidden = true;   // else the steps show, already finished
           el.hidden = false;
           el.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('intro-playing');
           var i = 0;
           function step() {
             if (i >= LINES.length) { later(flow, 420); return; }
@@ -1842,6 +1844,7 @@ function boot(){
         clearAll();
         el.hidden = true;
         el.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('intro-playing');
         document.dispatchEvent(new CustomEvent('insu:pg-intro-done'));
         /* Restore the greeting, or reopening lands on a finished
            questionnaire instead of the opening line. */
@@ -1868,6 +1871,7 @@ function boot(){
         clearAll();
         el.hidden = false;
         el.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('intro-playing');
         var i = 0;
         function step() {
           if (i >= LINES.length) { later(askQuestions, 520); return; }
