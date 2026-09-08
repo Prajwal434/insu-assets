@@ -2999,3 +2999,98 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
     opacity: 1; transform: none; transition: none;
   }
 }
+
+/* ============================================================
+   AI PANEL — stagger everything below the first agent too.
+   The cinematic reveal was written for [data-agent-demo="pegging"]
+   only, so SRE Bench and the closing blocks arrived as slabs.
+   These rules target any agent demo and the remaining blocks.
+   ============================================================ */
+.pageview[data-page="ai-solutions"] [data-agent-demo] .cstudy-problem,
+.pageview[data-page="ai-solutions"] [data-agent-demo] .cstudy-col--now,
+.pageview[data-page="ai-solutions"] [data-agent-demo] .cstudy-col--next,
+.pageview[data-page="ai-solutions"] [data-agent-demo] .cstudy-win,
+.pageview[data-page="ai-solutions"] [data-agent-demo] .agentui,
+.pageview[data-page="ai-solutions"] [data-agent-demo] .agentdemo-head {
+  opacity: 0; transform: translate3d(0, 26px, 0);
+  transition: opacity .75s cubic-bezier(.16,.84,.28,1),
+              transform .75s cubic-bezier(.16,.84,.28,1);
+}
+.pageview[data-page="ai-solutions"] [data-agent-demo].is-in .agentdemo-head { opacity: 1; transform: none; transition-delay: .05s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo].is-in .cstudy-problem { opacity: 1; transform: none; transition-delay: .40s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo].is-in .cstudy-col--now { opacity: 1; transform: none; transition-delay: .85s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo].is-in .cstudy-col--next { opacity: 1; transform: none; transition-delay: 1.30s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo].is-in .cstudy-win { opacity: 1; transform: none; transition-delay: 1.75s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo].is-in .agentui { opacity: 1; transform: none; transition-delay: 2.15s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo].is-in .cstudy-col--now .cstudy-bar i { transition-delay: 1.20s; }
+.pageview[data-page="ai-solutions"] [data-agent-demo].is-in .cstudy-col--next .cstudy-bar i { transition-delay: 1.65s; }
+
+/* Bullet points inside each column arrive one after another. */
+.pageview[data-page="ai-solutions"] .cstudy-col li,
+.pageview[data-page="ai-solutions"] .cstudy-wins li {
+  opacity: 0; transform: translate3d(-10px, 0, 0);
+  transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col li,
+.pageview[data-page="ai-solutions"] .is-in .cstudy-wins li { opacity: 1; transform: none; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col--now li:nth-child(1) { transition-delay: 1.00s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col--now li:nth-child(2) { transition-delay: 1.08s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col--now li:nth-child(3) { transition-delay: 1.16s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col--now li:nth-child(4) { transition-delay: 1.24s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col--next li:nth-child(1) { transition-delay: 1.45s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col--next li:nth-child(2) { transition-delay: 1.53s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col--next li:nth-child(3) { transition-delay: 1.61s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-col--next li:nth-child(4) { transition-delay: 1.69s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-wins li:nth-child(1) { transition-delay: 1.90s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-wins li:nth-child(2) { transition-delay: 1.98s; }
+.pageview[data-page="ai-solutions"] .is-in .cstudy-wins li:nth-child(3) { transition-delay: 2.06s; }
+
+/* The closing choice cards deal in rather than appearing together. */
+.pageview[data-page="ai-solutions"] .aifit-opt {
+  opacity: 0; transform: translate3d(0, 20px, 0);
+  transition: opacity .6s cubic-bezier(.16,.84,.28,1), transform .6s cubic-bezier(.16,.84,.28,1),
+              border-color .24s ease, background .24s ease;
+}
+.pageview[data-page="ai-solutions"] .is-in .aifit-opt { opacity: 1; transform: none; }
+.pageview[data-page="ai-solutions"] .is-in .aifit-opt:nth-child(1) { transition-delay: .48s; }
+.pageview[data-page="ai-solutions"] .is-in .aifit-opt:nth-child(2) { transition-delay: .62s; }
+.pageview[data-page="ai-solutions"] .is-in .aifit-opt:nth-child(3) { transition-delay: .76s; }
+
+/* Numbered process steps walk down. */
+.pageview[data-page="ai-solutions"] .pv-steps li {
+  opacity: 0; transform: translate3d(-12px, 0, 0);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.pageview[data-page="ai-solutions"] .is-in .pv-steps li { opacity: 1; transform: none; }
+.pageview[data-page="ai-solutions"] .is-in .pv-steps li:nth-child(1) { transition-delay: .46s; }
+.pageview[data-page="ai-solutions"] .is-in .pv-steps li:nth-child(2) { transition-delay: .58s; }
+.pageview[data-page="ai-solutions"] .is-in .pv-steps li:nth-child(3) { transition-delay: .70s; }
+.pageview[data-page="ai-solutions"] .is-in .pv-steps li:nth-child(4) { transition-delay: .82s; }
+.pageview[data-page="ai-solutions"] .is-in .pv-steps li:nth-child(5) { transition-delay: .94s; }
+
+.pageview[data-page="ai-solutions"] .pv-list li {
+  opacity: 0; transform: translate3d(-10px, 0, 0);
+  transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.pageview[data-page="ai-solutions"] .is-in .pv-list li { opacity: 1; transform: none; }
+.pageview[data-page="ai-solutions"] .is-in .pv-list li:nth-child(1) { transition-delay: .46s; }
+.pageview[data-page="ai-solutions"] .is-in .pv-list li:nth-child(2) { transition-delay: .54s; }
+.pageview[data-page="ai-solutions"] .is-in .pv-list li:nth-child(3) { transition-delay: .62s; }
+.pageview[data-page="ai-solutions"] .is-in .pv-list li:nth-child(4) { transition-delay: .70s; }
+.pageview[data-page="ai-solutions"] .is-in .pv-list li:nth-child(n+5) { transition-delay: .78s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pageview[data-page="ai-solutions"] [data-agent-demo] .cstudy-problem,
+  .pageview[data-page="ai-solutions"] [data-agent-demo] .cstudy-col--now,
+  .pageview[data-page="ai-solutions"] [data-agent-demo] .cstudy-col--next,
+  .pageview[data-page="ai-solutions"] [data-agent-demo] .cstudy-win,
+  .pageview[data-page="ai-solutions"] [data-agent-demo] .agentui,
+  .pageview[data-page="ai-solutions"] [data-agent-demo] .agentdemo-head,
+  .pageview[data-page="ai-solutions"] .cstudy-col li,
+  .pageview[data-page="ai-solutions"] .cstudy-wins li,
+  .pageview[data-page="ai-solutions"] .aifit-opt,
+  .pageview[data-page="ai-solutions"] .pv-steps li,
+  .pageview[data-page="ai-solutions"] .pv-list li {
+    opacity: 1; transform: none; transition: none;
+  }
+}

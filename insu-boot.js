@@ -1564,7 +1564,14 @@ function boot(){
         var scroller = panel.querySelector('.pageview-scroll');
         if ('IntersectionObserver' in window && scroller) {
           var io2 = new IntersectionObserver(function (es) {
-            es.forEach(function (e) { if (e.isIntersecting) { io2.unobserve(e.target); run(); } });
+            es.forEach(function (e) {
+            if (e.isIntersecting) {
+              io2.unobserve(e.target);
+              /* its panel takes ~2.15s to arrive; starting sooner runs
+                 the incident against something still invisible */
+              later(run, 2300);
+            }
+          });
           }, { root: scroller, threshold: 0.3 });
           io2.observe(host);
         } else { run(); }
