@@ -2762,3 +2762,51 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
     opacity: 1; transform: none; transition: none;
   }
 }
+
+/* ---- AI intro: one build step at a time ----
+   The list showed all five at once with a moving highlight, so the
+   ending was visible from the start. A single card that swaps keeps
+   attention on the step being made. */
+.aiintro-card {
+  position: relative;
+  padding: 28px 30px 24px; border-radius: 16px;
+  background: rgba(234,246,242,.06); border: 1px solid rgba(143,209,193,.28);
+  text-align: left; min-height: 158px;
+}
+.aiintro-card.is-swap .aiintro-card-n,
+.aiintro-card.is-swap .aiintro-card-t,
+.aiintro-card.is-swap .aiintro-card-d { opacity: 0; transform: translate3d(0,10px,0); }
+.aiintro-card-n, .aiintro-card-t, .aiintro-card-d {
+  transition: opacity .34s ease, transform .34s cubic-bezier(.2,.7,.2,1);
+}
+.aiintro-card-n {
+  display: inline-block; margin-bottom: 12px;
+  font-size: 11px; font-weight: 700; letter-spacing: .16em;
+  color: var(--mint); background: rgba(143,209,193,.14);
+  border: 1px solid rgba(143,209,193,.34);
+  padding: 4px 11px; border-radius: 999px;
+}
+.aiintro-card-t {
+  display: block; margin-bottom: 8px;
+  font-family: 'Poppins','Century Gothic',-apple-system,sans-serif;
+  font-size: clamp(19px, 2.6vw, 25px); font-weight: 600; color: #fff;
+  letter-spacing: -0.02em;
+}
+.aiintro-card-d {
+  display: block; font-size: 14.5px; line-height: 1.6;
+  color: rgba(234,246,242,.76); max-width: 46ch;
+}
+.aiintro-dots { display: flex; gap: 6px; margin-top: 20px; }
+.aiintro-dot {
+  width: 22px; height: 3px; border-radius: 2px;
+  background: rgba(234,246,242,.18); transition: background .35s ease;
+}
+.aiintro-dot.is-on { background: var(--mint); }
+.aiintro-dot.is-past { background: rgba(143,209,193,.45); }
+
+@media (prefers-reduced-motion: reduce) {
+  .aiintro-card-n, .aiintro-card-t, .aiintro-card-d { transition: none; }
+}
+@media (max-width: 600px) {
+  .aiintro-card { padding: 22px 20px 20px; min-height: 190px; }
+}
