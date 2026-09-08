@@ -1210,7 +1210,7 @@ function boot(){
         function play() {
           /* Plays on every open. The skip control is what keeps that
              from being an obstacle, so it stays. */
-          if (reduce) { el.hidden = true; return; }
+          if (reduce) { el.hidden = true; document.body.classList.remove('intro-playing'); return; }
           clearAll();
           skipped = false;   // per open, not per session
           var fw = panel.querySelector('[data-aiintro-flow]');
@@ -1348,7 +1348,7 @@ function boot(){
 
         if (!panel.hidden) play();
         new MutationObserver(function () {
-          if (!panel.hidden) play(); else { clearAll(); el.hidden = true; }
+          if (!panel.hidden) { play(); } else { clearAll(); el.hidden = true; document.body.classList.remove('intro-playing'); }
         }).observe(panel, { attributes: true, attributeFilter: ['hidden'] });
       })();
 
@@ -1867,7 +1867,7 @@ function boot(){
       document.addEventListener('insu:pf-done', end);
 
       function play() {
-        if (reduce) { el.hidden = true; return; }
+        if (reduce) { el.hidden = true; document.body.classList.remove('intro-playing'); return; }
         clearAll();
         el.hidden = false;
         el.setAttribute('aria-hidden', 'false');
@@ -1895,7 +1895,7 @@ function boot(){
 
       if (!panel.hidden) play();
       new MutationObserver(function () {
-        if (!panel.hidden) play(); else { clearAll(); el.hidden = true; }
+        if (!panel.hidden) { play(); } else { clearAll(); el.hidden = true; document.body.classList.remove('intro-playing'); }
       }).observe(panel, { attributes: true, attributeFilter: ['hidden'] });
     })();
 
