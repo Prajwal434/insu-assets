@@ -3301,3 +3301,11 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .pf-stage { padding: 24px 18px 22px; }
   .pf-opt { padding: 14px 14px 14px 50px; font-size: 14.5px; }
 }
+
+/* ---- Programs intro: the finder runs inside the overlay ---- */
+.pgintro { align-content: center; }
+.pgintro-inner[hidden] { display: none; }
+.pgintro-pf { width: min(680px, 92vw); }
+.pgintro-pf[hidden] { display: none; }
+.pgintro-pf .pf { margin: 0; animation: aiFlowIn .5s cubic-bezier(.2,.7,.2,1) both; }
+.pgintro-pf .pf-fine { padding: 0 30px 22px; }
