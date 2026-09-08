@@ -2544,3 +2544,29 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .pageview[data-page="ai-solutions"] .pv-list li:hover,
   .pageview[data-page="ai-solutions"] .pv-steps li:hover { transform: none; }
 }
+
+/* ---- AI intro: one or two lines, centred, stable height ----
+   The first pass capped the text at 24ch, which wrapped the longer
+   lines to three and shifted the caret onto its own row. Centring a
+   wider block and easing the size keeps every line to two rows at
+   most, so the block does not jump between steps. */
+.aiintro-inner {
+  display: block; text-align: center;
+  max-width: min(720px, 88vw); width: 100%;
+  min-height: 2.4em;   /* holds the height so lines do not shunt */
+}
+.aiintro-line {
+  display: inline;
+  font-size: clamp(23px, 3.6vw, 44px);
+  line-height: 1.2;
+  max-width: none;
+  text-wrap: balance;
+}
+.aiintro-caret {
+  height: .82em; width: 3px; margin-left: 6px;
+  vertical-align: baseline; transform: translateY(.06em);
+}
+@media (max-width: 600px) {
+  .aiintro-inner { min-height: 3.2em; }
+  .aiintro-line { font-size: clamp(21px, 6.4vw, 30px); }
+}

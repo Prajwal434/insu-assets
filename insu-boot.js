@@ -1158,10 +1158,12 @@ function boot(){
         var skip = panel.querySelector('[data-aiintro-skip]');
         if (!el || !line) return;
 
+        /* Kept short and near-equal in length: at display size a long
+           line wraps to three and the block jumps between steps. */
         var LINES = [
           'Hello.',
           'Welcome to InSu AI Solutions.',
-          'We build AI around your problem, not around a product.',
+          'We build AI around your problem.',
           'Two of ours are running below.'
         ];
         function end() {
