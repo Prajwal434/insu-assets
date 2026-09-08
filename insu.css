@@ -3553,3 +3553,27 @@ body.pageview-open #r1 {
   body.pageview-open #r1 { transition: none; }
   #r1 { transition: none; }
 }
+
+/* ============================================================
+   Brandmark stays; the back control moves below it.
+   The logo docks at top 20px and is 28px tall, so it ends at 48px.
+   The panel bar starts below that with a 40px gap, aligned to the
+   same left edge, so the two read as one column instead of
+   colliding.
+   ============================================================ */
+body.pageview-open #r1 { opacity: 1; pointer-events: auto; }
+
+.pageview .pageview-bar {
+  padding-top: 88px;
+  padding-left: 24px;
+}
+.pageview .pageview-close { margin-left: 0; }
+
+/* The mark sits over the panel now, so it needs the panel's contrast.
+   Light panels first; the dark one overrides below. */
+body.pageview-open #r1 .mark-text { color: #22292B; }
+body.ai-panel-open #r1 .mark-text { color: #EAF6F2; }
+
+@media (max-width: 600px) {
+  .pageview .pageview-bar { padding-top: 74px; padding-left: 14px; }
+}

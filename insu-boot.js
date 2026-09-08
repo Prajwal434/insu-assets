@@ -1662,6 +1662,12 @@ function boot(){
       if (!panel || !('IntersectionObserver' in window)) return;
       var scroller = panel.querySelector('.pageview-scroll');
       var blocks = [].slice.call(panel.querySelectorAll('.pv-block, .pathfinder-sec'));
+
+      /* The brandmark sits over the panel, and this one is dark — flag
+         it on <body> so the mark can take the right contrast. */
+      new MutationObserver(function () {
+        document.body.classList.toggle('ai-panel-open', !panel.hidden);
+      }).observe(panel, { attributes: true, attributeFilter: ['hidden'] });
       if (!scroller || !blocks.length) return;
 
       var io = new IntersectionObserver(function (entries) {
