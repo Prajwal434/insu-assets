@@ -2810,3 +2810,18 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 @media (max-width: 600px) {
   .aiintro-card { padding: 22px 20px 20px; min-height: 190px; }
 }
+
+/* ---- Planning agent: scene indicator and row variants ---- */
+.agentui-scenes { margin-left: auto; display: flex; gap: 5px; }
+.agentui-scene-pip {
+  width: 16px; height: 3px; border-radius: 2px;
+  background: rgba(234,246,242,.18); transition: background .35s ease;
+}
+.agentui-scene-pip.is-on { background: var(--mint); }
+.agentui-scene-pip.is-past { background: rgba(143,209,193,.42); }
+
+.peg.is-muted { opacity: .5; }
+.peg.is-muted .peg-kind { background: rgba(234,246,242,.1); color: rgba(234,246,242,.5); }
+.peg.is-good { border-color: rgba(143,209,193,.4); background: rgba(143,209,193,.07); }
+.peg.is-good .peg-kind { background: rgba(143,209,193,.2); color: var(--mint); }
+.peg.is-alt .peg-kind { background: rgba(166,198,58,.18); color: #C6E06A; }
