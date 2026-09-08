@@ -3174,3 +3174,41 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .pageview[data-page="ai-solutions"] > .pageview-bar > * {
   -webkit-mask-image: none; mask-image: none;
 }
+
+/* ---- Pathfinder: the greeting ---- */
+.pf-greet {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 40px 32px; min-height: 300px;
+}
+.pf-greet[hidden] { display: none; }
+.pf-avatar {
+  flex: 0 0 auto; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--mint); box-shadow: 0 0 16px var(--mint);
+  transform: translateY(-2px);
+  animation: aiPulse 1.8s ease-in-out infinite;
+}
+.pf-greet-line {
+  margin: 0; flex: 0 1 auto;
+  font-family: 'Poppins','Century Gothic',-apple-system,sans-serif;
+  font-size: clamp(19px, 2.6vw, 27px); line-height: 1.3;
+  letter-spacing: -0.02em; color: #fff;
+  transition: opacity .26s ease;
+}
+.pf-greet-caret {
+  flex: 0 0 auto; width: 3px; height: 1em; background: var(--mint);
+  animation: aiBlink 1s steps(2, start) infinite;
+}
+
+/* A line that names why we are asking again, rather than just asking. */
+.pf-aside {
+  margin: -8px 0 18px; padding: 12px 14px; border-radius: 10px;
+  background: rgba(166,198,58,.10); border: 1px solid rgba(166,198,58,.32);
+  font-size: 13.5px; line-height: 1.55; color: rgba(234,246,242,.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-avatar, .pf-greet-caret { animation: none; }
+}
+@media (max-width: 600px) {
+  .pf-greet { padding: 28px 20px; min-height: 220px; }
+}
