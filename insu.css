@@ -3531,3 +3531,25 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .intern-more { animation: none; }
   .intern-more-i:hover { transform: none; }
 }
+
+/* ============================================================
+   Hide the brandmark while a panel is open.
+   It is lifted to <body> at z-index 200 so it can dock over the
+   hero, which also puts it above every panel — landing on top of
+   the back control in the panel's own bar.
+
+   Hidden rather than restacked: each panel already names itself in
+   its bar, so a second logo over the top is duplication as well as
+   a collision.
+   ============================================================ */
+body.pageview-open #r1 {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+#r1 { transition: opacity .3s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.pageview-open #r1 { transition: none; }
+  #r1 { transition: none; }
+}
