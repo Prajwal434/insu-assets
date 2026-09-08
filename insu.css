@@ -3109,3 +3109,26 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   inset: -20% -10% -40%;
   pointer-events: none;
 }
+
+/* ============================================================
+   Keep the back control above the background layers.
+   The panel's atmosphere sits on .pageview-scroll's fixed
+   pseudo-elements, which cover the whole viewport. The scroller and
+   the bar both had z-index 2, so the scroller — later in the DOM —
+   painted over the bar and its background swallowed the back button.
+   ============================================================ */
+.pageview[data-page="ai-solutions"] > .pageview-bar {
+  position: relative;
+  z-index: 6;
+  background: #0A1917;   /* opaque: the layers behind must not show through */
+  border-bottom: 1px solid rgba(143,209,193,.18);
+}
+.pageview[data-page="ai-solutions"] .pageview-close {
+  position: relative; z-index: 1;
+  border-color: rgba(143,209,193,.45);
+  color: #EAF6F2;
+}
+.pageview[data-page="ai-solutions"] .pageview-close:hover {
+  background: rgba(143,209,193,.16);
+  border-color: var(--mint);
+}
