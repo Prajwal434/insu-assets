@@ -3631,3 +3631,15 @@ body.pageview-open:not(.ai-panel-open):not(.intro-playing) #r1 .mark-text .ch { 
 /* The logo image is a photo, so give it a ring on dark ground. */
 body.intro-playing #r1 .mark-icon,
 body.ai-panel-open #r1 .mark-icon { box-shadow: 0 0 0 1px rgba(234,246,242,.28); }
+
+/* ============================================================
+   Lift the brandmark above the panels.
+   It is set to z-index 200 in JS so it can dock over the hero, but
+   .pageview is 800 — so on every internal page the panel painted
+   straight over it. The bar's top padding reserved the space and
+   nothing appeared in it.
+
+   Above the panels (800) and their bars (6 within the panel), below
+   the document overlays (890+) which are full-screen takeovers.
+   ============================================================ */
+#r1 { z-index: 860 !important; }
