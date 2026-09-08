@@ -3600,3 +3600,13 @@ body.pageview-open #r1 .mark-text,
 body.pageview-open #r1 .mark-text .ch { color: #22292B; }
 body.ai-panel-open #r1 .mark-text,
 body.ai-panel-open #r1 .mark-text .ch { color: #EAF6F2; }
+
+/* ============================================================
+   Case deck: the deck owns its cards' transforms.
+   The panel entrance also animates .scs-case with animation-fill-mode
+   both, so it holds transform:none at the end — overriding the scale
+   the deck uses to set the front card forward, and fighting the
+   track's own offset.
+   ============================================================ */
+.pageview:not([hidden]) .casedeck .scs-case { animation: none; }
+.casedeck .scs-cases { will-change: transform; }

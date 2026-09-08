@@ -1140,6 +1140,26 @@ function boot(){
       }
       measure(); goTo(0, true);
       window.addEventListener('resize', function () { measure(); goTo(idx, true); });
+
+      /* The panel is display:none at init, so every width measures zero
+         and the deck has nothing to slide. Measure again once it is
+         actually laid out — and once more after a frame, since the
+         panel's entrance animation is still transforming on the first. */
+      var pv = deck.closest('.pageview');
+      if (pv) {
+        new MutationObserver(function () {
+          if (pv.hidden) return;
+          measure(); goTo(idx, true);
+          requestAnimationFrame(function () { measure(); goTo(idx, true); });
+          setTimeout(function () { measure(); goTo(idx, true); }, 700);
+        }).observe(pv, { attributes: true, attributeFilter: ['hidden'] });
+      }
+
+      /* Card widths depend on their images, which arrive later. */
+      deck.querySelectorAll('img').forEach(function (im) {
+        if (im.complete) return;
+        im.addEventListener('load', function () { measure(); goTo(idx, true); });
+      });
     })();
 
     /* AI panel: opening sequence, then the two agent simulations.
