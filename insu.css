@@ -3610,3 +3610,180 @@ body.ai-panel-open #r1 .mark-text .ch { color: #EAF6F2; }
    ============================================================ */
 .pageview:not([hidden]) .casedeck .scs-case { animation: none; }
 .casedeck .scs-cases { will-change: transform; }
+
+/* ============================================================
+   LIGHT THEME — intros and the AI panel.
+   Both intros and the AI page were built dark. Switched to the
+   site's light ground so every page reads the same, keeping the
+   agent terminals dark: a console is meant to look like one, and
+   it now reads as an inset panel rather than the whole page.
+   ============================================================ */
+
+/* ---- intro overlays ---- */
+.aiintro, .pgintro {
+  background:
+    radial-gradient(70% 60% at 50% 42%, #FFFFFF 0%, #EFEDE6 62%, #E4E1D7 100%);
+}
+.aiintro-line, .pgintro-line { color: #16302B; }
+.aiintro-caret, .pgintro-caret { background: #2E9C8E; }
+.aiintro-avatar, .pgintro-avatar { background: #2E9C8E; box-shadow: 0 0 16px rgba(46,156,142,.55); }
+.aiintro-skip {
+  border-color: rgba(34,41,43,.28); color: #4A5553; background: rgba(255,255,255,.6);
+}
+.aiintro-skip:hover { background: #fff; color: #16302B; }
+
+.aiintro-flow-k { color: #1C6F66; }
+.aiintro-card {
+  background: #fff; border-color: rgba(46,156,142,.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,.07);
+}
+.aiintro-card-n { color: #1C6F66; background: rgba(46,156,142,.12); border-color: rgba(46,156,142,.3); }
+.aiintro-card-t { color: #16302B; }
+.aiintro-card-d { color: #5B6567; }
+.aiintro-dot { background: rgba(34,41,43,.16); }
+.aiintro-dot.is-on { background: #2E9C8E; }
+.aiintro-dot.is-past { background: rgba(46,156,142,.45); }
+
+/* The miniature agent stays a console — that is what it is. */
+.aiintro-mini { background: #0C201D; border-color: rgba(34,41,43,.18); }
+.aiintro-mini.is-live { border-color: rgba(46,156,142,.5); }
+
+/* ---- AI panel ---- */
+.pageview[data-page="ai-solutions"] {
+  --page-bg: #F3F1EC;
+  --page-ink: #22292B;
+  --page-ink-soft: #5B6567;
+  --page-line: #DCD8CD;
+  --page-card: #FFFFFF;
+  background: #F3F1EC;
+  color: #22292B;
+}
+.pageview[data-page="ai-solutions"] .pageview-scroll::before {
+  background:
+    radial-gradient(60% 45% at 15% 12%, rgba(46,156,142,.14), transparent 60%),
+    radial-gradient(50% 40% at 88% 30%, rgba(166,198,58,.12), transparent 58%),
+    radial-gradient(55% 45% at 60% 92%, rgba(46,156,142,.10), transparent 60%);
+}
+.pageview[data-page="ai-solutions"] .pageview-scroll::after {
+  background-image:
+    linear-gradient(rgba(34,41,43,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,41,43,.045) 1px, transparent 1px);
+}
+.pageview[data-page="ai-solutions"]::before {
+  background:
+    radial-gradient(38% 34% at 22% 28%, rgba(46,156,142,.16), transparent 62%),
+    radial-gradient(30% 28% at 78% 62%, rgba(166,198,58,.13), transparent 60%);
+}
+.pageview[data-page="ai-solutions"]::after {
+  background: linear-gradient(104deg, transparent 42%, rgba(46,156,142,.07) 50%, transparent 58%);
+}
+.ai-par {
+  background:
+    radial-gradient(28% 22% at 18% 18%, rgba(46,156,142,.13), transparent 62%),
+    radial-gradient(22% 20% at 82% 44%, rgba(166,198,58,.10), transparent 60%),
+    radial-gradient(26% 22% at 40% 78%, rgba(46,156,142,.10), transparent 62%);
+}
+
+.pageview[data-page="ai-solutions"] > .pageview-bar { background: transparent; }
+.pageview[data-page="ai-solutions"] .pageview-close {
+  background: rgba(255,255,255,.75); border-color: rgba(46,156,142,.5); color: #22292B;
+}
+.pageview[data-page="ai-solutions"] .pageview-close:hover { background: rgba(46,156,142,.16); }
+.pageview[data-page="ai-solutions"] .pageview-title { color: #5B6567; text-shadow: none; }
+.pageview[data-page="ai-solutions"] .pageview-h { color: #16302B; text-shadow: none; animation: none; }
+.pageview[data-page="ai-solutions"] .who-eyebrow { color: #1C6F66; }
+
+.pageview[data-page="ai-solutions"] .pv-block {
+  background: rgba(255,255,255,.72);
+  border-color: var(--page-line);
+}
+.pageview[data-page="ai-solutions"] .pv-block.is-in:hover {
+  background: #fff; border-color: rgba(46,156,142,.4);
+}
+.pageview[data-page="ai-solutions"] .pv-block h2 { color: #16302B; }
+.pageview[data-page="ai-solutions"] .pv-block h2::before { background: #2E9C8E; box-shadow: none; }
+.pageview[data-page="ai-solutions"] .pv-block h2:hover { text-shadow: none; }
+.pageview[data-page="ai-solutions"] .pv-lead { color: var(--page-ink-soft); }
+.pageview[data-page="ai-solutions"] .pv-list li { color: var(--page-ink); }
+.pageview[data-page="ai-solutions"] .pv-list li b,
+.pageview[data-page="ai-solutions"] .pv-steps li span { color: #1C6F66; }
+.pageview[data-page="ai-solutions"] .pv-steps li b { color: var(--page-ink); }
+.pageview[data-page="ai-solutions"] .pv-steps li p { color: var(--page-ink-soft); }
+.pageview[data-page="ai-solutions"] .pv-list li:hover { color: #16302B; }
+.pageview[data-page="ai-solutions"] .tag {
+  background: rgba(46,156,142,.10); border-color: rgba(46,156,142,.32); color: #22292B;
+}
+.pageview[data-page="ai-solutions"] .tag:hover { background: rgba(46,156,142,.2); }
+
+.agentdemo-tag { color: #1C6F66; background: rgba(46,156,142,.12); border-color: rgba(46,156,142,.32); }
+
+/* Case studies on light */
+.cstudy-k { color: #6B7573; }
+.cstudy-problem { background: rgba(232,163,61,.12); border-color: rgba(201,132,24,.4); }
+.cstudy-problem .cstudy-k { color: #A96A0F; }
+.cstudy-problem p { color: var(--page-ink); }
+.cstudy-col { background: #fff; border-color: var(--page-line); }
+.cstudy-col--next { background: rgba(46,156,142,.08); border-color: rgba(46,156,142,.35); }
+.cstudy-col--next .cstudy-k { color: #1C6F66; }
+.cstudy-col li { color: var(--page-ink); }
+.cstudy-col--now li::before { background: rgba(34,41,43,.35); }
+.cstudy-col--next li::before { color: #1C6F66; }
+.cstudy-bar { background: rgba(34,41,43,.12); }
+.cstudy-win { background: rgba(46,156,142,.09); border-color: rgba(46,156,142,.32); }
+.cstudy-saving { color: #16302B; }
+.cstudy-wins li { color: var(--page-ink); }
+.cstudy-wins b { color: #1C6F66; }
+.cstudy-fine { color: #8A9391; }
+
+.probmore-i { background: #fff; border-color: var(--page-line); color: var(--page-ink); }
+.probmore-i:hover { background: rgba(46,156,142,.12); border-color: #2E9C8E; color: #16302B; }
+
+.aifit-opt { background: #fff; border-color: var(--page-line); color: var(--page-ink); }
+.aifit-opt:hover, .aifit-opt:focus-visible { background: rgba(46,156,142,.09); border-color: #2E9C8E; }
+.aifit-opt-k { color: #16302B; }
+.aifit-opt-d { color: var(--page-ink-soft); }
+.aifit-opt-go { color: #1C6F66; }
+
+/* The brandmark now sits over a light AI panel like the others. */
+body.ai-panel-open #r1 .mark-text,
+body.ai-panel-open #r1 .mark-text .ch { color: #22292B; }
+
+/* ---- Programs finder on light ---- */
+.pf {
+  background:
+    radial-gradient(120% 84% at 10% 0%, rgba(46,156,142,.14) 0%, transparent 56%),
+    radial-gradient(96% 76% at 94% 10%, rgba(166,198,58,.12) 0%, transparent 54%),
+    #FFFFFF;
+  border-color: var(--page-line);
+  box-shadow: 0 18px 44px rgba(0,0,0,.08);
+}
+.pf-progress { background: rgba(34,41,43,.12); }
+.pf-q { color: #16302B; }
+.pf-q::before { background: #2E9C8E; box-shadow: none; }
+.pf-step { color: #1C6F66; background: rgba(46,156,142,.12); border-color: rgba(46,156,142,.32); }
+.pf-opt {
+  background: linear-gradient(120deg, rgba(46,156,142,.05), rgba(255,255,255,.9));
+  border-color: var(--page-line); color: var(--page-ink);
+}
+.pf-opt:hover, .pf-opt:focus-visible {
+  background: linear-gradient(120deg, rgba(46,156,142,.14), rgba(46,156,142,.05));
+  border-color: rgba(46,156,142,.6); box-shadow: 0 10px 24px rgba(0,0,0,.08);
+}
+.pf-opt::before { background: rgba(46,156,142,.14); color: #1C6F66; border-color: rgba(46,156,142,.32); }
+.pf-opt:hover::before { background: #2E9C8E; color: #fff; }
+.pf-opt-go { color: #1C6F66; }
+.pf-back { color: #6B7573; }
+.pf-back:hover { color: var(--page-ink); }
+.pf-aside { background: rgba(166,198,58,.14); border-color: rgba(134,168,40,.4); color: var(--page-ink); }
+.pf-res {
+  background: linear-gradient(150deg, rgba(46,156,142,.08), rgba(255,255,255,.9));
+  border-color: var(--page-line); border-top-color: #2E9C8E;
+  box-shadow: 0 10px 26px rgba(0,0,0,.07);
+}
+.pf-res-tag { color: #1C6F66; }
+.pf-res h4 { color: #16302B; }
+.pf-res-note { color: var(--page-ink-soft); }
+.pf-res-why { color: var(--page-ink); }
+.pf-res-foot { color: var(--page-ink-soft); }
+.pf-fine { color: #8A9391; }
+.pf-actions .btn.ghost { border-color: var(--page-line); color: var(--page-ink); }
