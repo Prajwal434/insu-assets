@@ -2570,3 +2570,103 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .aiintro-inner { min-height: 3.2em; }
   .aiintro-line { font-size: clamp(21px, 6.4vw, 30px); }
 }
+
+/* ============================================================
+   AI PANEL — compact case studies
+   Problem, today, with the agent, then what changes. Enough to
+   show we understand the job; not a build guide.
+   ============================================================ */
+.probhead h2, .probmore h2 { max-width: 18ch; }
+
+.cstudy { margin-bottom: 26px; }
+.cstudy-k {
+  display: block; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(234,246,242,.5); margin-bottom: 10px;
+}
+.cstudy-problem {
+  padding: 18px 20px; border-radius: 12px; margin-bottom: 16px;
+  background: rgba(242,163,60,.08); border: 1px solid rgba(242,163,60,.28);
+}
+.cstudy-problem .cstudy-k { color: #F2A33C; }
+.cstudy-problem p { margin: 0; font-size: 14.5px; line-height: 1.62; color: rgba(234,246,242,.92); }
+
+.cstudy-cols { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.cstudy-col {
+  padding: 18px 20px; border-radius: 12px;
+  background: rgba(234,246,242,.04); border: 1px solid rgba(234,246,242,.12);
+}
+.cstudy-col--next { border-color: rgba(143,209,193,.3); background: rgba(143,209,193,.07); }
+.cstudy-col--next .cstudy-k { color: var(--mint); }
+.cstudy-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.cstudy-col li {
+  position: relative; padding-left: 20px;
+  font-size: 13.5px; line-height: 1.5; color: rgba(234,246,242,.82);
+}
+.cstudy-col--now li::before {
+  content: ""; position: absolute; left: 2px; top: .55em;
+  width: 8px; height: 1.5px; background: rgba(234,246,242,.4);
+}
+.cstudy-col--next li::before {
+  content: "✓"; position: absolute; left: 0; top: 0;
+  font-size: 11px; color: var(--mint);
+}
+
+/* Effort bars fill when the block scrolls in, so the comparison
+   plays rather than sitting there pre-drawn. */
+.cstudy-meter { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.cstudy-meter-k {
+  font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(234,246,242,.45); flex: 0 0 auto;
+}
+.cstudy-bar {
+  flex: 1 1 auto; height: 5px; border-radius: 3px;
+  background: rgba(234,246,242,.12); overflow: hidden;
+}
+.cstudy-bar i {
+  display: block; height: 100%; width: 0; border-radius: 3px;
+  background: linear-gradient(90deg, #F2A33C, #E07A3C);
+  transition: width 1.1s cubic-bezier(.16,.84,.28,1) .2s;
+}
+.cstudy-bar--good i { background: linear-gradient(90deg, var(--mint), #A6C63A); }
+.is-in .cstudy-bar i { width: var(--w); }
+
+.cstudy-win {
+  margin-top: 16px; padding: 18px 20px; border-radius: 12px;
+  background: rgba(143,209,193,.08); border: 1px solid rgba(143,209,193,.26);
+}
+.cstudy-saving {
+  display: block;
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: clamp(17px, 2.2vw, 22px); line-height: 1.25;
+  color: #fff; margin-bottom: 12px;
+}
+.cstudy-wins { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.cstudy-wins li { font-size: 13.5px; line-height: 1.55; color: rgba(234,246,242,.82); }
+.cstudy-wins b { color: var(--mint); font-weight: 600; }
+
+.cstudy-fine {
+  margin: 12px 0 0; font-size: 11.5px; line-height: 1.5;
+  color: rgba(234,246,242,.42);
+}
+
+/* ---- also solvable ---- */
+.probmore-grid { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+.probmore-i {
+  font-size: 13px; padding: 9px 15px; border-radius: 999px;
+  background: rgba(234,246,242,.05); border: 1px solid rgba(234,246,242,.16);
+  color: rgba(234,246,242,.85);
+  transition: transform .24s cubic-bezier(.2,.7,.2,1), border-color .24s ease, background .24s ease;
+}
+.probmore-i:hover {
+  transform: translateY(-3px); border-color: var(--mint);
+  background: rgba(143,209,193,.12); color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cstudy-bar i { transition: none; }
+  .probmore-i:hover { transform: none; }
+}
+@media (max-width: 600px) {
+  .cstudy-problem, .cstudy-col, .cstudy-win { padding: 15px 16px; }
+}
