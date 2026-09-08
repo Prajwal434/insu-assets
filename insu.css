@@ -3132,3 +3132,10 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   background: rgba(143,209,193,.16);
   border-color: var(--mint);
 }
+
+/* The panel must not be able to scroll at all — only the region inside
+   it does. Anything that scrolls the panel takes the bar off the top. */
+.pageview[data-page="ai-solutions"] { overflow: clip; }
+@supports not (overflow: clip) {
+  .pageview[data-page="ai-solutions"] { overflow: hidden; }
+}

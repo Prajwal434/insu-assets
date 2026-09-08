@@ -1190,7 +1190,16 @@ function boot(){
           if (!skipped) {
             var first = panel.querySelector('[data-agent-demo="pegging"]');
             if (first) later(function () {
-              first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              /* Not scrollIntoView: it scrolls every scrollable ancestor, and
+                 the panel has overflow:hidden — still scrollable from script —
+                 so it shifted the whole panel and took the back bar off the top.
+                 Scroll the intended container and nothing else. */
+              var sc = panel.querySelector('.pageview-scroll');
+              if (!sc) return;
+              var top = first.getBoundingClientRect().top
+                      - sc.getBoundingClientRect().top + sc.scrollTop;
+              sc.scrollTo({ top: Math.max(0, top - 8), behavior: 'smooth' });
+              panel.scrollTop = 0;   // undo any nudge the panel already took
             }, 320);
           }
         }
