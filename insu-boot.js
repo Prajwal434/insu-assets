@@ -1695,8 +1695,13 @@ function boot(){
       var panel = document.querySelector('.pageview[data-page="programs"]');
       if (!panel || !('IntersectionObserver' in window)) return;
       var scroller = panel.querySelector('.pageview-scroll');
+      /* Headings and ledes were left out of the first pass, so the
+         cards moved and everything framing them sat still. */
       var items = [].slice.call(panel.querySelectorAll(
-        '.prog, .path, .intern-stack-item, .price-row, .teach-example'));
+        '.prog, .path, .intern-stack-item, .price-row, .teach-example, ' +
+        '.who-eyebrow, .who-statement, .sec-lede, .intern-lede, .intern-body, ' +
+        '.intern-pipeline, .intern-cta-row, .price-legend, .price-table, ' +
+        '.prog .flow, .paths, .indnet, .who-tagline'));
       if (!scroller || !items.length) return;
 
       var io = new IntersectionObserver(function (es) {

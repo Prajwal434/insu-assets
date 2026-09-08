@@ -3443,3 +3443,47 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
   .pageview[data-page="programs"] .prog:hover,
   .pageview[data-page="programs"] .path:hover { transform: none; }
 }
+
+/* ---- Programs: everything below the flagship moves too ----
+   The first pass only revealed cards, so each section's heading, lede
+   and supporting blocks stayed put while the cards under them animated.
+   ---- */
+.pageview[data-page="programs"] .who-eyebrow,
+.pageview[data-page="programs"] .who-statement,
+.pageview[data-page="programs"] .sec-lede,
+.pageview[data-page="programs"] .intern-lede,
+.pageview[data-page="programs"] .intern-body,
+.pageview[data-page="programs"] .intern-pipeline,
+.pageview[data-page="programs"] .intern-cta-row,
+.pageview[data-page="programs"] .price-legend,
+.pageview[data-page="programs"] .price-table,
+.pageview[data-page="programs"] .paths,
+.pageview[data-page="programs"] .who-tagline {
+  opacity: 0; transform: translate3d(0, 20px, 0);
+  transition: opacity .7s cubic-bezier(.16,.84,.28,1), transform .7s cubic-bezier(.16,.84,.28,1);
+}
+/* Headings lead their own section rather than arriving with it. */
+.pageview[data-page="programs"] .who-eyebrow { transform: translate3d(-14px, 0, 0); }
+
+/* Flow diagrams draw in from the left, matching how they read. */
+.pageview[data-page="programs"] .prog .flow {
+  opacity: 0; transform: translate3d(-16px, 0, 0);
+  transition: opacity .8s cubic-bezier(.16,.84,.28,1), transform .8s cubic-bezier(.16,.84,.28,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageview[data-page="programs"] .who-eyebrow,
+  .pageview[data-page="programs"] .who-statement,
+  .pageview[data-page="programs"] .sec-lede,
+  .pageview[data-page="programs"] .intern-lede,
+  .pageview[data-page="programs"] .intern-body,
+  .pageview[data-page="programs"] .intern-pipeline,
+  .pageview[data-page="programs"] .intern-cta-row,
+  .pageview[data-page="programs"] .price-legend,
+  .pageview[data-page="programs"] .price-table,
+  .pageview[data-page="programs"] .paths,
+  .pageview[data-page="programs"] .who-tagline,
+  .pageview[data-page="programs"] .prog .flow {
+    opacity: 1; transform: none; transition: none;
+  }
+}
