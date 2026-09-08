@@ -3592,3 +3592,11 @@ body.intro-playing #r1 {
   opacity: 0;
   pointer-events: none;
 }
+
+/* The brandmark takes each panel's own contrast. Panels have one
+   background throughout, so this is a fixed choice per panel rather
+   than something to measure while scrolling. */
+body.pageview-open #r1 .mark-text,
+body.pageview-open #r1 .mark-text .ch { color: #22292B; }
+body.ai-panel-open #r1 .mark-text,
+body.ai-panel-open #r1 .mark-text .ch { color: #EAF6F2; }

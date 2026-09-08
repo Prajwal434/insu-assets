@@ -500,6 +500,18 @@ function boot(){
       var last = null, queued = false;
       function update() {
         queued = false;
+
+        /* A panel covers the page, so the band behind it is the wrong
+           thing to measure. Each panel has one background throughout,
+           so clear the inline colour and let the stylesheet decide from
+           body.pageview-open / body.ai-panel-open. Inline style would
+           otherwise beat those rules. */
+        if (document.querySelector('.pageview:not([hidden])')) {
+          text.style.color = '';
+          last = null;
+          return;
+        }
+
         var r = mark.getBoundingClientRect();
         var probe = r.top + r.height / 2;
         var band = null;
