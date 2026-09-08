@@ -304,7 +304,7 @@ function boot(){
       discover:  ['A short discovery to find where the cost actually sits', 'An honest answer on whether AI is the right tool here', 'A costed recommendation before anyone builds anything']
     };
 
-    /* Each step: what Ravi says, optional reaction to the last answer,
+    /* Each step: what Insu says, optional reaction to the last answer,
        and either chips or a free-text prompt. */
     var FLOW = {
       area: {
