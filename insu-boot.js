@@ -1723,7 +1723,9 @@ function boot(){
 
           });
 
-          var total = items.length * 210 + 900;
+          /* Held long enough to actually read — the terms are the point of
+     this beat, not a flourish on the way past. */
+  var total = items.length * 210 + 5000;
 
           later(function () {
 
