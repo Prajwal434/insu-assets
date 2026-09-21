@@ -3820,3 +3820,41 @@ body.intro-playing #r1 .mark-icon { box-shadow: none; }
   .contactpop-panel.bda { max-height: 92vh; }
   .bda-log { padding: 14px; }
 }
+
+/* ============================================================
+   BACK TO TOP
+   'Talk to our Team' jumps to the foot of a long page with two
+   pinned sections, so the way back is a long scroll. Appears only
+   once there is a real distance to travel, and never over a panel —
+   those have their own back control.
+   ============================================================ */
+.totop {
+  position: fixed; right: 22px; bottom: 22px; z-index: 520;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 16px 11px 13px; border-radius: 999px; cursor: pointer;
+  font: inherit; font-size: 12.5px; font-weight: 600; letter-spacing: .04em;
+  color: #EAF6F2; background: rgba(15,46,42,.9);
+  border: 1px solid rgba(143,209,193,.42);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 6px 22px rgba(0,0,0,.22);
+  opacity: 0; transform: translate3d(0, 12px, 0);
+  transition: opacity .3s ease, transform .3s cubic-bezier(.2,.7,.2,1),
+              background .2s ease, border-color .2s ease;
+}
+.totop[hidden] { display: none; }
+.totop.is-on { opacity: 1; transform: none; }
+.totop:hover { background: var(--teal-900); border-color: var(--mint); }
+.totop:hover .totop-arrow { transform: translateY(-2px); }
+.totop-arrow { font-size: 14px; line-height: 1; transition: transform .2s ease; }
+
+/* A panel carries its own back control; two at once is noise. */
+body.pageview-open .totop { opacity: 0 !important; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .totop { transition: none; }
+  .totop:hover .totop-arrow { transform: none; }
+}
+@media (max-width: 600px) {
+  .totop { right: 14px; bottom: 14px; padding: 10px 14px 10px 11px; }
+  .totop-t { display: none; }
+}
