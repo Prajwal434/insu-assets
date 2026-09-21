@@ -3969,3 +3969,32 @@ body.pageview-open .totop { opacity: 0 !important; pointer-events: none; }
 @media (max-width: 600px) {
   .stk-row > p, .stk-tags, .stk-note { margin-left: 0; }
 }
+
+/* ---- AI intro: the keyword beat before the walkthrough ---- */
+.aiintro-kw {
+  width: min(760px, 92vw); text-align: center;
+  animation: aiFlowIn .4s cubic-bezier(.2,.7,.2,1) both;
+}
+.aiintro-kw[hidden] { display: none; }
+.aiintro-kw.is-out { animation: aiKwOut .34s ease both; }
+@keyframes aiKwOut { to { opacity: 0; transform: translate3d(0,-10px,0); } }
+.aiintro-kw-k {
+  display: block; margin-bottom: 22px;
+  font-size: 11px; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--mint);
+}
+.aiintro-kw-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.aiintro-kw-i {
+  font-family: 'Poppins','Century Gothic',-apple-system,sans-serif;
+  font-size: clamp(15px, 2.2vw, 22px); font-weight: 600; letter-spacing: -0.01em;
+  color: #fff; background: rgba(143,209,193,.12);
+  border: 1px solid rgba(143,209,193,.36);
+  padding: 9px 18px; border-radius: 999px;
+  opacity: 0; transform: translate3d(0, 14px, 0) scale(.94);
+  transition: opacity .32s ease, transform .38s cubic-bezier(.2,.9,.3,1.2);
+}
+.aiintro-kw-i.is-on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .aiintro-kw, .aiintro-kw.is-out { animation: none; }
+  .aiintro-kw-i { transition: none; opacity: 1; transform: none; }
+}
