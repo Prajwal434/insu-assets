@@ -93,6 +93,10 @@ function boot(){
         if (visible[id] > best) { best = visible[id]; bestId = id; }
       });
       var active = bestId ? sectionToLink[bestId] : null;
+      /* While a panel is open it owns the highlight: its content is what
+         the visitor is looking at, and the observer would otherwise keep
+         lighting whichever main-page section sits behind it. */
+      if (document.body.classList.contains('pageview-open')) return;
       navLinks.forEach(function (a) { a.classList.toggle('is-current', a === active); });
     }, { threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin: '-45% 0px -45% 0px' });
     Object.keys(sectionToLink).forEach(function (id) {
@@ -114,6 +118,14 @@ function boot(){
       pv.hidden = true;
       pv.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('pageview-open');
+      /* Clear it and let the scroll observer take over again on its
+         next update, rather than leaving the panel's item lit. */
+      (function () {
+        var nav = document.getElementById('siteNav');
+        if (nav) nav.querySelectorAll('a[data-nav]').forEach(function (a) {
+          a.classList.remove('is-current');
+        });
+      })();
       var wasHash = '#' + openKey;
       openKey = null;
       if (pop && location.hash === wasHash) history.back();
@@ -127,6 +139,15 @@ function boot(){
       pv.hidden = false;
       pv.setAttribute('aria-hidden', 'false');
       document.body.classList.add('pageview-open');
+      /* Panels have no main-page section, so nothing would light them. */
+      (function () {
+        var forKey = { 'programs': '#programs', 'supply-chain': '#supplychain', 'ai-solutions': '#workflow' }[key];
+        var nav = document.getElementById('siteNav');
+        if (!nav) return;
+        nav.querySelectorAll('a[data-nav]').forEach(function (a) {
+          a.classList.toggle('is-current', forKey && a.getAttribute('href') === forKey);
+        });
+      })();
       openKey = key;
       var sc = pv.querySelector('.pageview-scroll');
       if (sc) sc.scrollTop = 0;
