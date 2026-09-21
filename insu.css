@@ -3864,3 +3864,23 @@ body.pageview-open .totop { opacity: 0 !important; pointer-events: none; }
 .sol--more.is-revealed { animation: solIn .5s cubic-bezier(.2,.7,.2,1) both; }
 @keyframes solIn { from { opacity: 0; transform: translate3d(0, 16px, 0); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .sol--more.is-revealed { animation: none; } }
+
+/* ============================================================
+   INDUSTRIES — labels, not controls.
+   These are <span> elements listing where the approach applies.
+   A hover lift gave them a button's affordance, and the filled
+   style on Supply Chain read as a selected state in a set nobody
+   can select from. Both removed; the emphasis now says why it is
+   emphasised.
+   ============================================================ */
+.ind, .indnet .ind { cursor: default; }
+.ind:hover { transform: none; border-color: var(--page-line); }
+.ind--strong:hover { border-color: var(--teal-900); }
+
+.ind--strong { display: inline-flex; align-items: center; gap: 9px; }
+.ind-flag {
+  font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mint); background: rgba(143,209,193,.18);
+  border: 1px solid rgba(143,209,193,.34);
+  padding: 2px 7px; border-radius: 999px;
+}
