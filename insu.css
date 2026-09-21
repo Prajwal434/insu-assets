@@ -3998,3 +3998,24 @@ body.pageview-open .totop { opacity: 0 !important; pointer-events: none; }
   .aiintro-kw, .aiintro-kw.is-out { animation: none; }
   .aiintro-kw-i { transition: none; opacity: 1; transform: none; }
 }
+
+/* ---- Main page, AI section: the vocabulary in one line ----
+   The section described the approach without naming anything a
+   technical reader scans for. Short strip, with deployment options
+   marked out in the second colour since that is the differentiator. */
+.aibar { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 14px; }
+.aibar-i {
+  font-size: 13px; font-weight: 600; letter-spacing: .01em;
+  padding: 7px 14px; border-radius: 999px;
+  background: rgba(143,209,193,.12); border: 1px solid rgba(143,209,193,.34);
+  color: #EAF6F2;
+  transition: background .22s ease, transform .22s cubic-bezier(.2,.7,.2,1), border-color .22s ease;
+}
+.aibar-i--alt { background: rgba(166,198,58,.13); border-color: rgba(166,198,58,.4); }
+.aibar-i:hover { background: rgba(143,209,193,.24); border-color: var(--mint); transform: translateY(-2px); }
+.aibar-i--alt:hover { background: rgba(166,198,58,.26); border-color: #C6E06A; }
+.aibar-note {
+  margin: 0 0 6px; font-size: 14px; line-height: 1.6;
+  color: var(--ink-soft); max-width: 56ch;
+}
+@media (prefers-reduced-motion: reduce) { .aibar-i:hover { transform: none; } }
