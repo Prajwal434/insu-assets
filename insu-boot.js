@@ -923,6 +923,7 @@ function boot(){
         if (document.querySelector('.pageview:not([hidden])')) {
           text.style.color = '';
           last = null;
+          mark.classList.add('is-docked');   // panels always count as docked
           return;
         }
 
@@ -935,7 +936,12 @@ function boot(){
         }
         /* No band under the mark means we are still in the hero, where
            the pinned timeline owns the colour. Leave it alone. */
-        if (!band) { last = null; return; }
+        /* No band under the mark means we are still in the hero, where it
+           sits in the headline block and the wordmark belongs. Past that
+           it is a corner logo, and the words are what make it wide enough
+           to collide with the page. */
+        if (!band) { last = null; mark.classList.remove('is-docked'); return; }
+        mark.classList.add('is-docked');
 
         var c = getComputedStyle(band).color;
         if (c === last) return;

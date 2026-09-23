@@ -4019,3 +4019,28 @@ body.pageview-open .totop { opacity: 0 !important; pointer-events: none; }
   color: var(--ink-soft); max-width: 56ch;
 }
 @media (prefers-reduced-motion: reduce) { .aibar-i:hover { transform: none; } }
+
+/* ============================================================
+   Docked brandmark: icon only.
+   In the hero it sits in the headline block and the wordmark
+   belongs with it. Once docked it is a corner logo, and the words
+   are what made it wide enough to run into page text.
+   ============================================================ */
+#r1 .mark-text { transition: opacity .3s ease, max-width .35s ease, margin .35s ease; }
+#r1.is-docked .mark-text {
+  opacity: 0;
+  max-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+#r1.is-docked { gap: 0; }
+
+/* The pill becomes a disc around the icon alone. */
+body.pageview-open #r1.is-docked,
+body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
+
+@media (prefers-reduced-motion: reduce) {
+  #r1 .mark-text { transition: none; }
+}
