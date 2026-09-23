@@ -956,6 +956,13 @@ function boot(){
       }
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll);
+
+      /* Opening a panel fires no scroll event, so the docked state was
+         only picked up the next time the page moved — leaving the full
+         wordmark expanded over the panel's back control. */
+      new MutationObserver(onScroll).observe(document.body, {
+        attributes: true, attributeFilter: ['class']
+      });
       /* Re-check when the colour scheme flips under us. */
       if (window.matchMedia) {
         var mq = window.matchMedia('(prefers-color-scheme: dark)');

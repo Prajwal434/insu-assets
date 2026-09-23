@@ -3388,7 +3388,9 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 
 /* ---- paths ---- */
 .pageview[data-page="programs"] .path {
-  border-radius: 16px; overflow: hidden;
+  /* No overflow:hidden — .path-flag sits at top:-10px, outside the card,
+     and clipping the card hid 'Most complete' entirely. */
+  border-radius: 16px;
   transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease;
 }
 .pageview[data-page="programs"] .path:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,.12); }
