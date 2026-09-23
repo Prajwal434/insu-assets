@@ -4046,3 +4046,81 @@ body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
 @media (prefers-reduced-motion: reduce) {
   #r1 .mark-text { transition: none; }
 }
+
+/* ============================================================
+   ONE PROJECT, SEVEN WEEKS
+   The teaching claim is that a single project compounds rather than
+   seven exercises being thrown away — so the layers accumulate on
+   screen and earlier ones stay.
+   ============================================================ */
+.grow {
+  margin: 26px 0 8px; padding: 26px 26px 24px; border-radius: 18px;
+  background: var(--page-card); border: 1px solid var(--page-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.07);
+}
+.grow-k {
+  display: block; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mint-ink); margin-bottom: 9px;
+}
+.grow-p { margin: 0 0 22px; font-size: 14.5px; line-height: 1.65; color: var(--page-ink-soft); max-width: 66ch; }
+.grow-body { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+
+.grow-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.grow-step {
+  display: flex; gap: 12px; align-items: flex-start; cursor: pointer;
+  padding: 10px 12px; border-radius: 10px;
+  opacity: .42; transition: opacity .4s ease, background .3s ease, transform .3s cubic-bezier(.2,.7,.2,1);
+}
+.grow-step:hover { opacity: .8; }
+.grow-step.is-done { opacity: .62; }
+.grow-step.is-on { opacity: 1; background: rgba(46,156,142,.09); transform: translateX(3px); }
+.grow-num {
+  flex: 0 0 auto; font-size: 10.5px; font-weight: 800; letter-spacing: .08em;
+  color: var(--page-ink-soft); padding-top: 2px; font-variant-numeric: tabular-nums;
+}
+.grow-step.is-on .grow-num { color: var(--mint-ink); }
+.grow-t { min-width: 0; }
+.grow-t b {
+  display: block; font-family: 'Poppins','Century Gothic',-apple-system,sans-serif;
+  font-size: 14.5px; color: var(--page-ink); margin-bottom: 2px;
+}
+.grow-t span { font-size: 13px; line-height: 1.5; color: var(--page-ink-soft); }
+
+.grow-stack {
+  padding: 18px 18px 16px; border-radius: 14px;
+  background: var(--page-bg); border: 1px solid var(--page-line);
+}
+.grow-stack-k {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--page-ink-soft); margin-bottom: 12px;
+}
+.grow-layers { display: flex; flex-direction: column; gap: 7px; }
+.grow-layer {
+  padding: 10px 13px; border-radius: 9px;
+  background: var(--page-card); border: 1px solid var(--page-line);
+  border-left: 3px solid var(--mint);
+  opacity: 0; transform: translate3d(0, 10px, 0);
+  transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.grow-layer.is-on { opacity: 1; transform: none; }
+.grow-layer b {
+  display: block; font-size: 13px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--page-ink); margin-bottom: 2px;
+}
+.grow-layer span { font-size: 12.5px; line-height: 1.45; color: var(--page-ink-soft); }
+.grow-layer i { font-style: italic; }
+.grow-end {
+  margin: 14px 0 0; padding-left: 12px; border-left: 3px solid var(--mint);
+  font-size: 13.5px; line-height: 1.55; color: var(--page-ink);
+}
+.grow-end[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grow-step, .grow-layer { transition: none; }
+  .grow-step.is-on { transform: none; }
+}
+@media (max-width: 780px) {
+  .grow-body { grid-template-columns: 1fr; }
+  .grow { padding: 20px 18px 18px; }
+}
