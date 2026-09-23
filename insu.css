@@ -4124,3 +4124,17 @@ body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
   .grow-body { grid-template-columns: 1fr; }
   .grow { padding: 20px 18px 18px; }
 }
+
+/* ---- Teaching demo: one project per programme ---- */
+.grow-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
+.grow-tab {
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--page-line); background: var(--page-bg); color: var(--page-ink-soft);
+  transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.grow-tab:hover { color: var(--page-ink); border-color: var(--mint); }
+.grow-tab.is-on {
+  background: var(--teal-900); border-color: var(--teal-900); color: #EAF6F2;
+}
+@media (prefers-reduced-motion: reduce) { .grow-tab { transition: none; } }
