@@ -1894,20 +1894,13 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
    while the drag is still moving the track.
    ============================================================ */
 .casedeck-viewport { overflow: hidden; }
-.casedeck.is-live .casedeck-viewport { overflow: visible; }
-.casedeck.is-live .scs-cases {
-  overflow: visible; scroll-snap-type: none;
-  cursor: grab; touch-action: pan-y; will-change: transform;
-  padding-bottom: 4px;
-}
+
+
 .casedeck.is-live .scs-cases.is-dragging { cursor: grabbing; }
-.casedeck.is-live .scs-case { scroll-snap-align: none; }
+
 
 /* The card in front reads as the active one, the rest sit back. */
-.casedeck.is-live .scs-case {
-  opacity: .62; transform: scale(.97);
-  transition: opacity .4s ease, transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease;
-}
+
 .casedeck.is-live .scs-case.is-front { opacity: 1; transform: scale(1); }
 .casedeck.is-live .scs-case.is-front:hover { transform: scale(1) translateY(-4px); }
 
@@ -1916,7 +1909,7 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
 .casedeck-hint { margin: 6px 0 0; }
 
 @media (prefers-reduced-motion: reduce) {
-  .casedeck.is-live .scs-case { transition: none; }
+  
 }
 
 /* ============================================================
@@ -1926,15 +1919,9 @@ body { margin:0 !important; padding:0 !important; overflow-x:hidden; }
    the whole panel sideways. The viewport must keep clipping; only
    the track inside it moves.
    ============================================================ */
-.casedeck { overflow: hidden; }
-.casedeck.is-live .casedeck-viewport {
-  overflow: hidden;
-  /* Room for the hover lift and card shadows, which would otherwise
-     be cut off by the clip. */
-  padding: 10px 0 22px;
-  margin: -10px 0 -22px;
-}
-.casedeck.is-live .scs-cases { overflow: visible; padding-bottom: 0; }
+
+
+
 
 /* ============================================================
    CASE DECK — reveal the rope.
@@ -4229,4 +4216,54 @@ body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
 @media (max-width: 600px) {
   .noteread-scroll { padding: 14px 10px 40px; }
   .noteread-title { display: none; }
+}
+
+/* ============================================================
+   CARD RAILS — one carousel for the thread, the case studies
+   and the Insights notes.
+   The track is a native scroll container with scroll-snap, so
+   touch swipe and trackpad work with no script at all. The
+   buttons and arrow keys are an addition, not the mechanism.
+   ============================================================ */
+.crsl { position: relative; }
+.crsl-track {
+  display: flex; gap: 22px;
+  overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 6px 2px 18px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+.crsl-track::-webkit-scrollbar { height: 6px; }
+.crsl-track::-webkit-scrollbar-thumb { background: var(--page-line); border-radius: 3px; }
+.crsl-track > * { flex: 0 0 auto; scroll-snap-align: start; }
+.crsl-track:focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; }
+
+/* Insights was a grid; as a rail its cards need a width. */
+.crsl-track.notes { display: flex; }
+.crsl-track.notes > .note { width: min(330px, 84vw); }
+
+.crsl-nav { display: flex; gap: 9px; margin-top: 14px; }
+.crsl-btn {
+  width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--page-line); background: var(--page-card);
+  color: var(--page-ink); font-size: 20px; line-height: 1;
+  display: grid; place-items: center;
+  transition: background .18s ease, transform .18s ease, opacity .18s ease, border-color .18s ease;
+}
+.crsl-btn:hover:not(:disabled) { background: var(--mint); border-color: var(--mint); color: var(--mint-ink); transform: scale(1.06); }
+.crsl-btn:disabled { opacity: .3; cursor: default; }
+
+/* On the dark hero section the buttons need the dark treatment. */
+.section-light .crsl-btn, .section-tint .crsl-btn { background: var(--page-card); }
+.thread .crsl-btn { background: rgba(255,255,255,.9); }
+
+@media (prefers-reduced-motion: reduce) {
+  .crsl-track { scroll-behavior: auto; }
+  .crsl-btn:hover:not(:disabled) { transform: none; }
+}
+@media (max-width: 600px) {
+  .crsl-track { gap: 14px; }
+  .crsl-nav { display: none; }   /* swipe is the interaction on touch */
 }
