@@ -950,17 +950,21 @@ function boot(){
 
   /* The Who we are entrance.
 
-     Lost when the rope slider was replaced: a pinned sequence brought
-     the heading in out of a blur, slid the three cards in from the
-     right and then lit the pillars one by one. Restored here without
-     the rope's own parts — the line, the bead, the tension release and
-     the pulse travelling along it — which no longer exist.
+     The hero is scrubbed — scroll drives it frame by frame. This
+     section used to pin at the top and then play on its own clock for
+     130% of a viewport, so scrolling stopped meaning anything halfway
+     down the page and you had to push through a screen and a bit of
+     dead travel to get out. That mode change was the break between the
+     two sections, and the pin was the extra scrolling.
 
-     The track is a real scroll container now, so the cards' 150px
-     offset would briefly widen its scrollable area and flash a
-     scrollbar. Overflow is held shut for the duration instead of
-     dropping to a safer vertical entrance, because sliding in from
-     the side is the part that reads. */
+     So it is scrubbed too, and not pinned: the heading resolves and
+     the cards slide in as the section rises into view, on the same
+     input as the hero above it. The whole arrival takes about half a
+     viewport of travel and adds no scroll length of its own.
+
+     The track is a real scroll container, so the cards' offset would
+     widen its scrollable area and flash a scrollbar while they are
+     out to the right — overflow is held shut until they land. */
   (function () {
     if (!window.gsap || !window.ScrollTrigger) return;
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -975,54 +979,45 @@ function boot(){
     var cards = [].slice.call(track.querySelectorAll('.thread-card'));
     if (!cards.length) return;
 
-    if (textBits.length) gsap.set(textBits, { opacity: 0, scale: 0.72, filter: 'blur(14px)' });
-    if (groups.length) gsap.set(groups, { opacity: 0, filter: 'blur(12px)' });
-    gsap.set(cards, { opacity: 0, x: 150 });
-
+    var st;
     var entrance = gsap.timeline({
-      paused: true,
-      onStart: function () { track.style.overflowX = 'hidden'; },
-      onComplete: function () { track.style.overflowX = ''; }
+      scrollTrigger: {
+        trigger: story,
+        start: 'top 85%',
+        end: 'top 30%',
+        scrub: 0.6,
+        onUpdate: function (self) {
+          st = self;
+          track.style.overflowX = self.progress > 0.99 ? '' : 'hidden';
+        }
+      }
     })
-      .to(textBits.length ? textBits : {}, {
-        opacity: 1, scale: 1, filter: 'blur(0px)',
-        duration: 1.0, stagger: 0.1, ease: 'power3.out'
-      }, 0)
-      .to(cards, {
-        opacity: 1, x: 0, duration: 1.0, stagger: 0.42, ease: 'power3.out'
-      }, 0.5)
-      .to(groups.length ? groups : {}, {
-        opacity: 1, filter: 'blur(0px)', duration: 0.75, stagger: 0.42, ease: 'power2.out'
-      }, 0.7);
+      .fromTo(textBits.length ? textBits : {},
+        { opacity: 0, scale: 0.72, filter: 'blur(14px)' },
+        { opacity: 1, scale: 1, filter: 'blur(0px)',
+          duration: 0.9, stagger: 0.08, ease: 'power3.out' }, 0)
+      .fromTo(cards,
+        { opacity: 0, x: 150 },
+        { opacity: 1, x: 0, duration: 0.9, stagger: 0.3, ease: 'power3.out' }, 0.35)
+      .fromTo(groups.length ? groups : {},
+        { opacity: 0, filter: 'blur(12px)' },
+        { opacity: 1, filter: 'blur(0px)',
+          duration: 0.7, stagger: 0.3, ease: 'power2.out' }, 0.6);
 
-    ScrollTrigger.create({
-      trigger: '#story',
-      start: 'top top',
-      end: '+=130%',
-      pin: true,
-      anticipatePin: 1,
-      refreshPriority: 1,   // second pin down the page — the hero is 2
-      onEnter: function () { entrance.play(); },
-      onEnterBack: function () { entrance.play(); }
-    });
-
-    /* Backstop. The entrance starts the section at opacity 0, so if
-       that trigger ever fails to fire — a refresh race, a pin measured
-       against the wrong height — the whole section would stay invisible
-       rather than merely un-animated. An observer plays it on sight as
-       well; play() on a running or finished timeline does nothing, so
-       whichever arrives first wins and the other is a no-op. */
+    /* Backstop. The timeline renders its "from" state immediately, so
+       if the trigger never updated the section would sit invisible
+       rather than merely un-animated. If it is well into view and the
+       scrub still reads zero, jump it to the end. */
     if (window.IntersectionObserver) {
       new IntersectionObserver(function (entries, obs) {
-        if (entries[0].isIntersecting) { entrance.play(); obs.disconnect(); }
-      }, { threshold: 0.15 }).observe(story);
+        if (!entries[0].isIntersecting) return;
+        obs.disconnect();
+        setTimeout(function () {
+          if (!st || st.progress === 0) entrance.progress(1);
+          track.style.overflowX = '';
+        }, 1200);
+      }, { threshold: 0.6 }).observe(story);
     }
-
-    /* The hero's "See Our Services" lands here, and by then the
-       entrance has usually already run — play() on a finished timeline
-       does nothing. Restart it so the section arrives the same way it
-       does when you scroll down to it. */
-    document.addEventListener('insu:show-thread', function () { entrance.restart(); });
   })();
 
   function splitChars(el) {
