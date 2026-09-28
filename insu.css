@@ -4267,3 +4267,231 @@ body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
   .crsl-track { gap: 14px; }
   .crsl-nav { display: none; }   /* swipe is the interaction on touch */
 }
+
+/* ============================================================
+   INSIGHTS COVERS — drawn, not photographed.
+
+   The cards used a screenshot of the PDF's first page. At 330px
+   wide five pages of Oracle prose are indistinguishable from one
+   another, so the rail read as filler. Each document now gets a
+   dark cover with a motif drawn for its argument, and the old
+   screenshot survives underneath at low opacity so the card still
+   admits it is a document.
+   ============================================================ */
+.note[data-accent="mint"]   { --note-accent: #8FD1C1; }
+.note[data-accent="signal"] { --note-accent: #ED4948; }
+.note[data-accent="amber"]  { --note-accent: #E8A33D; }
+
+.note {
+  position: relative;
+  isolation: isolate;
+}
+
+.note-cover {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  color: var(--note-accent);
+  background:
+    radial-gradient(120% 90% at 78% 8%,
+      color-mix(in srgb, var(--note-accent) 20%, transparent) 0%, transparent 62%),
+    linear-gradient(152deg, #123733 0%, #0B2522 58%, #071B19 100%);
+}
+
+/* The original page screenshot, kept as texture only. */
+.note-texture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Body text rather than the page's own headline, which otherwise
+     ghosts through and repeats the card title. */
+  object-position: center 58%;
+  /* Low enough that the page's own headline does not read through and
+     repeat the card title underneath it. */
+  opacity: .07;
+  filter: grayscale(1) contrast(.9);
+  /* Hide the top band outright: that is where the PDF's own headline
+     sits, and it ghosted through to repeat the card title below. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0 34%, #000 62%);
+          mask-image: linear-gradient(to bottom, transparent 0 34%, #000 62%);
+}
+
+.note-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(to right, rgba(234,246,242,.055) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(to bottom, rgba(234,246,242,.055) 0 1px, transparent 1px 24px);
+  -webkit-mask-image: radial-gradient(130% 100% at 50% 40%, #000 35%, transparent 100%);
+          mask-image: radial-gradient(130% 100% at 50% 40%, #000 35%, transparent 100%);
+}
+
+.note-motif {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+
+.note-idx,
+.note-slug {
+  position: absolute;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  color: var(--note-accent);
+}
+.note-idx {
+  top: 13px;
+  left: 15px;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 600;
+  opacity: .42;
+  letter-spacing: -0.02em;
+}
+.note-slug {
+  bottom: 13px;
+  left: 15px;
+  right: 15px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: .8;
+}
+
+/* A sheen that crosses the cover on hover — cheap, and it makes the
+   drawn motif feel lit rather than printed. */
+.note-cover::after {
+  content: '';
+  position: absolute;
+  inset: -40% -60%;
+  background: linear-gradient(104deg, transparent 42%,
+    rgba(234,246,242,.16) 50%, transparent 58%);
+  transform: translateX(-72%);
+  transition: transform .72s cubic-bezier(.3,.7,.2,1);
+  pointer-events: none;
+}
+.note:hover .note-cover::after,
+.note-cover:focus-visible::after { transform: translateX(72%); }
+.note:hover .note-motif { transform: scale(1.045) translateY(-3px); }
+
+.note:hover .note-hover,
+.note-cover:focus-visible .note-hover { opacity: 1; }
+.note-hover { background: rgba(7,27,25,.58); }
+.note-hover span {
+  color: #0B2522;
+  background: var(--note-accent);
+}
+
+.note:hover {
+  border-color: color-mix(in srgb, var(--note-accent) 55%, var(--page-line));
+  box-shadow: 0 18px 46px rgba(10,30,28,.16);
+}
+
+.note-cat { color: color-mix(in srgb, var(--note-accent) 70%, #2B4B45); }
+
+.note-meta {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--page-ink-soft);
+}
+.note-go { color: color-mix(in srgb, var(--note-accent) 72%, #2B4B45); }
+
+@media (prefers-reduced-motion: reduce) {
+  .note-motif { transition: none; }
+  .note-cover::after { display: none; }
+  .note:hover .note-motif { transform: none; }
+}
+
+/* ============================================================
+   NUGGETS — a console panel rather than a white box.
+
+   The facts are the sharpest writing on the page and they sat in a
+   plain card, so they read like filler between the case studies.
+   Dark panel, dot matrix, monospace index: one deliberate accent on
+   a cream page, scoped to this component only.
+   ============================================================ */
+.nugbox {
+  background:
+    radial-gradient(90% 120% at 88% -10%, rgba(143,209,193,.13) 0%, transparent 58%),
+    linear-gradient(155deg, #123733 0%, #0B2522 62%, #071B19 100%);
+  border-color: rgba(143,209,193,.2);
+  box-shadow: 0 22px 54px rgba(8,26,24,.2);
+}
+
+/* Dot matrix, fading out before it reaches the text. */
+.nugbox::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(234,246,242,.1) 1px, transparent 1.4px);
+  background-size: 20px 20px;
+  -webkit-mask-image: linear-gradient(to bottom right, #000 0%, transparent 62%);
+          mask-image: linear-gradient(to bottom right, #000 0%, transparent 62%);
+  pointer-events: none;
+}
+
+/* Hairline at the top edge, so the panel reads as an instrument. */
+.nugbox::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--mint) 0%, rgba(143,209,193,.28) 42%, transparent 100%);
+  pointer-events: none;
+}
+
+.nug-stage { z-index: 1; }
+.nug { z-index: 1; }
+
+/* The index rides with the fact it belongs to, so it crossfades for
+   free rather than needing its own script. */
+.nug::before {
+  content: attr(data-idx) ' / 07';
+  position: absolute;
+  top: 26px;
+  right: 30px;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: rgba(143,209,193,.5);
+}
+
+.nug-tag {
+  color: #0B2522;
+  background: var(--mint);
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+}
+.nug-h { color: var(--ink); }
+.nug-p { color: var(--ink-soft); }
+
+.nug-bar { position: relative; z-index: 1; }
+.nug-dot { background: rgba(234,246,242,.24); }
+.nug-dot.is-on { background: var(--mint); }
+.nug-dot:hover:not(.is-on) { background: rgba(234,246,242,.45); }
+.nug-pause {
+  color: var(--ink-faint);
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.nug-pause:hover { color: var(--mint); }
+.nug-progress { position: relative; z-index: 1; background: rgba(234,246,242,.12); }
+
+@media (max-width: 720px) {
+  .nug::before { top: 20px; right: 20px; font-size: 10px; }
+}
