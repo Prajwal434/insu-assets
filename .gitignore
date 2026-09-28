@@ -1,1 +1,5 @@
+# Gated documents: the case studies are traded for an email, so they
+# must never be published. Open ones live in open-pdf/ instead of being
+# excepted here — a negation rule would quietly publish anything later
+# dropped into this folder.
 pdf/

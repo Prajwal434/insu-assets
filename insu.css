@@ -4138,3 +4138,95 @@ body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
   background: var(--teal-900); border-color: var(--teal-900); color: #EAF6F2;
 }
 @media (prefers-reduced-motion: reduce) { .grow-tab { transition: none; } }
+
+/* ============================================================
+   INSIGHTS — long-form notes on the Supply Chain page.
+   Not gated: these work by being read and forwarded, unlike the
+   case studies, which trade a document for an introduction.
+   ============================================================ */
+.scs-notes-sec { padding: 64px 0; border-top: 1px solid var(--page-line); }
+.notes {
+  display: grid; gap: 22px; margin-top: 34px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+}
+.note {
+  display: flex; flex-direction: column;
+  background: var(--page-card); border: 1px solid var(--page-line);
+  border-radius: 16px; overflow: hidden;
+  transition: transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s ease, border-color .28s ease;
+}
+.note:hover { transform: translateY(-4px); border-color: var(--mint); box-shadow: 0 16px 42px rgba(0,0,0,.13); }
+.note-thumb {
+  position: relative; display: block; width: 100%; padding: 0; border: 0;
+  cursor: pointer; background: #EFEDE6; overflow: hidden; aspect-ratio: 16 / 9;
+}
+.note-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.note-hover {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(8,22,20,.55); opacity: 0; transition: opacity .24s ease;
+}
+.note-hover span {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: #0F2E2A; background: var(--mint); padding: 9px 17px; border-radius: 999px;
+}
+.note:hover .note-hover, .note-thumb:focus-visible .note-hover { opacity: 1; }
+.note-body { padding: 18px 20px 18px; display: flex; flex-direction: column; flex: 1 1 auto; }
+.note-cat {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mint-ink); margin-bottom: 9px;
+}
+.note-h {
+  font-family: 'Poppins','Century Gothic',-apple-system,sans-serif;
+  font-size: 16.5px; line-height: 1.3; margin: 0 0 9px; color: var(--page-ink);
+}
+.note-dek { margin: 0 0 15px; font-size: 13.5px; line-height: 1.58; color: var(--page-ink-soft); }
+.note-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-top: auto; padding-top: 14px; border-top: 1px solid var(--page-line);
+}
+.note-mins { font-size: 12.5px; color: var(--page-ink-soft); }
+.note-go { font-size: 13px; font-weight: 600; color: var(--mint-ink); cursor: pointer; }
+
+/* ---- reader ---- */
+.noteread {
+  position: fixed; inset: 0; z-index: 870;
+  background: #EFEDE6; display: flex; flex-direction: column;
+  animation: dgFade .24s ease both;
+}
+.noteread[hidden] { display: none; }
+.noteread-bar {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 16px;
+  padding: 14px 22px; background: var(--teal-900); color: #EAF6F2;
+}
+.noteread-back {
+  flex: 0 0 auto; cursor: pointer; font: inherit; font-size: 13px; font-weight: 600;
+  color: #EAF6F2; background: transparent; border: 1px solid rgba(234,246,242,.4);
+  padding: 8px 16px; border-radius: 999px; transition: background .18s ease;
+}
+.noteread-back:hover { background: rgba(234,246,242,.14); }
+.noteread-title {
+  flex: 1 1 auto; min-width: 0; font-size: 13.5px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.noteread-dl {
+  flex: 0 0 auto; font-size: 13px; font-weight: 600;
+  color: var(--mint); text-decoration: none;
+}
+.noteread-dl:hover { color: #fff; text-decoration: underline; }
+.noteread-scroll {
+  flex: 1 1 auto; overflow-y: auto; padding: 26px 20px 60px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+.noteread-page {
+  width: 100%; max-width: 860px; height: auto; display: block;
+  border-radius: 6px; box-shadow: 0 4px 22px rgba(0,0,0,.13);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note:hover { transform: none; }
+  .noteread { animation: none; }
+}
+@media (max-width: 600px) {
+  .noteread-scroll { padding: 14px 10px 40px; }
+  .noteread-title { display: none; }
+}
