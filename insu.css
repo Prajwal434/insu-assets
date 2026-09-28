@@ -4495,3 +4495,14 @@ body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
 @media (max-width: 720px) {
   .nug::before { top: 20px; right: 20px; font-size: 10px; }
 }
+
+/* The Insights rail still inherits the old annotation-panel rule
+   (.notes { max-width: 920px; margin: 0 auto }), which centred the
+   track inside a wider column and pushed the cards ~56px right of
+   every heading on the page. The nav arrows sat correctly, so the
+   cards alone looked indented. */
+.crsl-track.notes {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
