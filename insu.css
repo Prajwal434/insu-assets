@@ -4506,3 +4506,43 @@ body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
   margin-left: 0;
   margin-right: 0;
 }
+
+/* ============================================================
+   CAROUSEL REGRESSIONS
+
+   Two things the generic rail broke when it replaced the bespoke
+   sliders.
+   ============================================================ */
+
+/* 1. .crsl-track > * sets flex:0 0 auto and lands later in this file
+   than .thread-card's flex:0 0 min(440px,84vw) at equal specificity,
+   so it won and the cards sized to their content — stretched wide.
+   The case cards were unaffected because they carry their own width.
+   Restated here with enough specificity to hold. */
+.crsl-track.thread-track > .thread-card { flex: 0 0 min(440px, 84vw); }
+
+/* 2. The nav buttons drew their ink from --page-ink, which flips to
+   near-white under prefers-color-scheme: dark, while .thread .crsl-btn
+   pins the background white — a white arrow on a white button with a
+   dark border. Every rail sits on a light surface (the panels pin the
+   light palette locally), so these are stated literally and cannot
+   flip with the viewer's OS setting. */
+.crsl-btn,
+.thread .crsl-btn,
+.section-light .crsl-btn,
+.section-tint .crsl-btn {
+  background: #FFFFFF;
+  color: #0F2E2A;
+  border: 1px solid rgba(15,46,42,.26);
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15,46,42,.07);
+}
+.crsl-btn:hover:not(:disabled),
+.thread .crsl-btn:hover:not(:disabled) {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: var(--mint-ink);
+}
+.crsl-btn:disabled { opacity: .34; box-shadow: none; }
+.crsl-btn:focus-visible { outline: 2px solid var(--teal-900); outline-offset: 3px; }
