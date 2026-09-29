@@ -5077,3 +5077,88 @@ body.pageview-open #r1 {
 
 /* The outcome rail runs edge to edge, so the button needs air under it. */
 .rail-outcome + .cta-row { margin-top: clamp(22px, 3vw, 34px); }
+
+/* ============================================================
+   MOBILE: LET FLEX ITEMS SHRINK
+
+   .page-section is display:flex, so .section-inner is a flex item
+   and carries the default min-width:auto — it cannot shrink below
+   its own min-content width. The card rails are flex rows of fixed
+   width cards, so min-content came out at ~1015px and every section
+   laid itself out 1015px wide inside a 390px phone. body has
+   overflow-x:hidden, so instead of a scrollbar the content simply
+   ran off the right edge, which is why it looked broken rather than
+   merely wide.
+
+   min-width:0 is the standard remedy: the rails already scroll, so
+   they are the right place for the overflow to live.
+   ============================================================ */
+.page-section > .section-inner { min-width: 0; }
+.crsl,
+.crsl-track,
+.thread-viewport,
+.casedeck-viewport { min-width: 0; }
+/* Same trap inside the panels. */
+.pageview-scroll,
+.pv-block { min-width: 0; }
+
+/* ============================================================
+   MOBILE NAV
+
+   Five labels in a centred pill at phone width had no room, so
+   they wrapped inside their own buttons — "Who we are" came out
+   over three lines. The pill now spans the width, the labels never
+   break, and the strip scrolls sideways if a narrow device still
+   cannot fit them. Scrolling a nav is worse than not needing to,
+   and much better than stacked words.
+   ============================================================ */
+@media (max-width: 820px) {
+  .sitenav {
+    left: 10px;
+    right: 10px;
+    transform: none;
+    justify-content: space-between;
+    gap: 2px;
+    padding: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .sitenav::-webkit-scrollbar { display: none; }
+  .sitenav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 11px;
+    padding: 7px 8px;
+  }
+}
+/* At 390px the five labels need ~388px, so they just miss. Tighter
+   metrics from 430px down bring them inside the strip; the scroll
+   above is still there for anything narrower. */
+@media (max-width: 430px) {
+  .sitenav { gap: 1px; padding: 4px 3px; }
+  .sitenav a { font-size: 10.5px; padding: 7px 6px; }
+}
+
+/* Catalogue internals at 320px: the cards are grid items, so they
+   carry min-width:auto too, and the monospace tables and the nowrap
+   SQL line pushed their min-content out to 378px. Let each layer
+   shrink, and let long tokens break rather than widen the card. */
+.catpg-i,
+.catpg-f,
+.cd-body,
+.cd-tbl,
+.cd-tr,
+.cd-tree,
+.cd-gantt { min-width: 0; }
+.cd-tr > span { min-width: 0; overflow-wrap: anywhere; }
+.cd-sql { min-width: 0; max-width: 100%; }
+.cd-msg { overflow-wrap: anywhere; }
+
+@media (max-width: 400px) {
+  /* Four levels of 13px indent leaves too little room for the row. */
+  .cd-tn { margin-left: calc(var(--d) * 8px); }
+  .cd-tr { gap: 8px; }
+  .cd-grow .cd-k { flex: 0 0 40px; }
+  .cd-grow i { left: calc(40px + 8px + (var(--s) * 1%)); }
+}
