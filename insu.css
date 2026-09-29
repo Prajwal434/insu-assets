@@ -4546,3 +4546,531 @@ body.intro-playing #r1.is-docked { padding: 7px; border-radius: 999px; }
 }
 .crsl-btn:disabled { opacity: .34; box-shadow: none; }
 .crsl-btn:focus-visible { outline: 2px solid var(--teal-900); outline-offset: 3px; }
+
+/* ============================================================
+   CATALOGUE — the answer to "is there anything besides the two
+   agents on this page?"
+
+   Grouped by the industry it was built for rather than by
+   technology, because that is how someone arrives looking. Each
+   entry carries its build state: two are in design and say so, and
+   the label is what makes the other six worth believing.
+   ============================================================ */
+.cat { margin-top: 26px; }
+
+.cat-g + .cat-g { margin-top: 26px; }
+
+.cat-dom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: #EAF6F2;
+}
+/* The domain rule runs out to the right so each group reads as a
+   band rather than a floating heading. */
+.cat-dom::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(143,209,193,.3), transparent);
+}
+.cat-dom span {
+  flex: 0 0 auto;
+  order: 1;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(234,246,242,.45);
+}
+
+.cat-row {
+  display: grid;
+  gap: 13px;
+  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+}
+
+.cat-i {
+  position: relative;
+  padding: 16px 18px 17px;
+  border-radius: 13px;
+  background: rgba(234,246,242,.045);
+  border: 1px solid rgba(234,246,242,.13);
+  border-left: 2px solid var(--cat-accent);
+  transition: transform .26s cubic-bezier(.2,.7,.2,1),
+              background .26s ease, border-color .26s ease;
+}
+.cat-i[data-state="built"]  { --cat-accent: rgba(143,209,193,.65); }
+.cat-i[data-state="design"] { --cat-accent: rgba(232,163,61,.6); }
+
+.cat-i:hover {
+  transform: translateY(-3px);
+  background: rgba(143,209,193,.075);
+  border-color: rgba(143,209,193,.34);
+  border-left-color: var(--cat-accent);
+}
+
+.cat-state {
+  float: right;
+  margin: 1px 0 0 12px;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+.cat-i[data-state="built"] .cat-state {
+  color: #0B2522;
+  background: var(--mint);
+}
+.cat-i[data-state="design"] .cat-state {
+  color: #E8A33D;
+  background: rgba(232,163,61,.14);
+  border: 1px solid rgba(232,163,61,.4);
+}
+
+.cat-i b {
+  display: block;
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #EAF6F2;
+  margin-bottom: 7px;
+}
+.cat-i p {
+  margin: 0;
+  font-size: 12.8px;
+  line-height: 1.62;
+  color: rgba(234,246,242,.74);
+}
+
+@media (max-width: 620px) {
+  .cat-row { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cat-i, .cat-i:hover { transition: none; transform: none; }
+}
+
+/* ============================================================
+   DOCKED MARK WHILE A PANEL IS OPEN
+
+   #r1 is lifted to the body as position:fixed at its hero
+   coordinates, and the hero's scrubbed timeline is what slides it up
+   to the corner. Open a panel before that timeline has run — a deep
+   link to #ai-solutions, or the nav from the top of the page — and
+   the class says docked while the mark is still sitting down where
+   the hero left it.
+
+   Pinning it here rather than in script because the transform
+   belongs to GSAP: this overrides for exactly as long as a panel is
+   open and hands it straight back on close. The values are the same
+   constants the dock calculation uses.
+   ============================================================ */
+body.pageview-open #r1 {
+  top: 20px !important;
+  left: 24px !important;
+  transform: none !important;
+}
+@media (max-width: 820px) {
+  body.pageview-open #r1 {
+    top: 14px !important;
+    left: 14px !important;
+  }
+}
+
+/* ============================================================
+   CATALOGUE PAGE — its own panel, same ground as AI Solutions.
+   ============================================================ */
+.pageview[data-page="catalogue"] {
+  --page-bg: #0A1917;
+  --page-ink: #EAF6F2;
+  --page-ink-soft: rgba(234,246,242,.68);
+  --page-line: rgba(234,246,242,.14);
+  --page-card: rgba(234,246,242,.05);
+  background: #0A1917;
+  color: #EAF6F2;
+}
+.pageview[data-page="catalogue"] .pageview-bar {
+  position: relative;
+  z-index: 6;
+  background: #0A1917;
+  border-bottom: 1px solid rgba(143,209,193,.18);
+}
+.pageview[data-page="catalogue"] .pageview-close {
+  border-color: rgba(143,209,193,.45);
+  color: #EAF6F2;
+}
+.pageview[data-page="catalogue"] .pageview-close:hover {
+  background: rgba(143,209,193,.16);
+  border-color: var(--mint);
+}
+.pageview[data-page="catalogue"] .pageview-title { color: rgba(234,246,242,.72); }
+
+
+.pageview[data-page="catalogue"] .pv-block { border-top: 0; padding-bottom: 0; }
+.pageview[data-page="catalogue"] .pv-lead { color: rgba(234,246,242,.72); }
+.pageview[data-page="catalogue"] h2,
+.pageview[data-page="catalogue"] h3 { color: #EAF6F2; }
+
+.catpg-h1 {
+  margin: 10px 0 16px;
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: clamp(27px, 4vw, 44px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #fff;
+  max-width: 24ch;
+}
+
+.catpg-legend { display: flex; gap: 10px; margin-top: 4px; }
+.catpg-lk {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+.catpg-lk[data-state="built"]  { color: #0B2522; background: var(--mint); }
+.catpg-lk[data-state="design"] { color: #E8A33D; background: rgba(232,163,61,.14); border: 1px solid rgba(232,163,61,.4); }
+
+.catpg-g { padding-top: clamp(22px, 3vw, 34px) !important; }
+.catpg-dom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px !important;
+  font-size: 15px !important;
+  font-weight: 700;
+  letter-spacing: 0 !important;
+}
+.catpg-dom::before { content: none !important; }
+.catpg-dom::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(143,209,193,.3), transparent);
+}
+.catpg-dom span {
+  flex: 0 0 auto;
+  order: 1;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(234,246,242,.45);
+}
+
+.catpg-row {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+}
+.catpg-i {
+  padding: 20px 22px 22px;
+  border-radius: 15px;
+  background: linear-gradient(160deg, rgba(234,246,242,.055), rgba(234,246,242,.02));
+  border: 1px solid rgba(234,246,242,.13);
+  border-left: 2px solid var(--cat-accent);
+  transition: transform .26s cubic-bezier(.2,.7,.2,1), background .26s ease, border-color .26s ease;
+}
+.catpg-i[data-state="built"]  { --cat-accent: rgba(143,209,193,.65); }
+.catpg-i[data-state="design"] { --cat-accent: rgba(232,163,61,.6); }
+.catpg-i:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(160deg, rgba(143,209,193,.09), rgba(234,246,242,.03));
+  border-color: rgba(143,209,193,.34);
+  border-left-color: var(--cat-accent);
+}
+
+.catpg-i-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.catpg-i-head h3 {
+  margin: 0;
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+.catpg-state {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.catpg-i[data-state="built"] .catpg-state  { color: #0B2522; background: var(--mint); }
+.catpg-i[data-state="design"] .catpg-state { color: #E8A33D; background: rgba(232,163,61,.14); border: 1px solid rgba(232,163,61,.4); }
+
+.catpg-f + .catpg-f { margin-top: 13px; padding-top: 13px; border-top: 1px solid rgba(234,246,242,.09); }
+.catpg-fk {
+  display: block;
+  margin-bottom: 5px;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: rgba(143,209,193,.75);
+}
+.catpg-f p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.62;
+  color: rgba(234,246,242,.76);
+}
+
+.catpg-end { padding-top: clamp(30px, 4vw, 52px) !important; padding-bottom: clamp(40px, 6vw, 80px) !important; }
+
+/* ---- the way through, on the AI page ---- */
+.catmore-in { text-align: left; }
+.catmore-go { margin-top: 6px; }
+
+@media (max-width: 620px) {
+  .catpg-row { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .catpg-i, .catpg-i:hover { transition: none; transform: none; }
+}
+
+/* ============================================================
+   CATALOGUE CARD META + DUMMY DEMOS
+
+   Each entry shows a small mock of the thing working. Static
+   markup and SVG on purpose: nine live simulations on one page
+   would be nine things to get wrong, and the point here is only
+   to show the shape of the output.
+   ============================================================ */
+.catpg-meta { display: flex; flex-wrap: wrap; gap: 7px; margin: -6px 0 13px; }
+.catpg-plat,
+.catpg-any {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 6px;
+}
+.catpg-plat { color: rgba(234,246,242,.62); background: rgba(234,246,242,.07); }
+/* Placed under one industry as an example, not a limit. */
+.catpg-any { color: rgba(143,209,193,.85); background: rgba(143,209,193,.1); border: 1px dashed rgba(143,209,193,.34); }
+
+.catpg-demo {
+  margin: 0 0 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(4,14,13,.5);
+  border: 1px solid rgba(234,246,242,.1);
+}
+.cd-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 11px;
+  background: rgba(234,246,242,.045);
+  border-bottom: 1px solid rgba(234,246,242,.08);
+}
+.cd-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); flex: 0 0 auto; }
+.cd-lab {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(234,246,242,.5);
+}
+.cd-body {
+  padding: 11px 12px 12px;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: rgba(234,246,242,.8);
+}
+
+.cd-k {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: rgba(143,209,193,.8);
+}
+.cd-k.is-warn { color: rgba(232,163,61,.9); }
+.cd-k.is-dim  { color: rgba(234,246,242,.4); }
+
+.cd-q {
+  padding: 6px 9px;
+  margin-bottom: 9px;
+  border-radius: 6px;
+  background: rgba(143,209,193,.1);
+  border-left: 2px solid var(--mint);
+  color: #EAF6F2;
+}
+.cd-q::before { content: '\203A  '; color: var(--mint); }
+
+.cd-note {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(234,246,242,.08);
+  font-size: 10px;
+  line-height: 1.55;
+  color: rgba(234,246,242,.58);
+}
+.cd-note.is-warn { color: rgba(232,163,61,.85); }
+
+/* ---- pegging tree ---- */
+.cd-tree { display: flex; flex-direction: column; gap: 3px; }
+.cd-tn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 7px;
+  margin-left: calc(var(--d) * 13px);
+  border-radius: 5px;
+  background: rgba(234,246,242,.05);
+  border-left: 2px solid rgba(143,209,193,.4);
+}
+.cd-tn.is-warn { border-left-color: #E8A33D; background: rgba(232,163,61,.1); }
+.cd-id { color: #EAF6F2; font-weight: 600; }
+.cd-m { margin-left: auto; font-size: 9.5px; color: rgba(234,246,242,.5); white-space: nowrap; }
+
+/* ---- capacity bars ---- */
+.cd-gantt { display: flex; flex-direction: column; gap: 5px; }
+.cd-grow { display: flex; align-items: center; gap: 8px; }
+.cd-grow .cd-k { flex: 0 0 46px; }
+.cd-grow { position: relative; }
+.cd-grow i {
+  position: absolute;
+  left: calc(46px + 8px + (var(--s) * 1%));
+  width: calc(var(--w) * 1%);
+  height: 8px;
+  border-radius: 3px;
+  background: rgba(143,209,193,.5);
+}
+.cd-grow i.is-clash { background: rgba(232,163,61,.62); }
+.cd-grow i.is-fix { background: rgba(143,209,193,.85); }
+
+/* ---- stage flow ---- */
+.cd-flow { display: flex; align-items: center; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
+.cd-st {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: rgba(234,246,242,.06);
+  color: rgba(234,246,242,.45);
+}
+.cd-st.is-done  { background: rgba(143,209,193,.2); color: var(--mint); }
+.cd-st.is-stall { background: rgba(232,163,61,.2); color: #E8A33D; border: 1px solid rgba(232,163,61,.5); }
+.cd-st + .cd-st::before { content: ''; }
+
+/* ---- small tables ---- */
+.cd-tbl { display: flex; flex-direction: column; }
+.cd-tr {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  padding: 4px 2px;
+  border-bottom: 1px solid rgba(234,246,242,.06);
+}
+.cd-tr > span:not(:first-child) { text-align: right; min-width: 38px; }
+.cd-tr.is-head {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: rgba(143,209,193,.7);
+  border-bottom-color: rgba(143,209,193,.22);
+}
+.cd-tr.is-dim { color: rgba(234,246,242,.38); }
+.cd-tr .is-ok { color: var(--mint); font-weight: 600; }
+
+.cd-sql {
+  display: block;
+  margin-top: 9px;
+  padding: 6px 9px;
+  border-radius: 5px;
+  font-size: 9.5px;
+  background: rgba(234,246,242,.05);
+  color: rgba(143,209,193,.78);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- sparklines ---- */
+.cd-spark { display: block; width: 100%; height: auto; color: var(--mint); }
+.cd-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+
+/* ---- action log ---- */
+.cd-log { display: flex; flex-direction: column; gap: 3px; margin-top: 7px; }
+.cd-log > div { display: flex; gap: 8px; font-size: 10px; color: rgba(234,246,242,.68); }
+.cd-log .cd-k { flex: 0 0 auto; }
+.cd-log > div.is-ok { color: var(--mint); }
+
+/* ---- tutor chat ---- */
+.cd-chat { display: flex; flex-direction: column; gap: 6px; }
+.cd-msg {
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: rgba(234,246,242,.055);
+  color: rgba(234,246,242,.82);
+}
+.cd-msg.is-you {
+  align-self: flex-end;
+  max-width: 88%;
+  background: rgba(143,209,193,.13);
+  color: #EAF6F2;
+}
+.cd-ref {
+  align-self: flex-start;
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(143,209,193,.7);
+}
+
+@media (max-width: 520px) {
+  .cd-body { font-size: 10px; }
+  .cd-m { display: none; }
+}
+
+/* Third build state. Amber designed, lime in development, mint
+   running — so the badges read as a pipeline rather than a
+   pass/fail. Lime is the accent already used by the case studies. */
+.catpg-i[data-state="build"] { --cat-accent: rgba(166,198,58,.62); }
+.catpg-i[data-state="build"] .catpg-state,
+.catpg-lk[data-state="build"] {
+  color: #A6C63A;
+  background: rgba(166,198,58,.14);
+  border: 1px solid rgba(166,198,58,.42);
+}
+.cd-k.is-ok { color: var(--mint); }
+
+/* An industry with one solution gave that card the full column, which
+   stretched its demo out of proportion — the smartwatch sparkline was
+   scaling to 280px tall. Cap the lone card and the charts. */
+.catpg-row > .catpg-i:only-child { max-width: 620px; }
+.cd-spark { max-width: 380px; }
