@@ -5075,15 +5075,5 @@ body.pageview-open #r1 {
 .catpg-row > .catpg-i:only-child { max-width: 620px; }
 .cd-spark { max-width: 380px; }
 
-/* A line beside the AI Solutions button saying what is through it, so
-   the button is a promise rather than a guess. */
-.cta-aside {
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--ink-faint);
-  max-width: 44ch;
-}
-.section-light .cta-aside,
-.section-tint .cta-aside { color: var(--page-ink-soft); }
 /* The outcome rail runs edge to edge, so the button needs air under it. */
 .rail-outcome + .cta-row { margin-top: clamp(22px, 3vw, 34px); }
