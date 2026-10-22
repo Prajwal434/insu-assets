@@ -5494,3 +5494,62 @@ body.pageview-open #r1 {
 }
 .apply-done .btn.ghost { color: var(--page-ink); border-color: var(--page-line); }
 .apply-done .btn.ghost:hover { border-color: var(--mint); color: var(--mint-ink); }
+
+/* ============================================================
+   PROGRAMMES NOT YET OPEN
+
+   Supply Chain Planning is taught but not one of the four roles
+   taking applications. Saying so on the card is better than
+   quietly removing it — the curriculum exists, and someone who
+   wants it should be able to say so rather than conclude we do
+   not do it.
+   ============================================================ */
+.prog-soon {
+  display: inline-block;
+  margin-bottom: 9px;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: #E8A33D;
+  background: rgba(232,163,61,.14);
+  border: 1px solid rgba(232,163,61,.42);
+}
+/* Reads as present but not yet live, without looking broken. */
+.prog.is-soon { opacity: .82; }
+.prog.is-soon:hover { opacity: 1; }
+
+.prog-soon-note {
+  display: block;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--page-ink-soft);
+}
+.linkish {
+  font: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--teal-700);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.linkish:hover { color: var(--teal-900); }
+
+/* The same marker in the list of other internships. */
+.intern-more-n em {
+  font-style: normal;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #E8A33D;
+  margin-left: 7px;
+  vertical-align: 1px;
+}
