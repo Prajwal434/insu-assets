@@ -5280,3 +5280,217 @@ body.pageview-open #r1 {
     .hero { min-height: clamp(560px, 90svh, 820px); }
   }
 }
+
+/* ============================================================
+   ADMISSIONS — hero notice and the application form
+   ============================================================ */
+
+/* A pill, not a ribbon. A full-width announcement bar would eat the
+   top of a 390px hero, and the hero is the one screen that has to
+   land. The dot is the only thing that moves. */
+.admit {
+  display: inline-flex;
+  /* .col-text is a flex column, so a bare inline-flex child still
+     stretches to the full width of it. */
+  align-self: flex-start;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 18px;
+  padding: 7px 14px 7px 11px;
+  cursor: pointer;
+  font: inherit;
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(143,209,193,.12);
+  border: 1px solid rgba(143,209,193,.42);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  transition: background .22s ease, border-color .22s ease, transform .22s cubic-bezier(.2,.7,.2,1);
+}
+.admit:hover {
+  background: rgba(143,209,193,.2);
+  border-color: var(--mint);
+  transform: translateY(-2px);
+}
+.admit-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 0 rgba(143,209,193,.7);
+  animation: admitPulse 2.4s ease-out infinite;
+}
+@keyframes admitPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(143,209,193,.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(143,209,193,0); }
+  100% { box-shadow: 0 0 0 0 rgba(143,209,193,0); }
+}
+.admit-t {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.admit-sub {
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  padding-left: 9px;
+  border-left: 1px solid rgba(234,246,242,.22);
+}
+.admit-go { font-size: 13px; color: var(--mint); }
+
+@media (max-width: 560px) {
+  /* The programme name is on the button people press next; here it
+     only costs a second line. */
+  .admit-sub { display: none; }
+  .admit { margin-bottom: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admit-dot { animation: none; }
+  .admit:hover { transform: none; }
+}
+
+/* ---- the apply button on each programme ---- */
+.prog-cta { margin-top: 18px; }
+.prog-apply { font-size: 13px; padding: 10px 18px; }
+
+/* ---- the form ---- */
+.contactpop-panel.apply {
+  width: min(520px, 100%);
+  max-height: min(760px, 90vh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+.apply-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px 16px;
+  background: var(--teal-900);
+  color: #EAF6F2;
+}
+.apply-kicker {
+  display: block;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 5px;
+}
+.apply-title {
+  margin: 0;
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.apply-head .contactpop-close { color: #EAF6F2; }
+
+.apply-form,
+.apply-done {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 18px 20px 22px;
+}
+.apply-f { display: block; margin-bottom: 14px; }
+.apply-f > span,
+.apply-f legend {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--page-ink);
+}
+.apply-f i {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--page-ink-soft);
+}
+.apply-f input,
+.apply-f select,
+.apply-f textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--page-ink);
+  background: var(--page-card);
+  border: 1px solid var(--page-line);
+}
+.apply-f textarea { resize: vertical; min-height: 68px; }
+.apply-f input:focus,
+.apply-f select:focus,
+.apply-f textarea:focus {
+  outline: 2px solid var(--mint);
+  outline-offset: 1px;
+  border-color: var(--mint);
+}
+.apply-bg { border: 0; padding: 0; margin: 0 0 16px; min-width: 0; }
+.apply-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.apply-chip {
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  padding: 8px 13px;
+  border-radius: 999px;
+  color: var(--page-ink-soft);
+  background: transparent;
+  border: 1px solid var(--page-line);
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.apply-chip:hover { border-color: var(--teal-700); color: var(--page-ink); }
+.apply-chip.is-on {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: var(--mint-ink);
+  font-weight: 600;
+}
+.apply-send { width: 100%; justify-content: center; margin-top: 2px; }
+.apply-send:disabled { opacity: .6; cursor: default; }
+.apply-err {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--signal-deep);
+}
+.apply-err a { color: var(--signal-deep); font-weight: 600; }
+.apply-fine {
+  margin: 12px 0 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--page-ink-soft);
+}
+
+.apply-done { text-align: center; padding-top: 34px; }
+.apply-tick {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  font-size: 22px;
+  color: var(--mint-ink);
+  background: var(--mint);
+}
+.apply-done h3 {
+  margin: 0 0 8px;
+  font-family: 'Poppins', 'Century Gothic', -apple-system, sans-serif;
+  font-size: 19px;
+  color: var(--page-ink);
+}
+.apply-done p {
+  margin: 0 0 20px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--page-ink-soft);
+}
+.apply-done .btn.ghost { color: var(--page-ink); border-color: var(--page-line); }
+.apply-done .btn.ghost:hover { border-color: var(--mint); color: var(--mint-ink); }
