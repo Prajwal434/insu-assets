@@ -5553,3 +5553,50 @@ body.pageview-open #r1 {
   margin-left: 7px;
   vertical-align: 1px;
 }
+
+/* ============================================================
+   WHAT IS OPEN, AND WHAT IS NOT
+
+   Courses run with a certification; internships and the combined
+   pathway are not taking anyone yet. Marked rather than removed —
+   the page has described three journeys for a long time, and
+   deleting two of them tells a visitor less than labelling them.
+   ============================================================ */
+.prog-dur {
+  display: block;
+  margin: -4px 0 9px;
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--teal-700);
+}
+
+/* ---- pricing ---- */
+.price-legend .is-soon { opacity: .55; }
+.price-cell.is-soon { opacity: .45; }
+.price-cell.is-soon .price-dur {
+  font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, monospace;
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.price-row.is-soon .price-prog { opacity: .6; }
+
+/* ---- journeys ---- */
+.path.is-soon { opacity: .6; }
+.path.is-soon:hover { opacity: .78; }
+.path-flag--soon {
+  color: #E8A33D;
+  background: rgba(232,163,61,.16);
+  border-color: rgba(232,163,61,.45);
+}
+/* .pageview[data-page="programs"] .path-flag paints the mint gradient at
+   higher specificity, so the coming-soon variant has to be scoped the
+   same way or it comes out looking like the featured one. */
+.pageview[data-page="programs"] .path-flag--soon {
+  background: rgba(232,163,61,.18);
+  border: 1px solid rgba(232,163,61,.5);
+  color: #E8A33D;
+}
