@@ -1167,8 +1167,32 @@ function boot(){
       pop.hidden = true;
       pop.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('applypop-open');
+      /* Drop a shared #apply link once it has done its job, or a refresh
+         or a back step reopens a form the visitor already closed. */
+      if (APPLY_HASH.test(location.hash) && history.replaceState) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
+
+    /* A shareable link to the form itself: /#apply opens it, and
+       /#apply/ai-ml-engineer opens it with that programme chosen. The
+       slug is the option's value lower-cased with punctuation turned to
+       dashes, so a new programme gets a link without touching this. */
+    var APPLY_HASH = /^#apply(\/|$)/;
+    function slug(s) {
+      return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+    function syncApplyHash() {
+      if (!APPLY_HASH.test(location.hash)) return;
+      var want = decodeURIComponent(location.hash.slice('#apply/'.length));
+      var match = [].slice.call(progField.options).filter(function (o) {
+        return want && slug(o.value) === slug(want);
+      })[0];
+      open(match ? match.value : '');
+    }
+    window.addEventListener('hashchange', syncApplyHash);
+    syncApplyHash();
 
     triggers.forEach(function (b) {
       b.addEventListener('click', function (e) {
