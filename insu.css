@@ -5468,6 +5468,49 @@ body.pageview-open #r1 {
   color: var(--page-ink-soft);
 }
 
+/* Call / WhatsApp block above the application form. The QR is for
+   desktop visitors; on a phone you cannot scan your own screen, so the
+   button carries the same link and the QR steps aside. */
+.apply-direct {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 16px;
+  margin-bottom: 4px;
+  border: 1px solid var(--page-line);
+  border-radius: 12px;
+  background: var(--page-card);
+}
+.apply-direct-text { flex: 1 1 auto; min-width: 0; }
+.apply-direct-k {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--page-ink-soft);
+}
+.apply-direct-line { margin: 0 0 10px; font-size: 14px; line-height: 1.5; color: var(--page-ink); }
+.apply-direct-line a { color: inherit; font-weight: 600; white-space: nowrap; }
+.apply-wa { background: #0F2E2A; color: #EAF6F2; border-color: #0F2E2A; }
+.apply-wa:hover { background: #153C36; border-color: #153C36; }
+.apply-qr-wrap { flex: 0 0 auto; text-align: center; }
+.apply-qr { display: block; width: 112px; height: 112px; border-radius: 6px; }
+.apply-qr-cap { display: block; margin-top: 5px; font-size: 11px; color: var(--page-ink-soft); }
+.apply-or {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+  font-size: 12px;
+  color: var(--page-ink-soft);
+}
+.apply-or::before,
+.apply-or::after { content: ''; flex: 1 1 auto; height: 1px; background: var(--page-line); }
+@media (max-width: 600px), (pointer: coarse) {
+  .apply-qr-wrap { display: none; }
+  .apply-wa { width: 100%; justify-content: center; }
+}
 .apply-done { text-align: center; padding-top: 34px; }
 .apply-tick {
   display: grid;
